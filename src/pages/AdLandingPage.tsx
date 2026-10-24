@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Phone, Trash2, Star, Shield, CheckCircle, Truck, Clock, MessageSquare, ArrowRight, Zap } from 'lucide-react';
+import { Phone, Trash2, Star, Shield, CheckCircle, Truck, Clock, MessageSquare, ArrowRight, Zap, MapPin } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { SEOHead } from '../components/SEOHead';
 
@@ -198,8 +198,8 @@ export function AdLandingPage() {
 
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-gray-400">
             <span className="flex items-center gap-1.5">
-              <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-              5-Star Rated
+              <MapPin className="h-4 w-4 text-yellow-400" />
+              Based in Molalla
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="h-4 w-4 text-green-400" />
@@ -257,8 +257,8 @@ export function AdLandingPage() {
             <div className="text-sm font-bold text-slate-800">Veteran Owned</div>
           </div>
           <div>
-            <Star className="h-8 w-8 text-yellow-500 fill-yellow-500 mx-auto mb-1" />
-            <div className="text-sm font-bold text-slate-800">5-Star Rated</div>
+            <MapPin className="h-8 w-8 text-yellow-600 mx-auto mb-1" />
+            <div className="text-sm font-bold text-slate-800">Molalla Based</div>
           </div>
           <div>
             <Truck className="h-8 w-8 text-green-600 mx-auto mb-1" />

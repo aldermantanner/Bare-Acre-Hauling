@@ -107,12 +107,12 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
           <h2 className="text-4xl font-extrabold mb-4">Why Customers Choose Us</h2>
           <div className="grid md:grid-cols-4 gap-8 mt-10">
             <div>
-              <div className="text-5xl font-extrabold text-green-400 mb-2">100%</div>
-              <p className="text-xl text-gray-300">Satisfaction Rate</p>
+              <div className="text-5xl font-extrabold text-green-400 mb-2">Local</div>
+              <p className="text-xl text-gray-300">Veteran-owned</p>
             </div>
             <div>
-              <div className="text-5xl font-extrabold text-green-400 mb-2">500+</div>
-              <p className="text-xl text-gray-300">Happy Customers</p>
+              <div className="text-5xl font-extrabold text-green-400 mb-2">Molalla</div>
+              <p className="text-xl text-gray-300">Out of Molalla, OR</p>
             </div>
             <div>
               <div className="text-5xl font-extrabold text-green-400 mb-2">Same Day</div>

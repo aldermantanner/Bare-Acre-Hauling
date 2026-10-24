@@ -24,7 +24,7 @@ export function PrivacyPolicyPage() {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Privacy Policy</h1>
-              <p className="text-slate-300 mt-1">Last updated: February 10, 2026</p>
+              <p className="text-slate-300 mt-1">Last updated: October 24, 2026</p>
             </div>
           </div>
         </div>
@@ -34,237 +34,145 @@ export function PrivacyPolicyPage() {
         <div className="prose prose-slate max-w-none">
           <section className="mb-12">
             <p className="text-lg text-gray-600 leading-relaxed">
-              Bare Acre Hauling ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website bareacrehauling.com (the "Site") or use our services.
+              Bare Acre Hauling is a veteran-owned junk removal business in Molalla, Oregon. We serve the Willamette Valley, including Canby, Silverton, and Salem/Keizer. This page says what information we collect and how we use it, in plain language. It is not legal advice.
             </p>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              1. Information We Collect
+              1. Information we collect
             </h2>
-            <h3 className="text-lg font-semibold text-slate-700 mt-6 mb-3">Personal Information</h3>
             <p className="text-gray-600 mb-4">
-              We may collect personal information that you voluntarily provide when using our services, including:
+              We collect the details you give us so we can quote and do a junk removal job:
             </p>
             <ul className="space-y-2 text-gray-600 mb-6">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Full name, email address, and phone number</span>
+                <span>Name, phone number, email address, and the address or ZIP code for the job, when you use a quote or contact form on this site.</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Mailing and delivery addresses</span>
+                <span>What you want hauled, photos you choose to send, and any notes you add.</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Driver's license information</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Vehicle insurance information</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Payment and billing information</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Electronic signatures on rental and service agreements</span>
+                <span>The same kind of contact details when you call, text, or email us, or when you send a message through the quick-contact box (that box opens an email to us).</span>
               </li>
             </ul>
-
-            <h3 className="text-lg font-semibold text-slate-700 mt-6 mb-3">Automatically Collected Information</h3>
-            <p className="text-gray-600 mb-4">
-              When you visit our Site, we may automatically collect certain information, including:
+            <p className="text-gray-600">
+              We do not collect driver's license numbers or insurance information. We do not ask for payment card numbers on this website.
             </p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>IP address and browser type</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Device information and operating system</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Pages visited, time spent on pages, and referring URLs</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Cookies and similar tracking technologies</span>
-              </li>
-            </ul>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              2. How We Use Your Information
+              2. How we use it
             </h2>
-            <p className="text-gray-600 mb-4">We use the information we collect to:</p>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Process and manage your junk removal bookings and services</span>
+                <span>Reply to quote requests and schedule junk removal.</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Communicate with you regarding your bookings, including confirmations, reminders, and status updates</span>
+                <span>Call, email, and text you from our business number, (503) 874-3705, about your quote or job. Your carrier's message and data rates may apply. Tell us if you want us to stop texting.</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Process payments securely</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Verify your identity for our services</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Improve our website, services, and customer experience</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Comply with legal obligations and enforce our terms of service</span>
+                <span>Keep a record of the job so we can do the work and get paid.</span>
               </li>
             </ul>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              3. Information Sharing and Disclosure
+              3. Jobber
+            </h2>
+            <p className="text-gray-600">
+              We use Jobber to run the business: customer records, quotes, scheduling, invoices, and payments. When you use Book Now or pay an invoice, the details needed for that job are handled in Jobber. Jobber has its own privacy practices. We use it to do the work, not to sell your information. Payment card details, if you pay by card, are handled by Jobber. We do not store them on this website.
+            </p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
+              4. We do not sell personal information
             </h2>
             <p className="text-gray-600 mb-4">
-              We do not sell, trade, or rent your personal information to third parties. We may share your information in the following circumstances:
+              We do not sell your personal information. We share it only in these cases:
             </p>
             <ul className="space-y-3 text-gray-600">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Service Providers:</strong> We share information with trusted third-party service providers who assist in operating our business, such as payment processors, email services, and hosting providers.</span>
+                <span><strong className="text-slate-700">Jobber,</strong> so we can quote, schedule, invoice, and take payment.</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Legal Requirements:</strong> We may disclose your information if required by law, court order, or governmental regulation, or if we believe disclosure is necessary to protect our rights, your safety, or the safety of others.</span>
+                <span><strong className="text-slate-700">Google Ads measurement,</strong> as described in the cookies section below.</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.</span>
+                <span><strong className="text-slate-700">If the law requires it,</strong> or if we need to protect someone's safety.</span>
               </li>
             </ul>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              4. Data Security
+              5. Cookies and ads
             </h2>
             <p className="text-gray-600 mb-4">
-              We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include:
+              This site loads Google's tag (gtag.js) for Google Ads, using conversion ID AW-17076418361. Google may set cookies or similar identifiers to tell which visits came from our ads and to measure conversions. The site code does not load a separate Google Analytics property.
             </p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>SSL/TLS encryption for all data transmitted through our Site</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Secure database storage with row-level security policies</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Secure payment processing (we never store your credit card details)</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span>Regular review and updates to our security practices</span>
-              </li>
-            </ul>
-            <p className="text-gray-600 mt-4">
-              While we strive to protect your personal information, no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee absolute security.
+            <p className="text-gray-600">
+              You can block or delete cookies in your browser. The site also stores a timestamp in your browser so the exit offer is not shown again for about a week. That timestamp stays on your device. It is not a customer account.
             </p>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              5. Cookies and Tracking Technologies
+              6. How long we keep information
+            </h2>
+            <p className="text-gray-600">
+              We keep contact and job details for as long as we need them to quote, do the work, get paid, and keep ordinary business and tax records. Then we delete or stop using them.
+            </p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
+              7. Asking to see, correct, or delete your information
             </h2>
             <p className="text-gray-600 mb-4">
-              Our Site may use cookies and similar tracking technologies to enhance your browsing experience. Cookies are small text files stored on your device that help us analyze site usage and improve functionality.
+              Email <a href="mailto:bareacrehauling@outlook.com" className="text-green-600 hover:text-green-700 transition-colors">bareacrehauling@outlook.com</a> or call <a href="tel:503-874-3705" className="text-green-600 hover:text-green-700 transition-colors">(503) 874-3705</a> and tell us what you want. We will correct or delete what we still have, unless we need to keep a record for a payment, tax, or legal reason.
             </p>
             <p className="text-gray-600">
-              You can control cookies through your browser settings. Disabling cookies may affect some features of the Site.
+              Bare Acre Hauling is a small local business in Oregon. This page is a straightforward explanation of our practices. It is not a claim that a particular privacy statute applies to us.
             </p>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              6. Your Rights
+              8. Children
             </h2>
-            <p className="text-gray-600 mb-4">Depending on your location, you may have the following rights regarding your personal information:</p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Access:</strong> Request a copy of the personal information we hold about you.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Correction:</strong> Request that we correct inaccurate or incomplete information.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Deletion:</strong> Request that we delete your personal information, subject to legal retention requirements.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Opt-Out:</strong> Opt out of receiving marketing communications from us at any time.</span>
-              </li>
-            </ul>
-            <p className="text-gray-600 mt-4">
-              To exercise any of these rights, please contact us using the information provided below.
+            <p className="text-gray-600">
+              Our service is for adults booking junk removal. We do not knowingly collect information from children.
             </p>
           </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              7. Third-Party Links
+              9. Changes
             </h2>
             <p className="text-gray-600">
-              Our Site may contain links to third-party websites or services that are not operated by us. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites. We encourage you to review the privacy policies of those sites before providing any personal information.
-            </p>
-          </section>
-
-          <section className="mb-10">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              8. Children's Privacy
-            </h2>
-            <p className="text-gray-600">
-              Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child without verification of parental consent, we will take steps to remove that information.
-            </p>
-          </section>
-
-          <section className="mb-10">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              9. Data Retention
-            </h2>
-            <p className="text-gray-600">
-              We retain your personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. Rental agreement records and associated documentation may be retained for a period of up to seven (7) years for legal and compliance purposes.
-            </p>
-          </section>
-
-          <section className="mb-10">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4 pb-2 border-b border-gray-200">
-              10. Changes to This Privacy Policy
-            </h2>
-            <p className="text-gray-600">
-              We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last updated" date. We encourage you to review this Privacy Policy periodically. Your continued use of the Site after changes are posted constitutes your acceptance of the updated policy.
+              If we change this page, we will update the date at the top.
             </p>
           </section>
 
           <section className="bg-slate-50 rounded-xl p-8 border border-slate-200">
             <h2 className="text-2xl font-bold text-slate-800 mb-4">
-              11. Contact Us
+              10. Contact us
             </h2>
             <p className="text-gray-600 mb-6">
-              If you have any questions about this Privacy Policy or our data practices, please contact us:
+              Questions about this policy, or a request to delete your information:
             </p>
             <div className="grid sm:grid-cols-2 gap-6">
               <div>
@@ -274,11 +182,11 @@ export function PrivacyPolicyPage() {
               <div>
                 <p className="text-gray-600 mb-1">
                   <strong className="text-slate-700">Phone:</strong>{' '}
-                  <a href="tel:503-874-3705" className="text-green-600 hover:text-green-700 transition-colors">503-874-3705</a>
+                  <a href="tel:503-874-3705" className="text-green-600 hover:text-green-700 transition-colors">(503) 874-3705</a>
                 </p>
                 <p className="text-gray-600">
                   <strong className="text-slate-700">Email:</strong>{' '}
-                  <a href="mailto:BareAcreHauling@outlook.com" className="text-green-600 hover:text-green-700 transition-colors">BareAcreHauling@outlook.com</a>
+                  <a href="mailto:bareacrehauling@outlook.com" className="text-green-600 hover:text-green-700 transition-colors">bareacrehauling@outlook.com</a>
                 </p>
               </div>
             </div>

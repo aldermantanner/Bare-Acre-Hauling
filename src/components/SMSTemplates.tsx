@@ -15,17 +15,17 @@ export function SMSTemplates({ booking, isOpen, onClose }: SMSTemplatesProps) {
 
     switch (status) {
       case 'pickup_reminder':
-        return `Hi ${firstName}, reminder: Your Bare Acre Hauling pickup is tomorrow! Bring your driver's license. Call 503-500-6121 with questions.`;
+        return `Hi ${firstName}, reminder: Bare Acre Hauling is scheduled for your junk removal tomorrow. Questions? Call or text 503-874-3705.`;
       case 'return_reminder':
-        return `Hi ${firstName}, reminder: Trailer return due tomorrow by end of day. Need extension? Call 503-500-6121 - Bare Acre Hauling`;
+        return `Hi ${firstName}, Bare Acre Hauling here. Please confirm we can reach the items for your junk removal. Call or text 503-874-3705.`;
       case 'overdue':
-        return `${firstName}, your trailer rental is OVERDUE. Please return ASAP or call 503-500-6121. Late fees apply. - Bare Acre Hauling`;
+        return `${firstName}, we still need to confirm your junk removal with Bare Acre Hauling. Call or text 503-874-3705.`;
       case 'active':
-        return `${firstName}, your trailer rental is active! Return by ${booking.end_date ? new Date(booking.end_date).toLocaleDateString() : 'end date'}. Questions? 503-500-6121`;
+        return `${firstName}, Bare Acre Hauling is on the way for your junk removal. Questions? Call or text 503-874-3705.`;
       case 'completed':
-        return `Thank you ${firstName}! Rental complete. Your deposit refund will be processed within 2-3 days. - Bare Acre Hauling`;
+        return `Thank you ${firstName}! Your junk removal with Bare Acre Hauling is complete. Questions? Call or text 503-874-3705.`;
       default:
-        return `Hi ${firstName}, this is Bare Acre Hauling regarding your booking. Call 503-500-6121 if you have questions.`;
+        return `Hi ${firstName}, this is Bare Acre Hauling regarding your junk removal. Call or text 503-874-3705 if you have questions.`;
     }
   };
 
@@ -48,13 +48,13 @@ export function SMSTemplates({ booking, isOpen, onClose }: SMSTemplatesProps) {
         onClick={() => openSmsApp(booking.customer_phone, getSmsTemplate('return_reminder'))}
         className="w-full text-left px-3 py-2 bg-white hover:bg-blue-100 rounded border border-blue-200 text-xs transition-colors"
       >
-        <span className="font-semibold">Return Reminder</span> - Reminder to return trailer
+        <span className="font-semibold">Access Check</span> - Ask the customer to confirm we can reach the items
       </button>
       <button
         onClick={() => openSmsApp(booking.customer_phone, getSmsTemplate('overdue'))}
         className="w-full text-left px-3 py-2 bg-white hover:bg-red-100 rounded border border-red-200 text-xs transition-colors"
       >
-        <span className="font-semibold text-red-700">Overdue Notice</span> - Urgent overdue notification
+        <span className="font-semibold text-red-700">Needs Confirmation</span> - Ask the customer to confirm the job
       </button>
       <button
         onClick={() => openSmsApp(booking.customer_phone, getSmsTemplate('default'))}

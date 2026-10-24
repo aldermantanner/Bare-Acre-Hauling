@@ -24,7 +24,7 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
     zip_code: '',
     emergency_contact_name: '',
     emergency_contact_phone: '',
-    service_type: 'rental' as 'rental' | 'junk_removal',
+    service_type: 'junk_removal' as 'rental' | 'junk_removal',
     trailer_type: 'Southland 6x12 10k' as 'Southland 6x12 10k' | 'Southland 7x14 14k',
     start_date: '',
     end_date: '',
@@ -33,7 +33,7 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
     notes: '',
     total_price: 0,
     deposit_amount: 50,
-    payment_method: 'card' as 'cash' | 'card' | '',
+    payment_method: 'jobber' as 'cash' | 'card' | 'jobber' | '',
   });
 
   const [files, setFiles] = useState<{
@@ -122,7 +122,7 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
         emergency_contact_name: formData.emergency_contact_name || null,
         emergency_contact_phone: formData.emergency_contact_phone || null,
         service_type: formData.service_type,
-        trailer_type: formData.trailer_type,
+        trailer_type: null,
         start_date: formData.start_date,
         end_date: formData.end_date || formData.start_date,
         delivery_address: formData.delivery_address || formData.address || '',
@@ -217,18 +217,6 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  name="date_of_birth"
-                  value={formData.date_of_birth}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Email *
                 </label>
                 <input
@@ -253,19 +241,6 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                   placeholder="(555) 123-4567"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Driver's License Number
-                </label>
-                <input
-                  type="text"
-                  name="drivers_license_number"
-                  value={formData.drivers_license_number}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                  placeholder="DL123456"
                 />
               </div>
             </div>
@@ -370,11 +345,11 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
             </div>
           </div>
 
-          {/* Rental Details */}
+          {/* Job Details */}
           <div>
             <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
               <Truck className="h-5 w-5" />
-              Rental Details
+              Job Details
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -387,26 +362,9 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                 >
-                  <option value="rental">Trailer Rental</option>
                   <option value="junk_removal">Junk Removal</option>
                 </select>
               </div>
-              {formData.service_type === 'rental' && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Trailer Type
-                  </label>
-                  <select
-                    name="trailer_type"
-                    value={formData.trailer_type}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                  >
-                    <option value="Southland 6x12 10k">Southland 6x12 10k</option>
-                    <option value="Southland 7x14 14k">Southland 7x14 14k</option>
-                  </select>
-                </div>
-              )}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Start Date *
@@ -478,6 +436,7 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                   >
                     <option value="">Select payment method</option>
+                    <option value="jobber">Jobber</option>
                     <option value="cash">Cash</option>
                     <option value="card">Card</option>
                   </select>
@@ -492,13 +451,13 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
                     onChange={handleInputChange}
                     className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                   />
-                  <span className="text-sm font-semibold text-gray-700">Delivery Required</span>
+                  <span className="text-sm font-semibold text-gray-700">Pickup address is different from the mailing address</span>
                 </label>
               </div>
               {formData.delivery_required && (
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Delivery Address
+                    Pickup Address
                   </label>
                   <input
                     type="text"

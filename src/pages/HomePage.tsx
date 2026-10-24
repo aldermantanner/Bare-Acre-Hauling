@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Star, CheckCircle, Shield, Truck, Phone, Facebook, Trash2, Home, Package, Leaf, Wrench, Building2, Archive } from 'lucide-react';
+import { Star, CheckCircle, Shield, Truck, Phone, Facebook, Trash2, Home, Package, Leaf, Wrench, Building2, Archive, MapPin } from 'lucide-react';
 import { Testimonials } from '../components/Testimonials';
 import { FAQ } from '../components/FAQ';
 import { ServiceArea } from '../components/ServiceArea';
@@ -185,10 +185,10 @@ export function HomePage() {
             </div>
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-100 rounded-full mb-3">
-                <Star className="h-8 w-8 text-yellow-600 fill-yellow-600" />
+                <MapPin className="h-8 w-8 text-yellow-600" />
               </div>
-              <div className="font-bold text-slate-800 text-lg">5-Star Service</div>
-              <div className="text-sm text-gray-500">Trusted Locally</div>
+              <div className="font-bold text-slate-800 text-lg">Molalla Based</div>
+              <div className="text-sm text-gray-500">Local junk removal</div>
             </div>
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-3">
@@ -415,7 +415,7 @@ export function HomePage() {
                 <Shield className="h-10 w-10 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold text-slate-800 mb-3">Local & Trusted</h3>
-              <p className="text-gray-600">Serving Molalla and Clackamas County with a reputation built on real reviews.</p>
+              <p className="text-gray-600">Local, veteran-owned junk removal out of Molalla, serving Clackamas County.</p>
             </div>
           </div>
 
@@ -423,7 +423,7 @@ export function HomePage() {
           <div className="rounded-2xl overflow-hidden shadow-2xl">
             <img
               src="/gavin-loading.jpg"
-              alt="Bare Acre Hauling crew loading furniture and appliances onto trailer"
+              alt="Bare Acre Hauling crew loading furniture and appliances"
               className="w-full object-cover object-center"
               style={{ maxHeight: '520px' }}
               loading="lazy"

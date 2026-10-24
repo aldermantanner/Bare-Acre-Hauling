@@ -82,7 +82,7 @@ Deno.serve(async (req: Request) => {
       refundPercentage = 0.5;
       refundReason = "12-24 hours notice: 50% refund (minus deposit)";
     } else {
-      throw new Error("No refund available: Less than 12 hours before rental start time");
+      throw new Error("No refund available: Less than 12 hours before the scheduled start time");
     }
 
     const baseAmount = booking.total_price - (booking.deposit_amount || 0);
