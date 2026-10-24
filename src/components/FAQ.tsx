@@ -49,7 +49,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'What payment methods do you accept?',
-    answer: 'Payment is collected through Jobber when the job is done, at the price you approved before we started.'
+    answer: 'We accept cash or card. Payment is collected when the job is done, at the price you approved before we started.'
   },
   {
     question: 'Are you veteran owned?',

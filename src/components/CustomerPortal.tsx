@@ -571,7 +571,7 @@ export function CustomerPortal() {
             <p>Are you sure you want to cancel this booking?</p>
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm">
               <p className="text-yellow-900">
-                Call or text 503-874-3705, or email BareAcreHauling@outlook.com, and we will cancel or reschedule the job. Payment for completed work is collected through Jobber at the price you approved.
+                Call or text 503-874-3705, or email BareAcreHauling@outlook.com, and we will cancel or reschedule the job. We accept cash or card. Payment is collected when the job is done, at the price you approved before we started. Card payments and invoices may be handled through Jobber.
               </p>
             </div>
           </div>

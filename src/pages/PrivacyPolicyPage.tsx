@@ -89,7 +89,7 @@ export function PrivacyPolicyPage() {
               3. Jobber
             </h2>
             <p className="text-gray-600">
-              We use Jobber to run the business: customer records, quotes, scheduling, invoices, and payments. When you use Book Now or pay an invoice, the details needed for that job are handled in Jobber. Jobber has its own privacy practices. We use it to do the work, not to sell your information. Payment card details, if you pay by card, are handled by Jobber. We do not store them on this website.
+              We accept cash or card only. Payment is collected when the job is done, at the price you approved before we started. We use Jobber for customer records, quotes, scheduling, and invoices. Card payments and invoices may be handled through Jobber. Cash is paid to us directly. When you book online, or when a card payment or invoice goes through Jobber, the details needed for that job are handled in Jobber. Jobber has its own privacy practices. We use it to run the job, not to sell your information. We do not store payment card numbers on this website.
             </p>
           </section>
 
@@ -103,7 +103,7 @@ export function PrivacyPolicyPage() {
             <ul className="space-y-3 text-gray-600">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>
-                <span><strong className="text-slate-700">Jobber,</strong> so we can quote, schedule, invoice, and take payment.</span>
+                <span><strong className="text-slate-700">Jobber,</strong> for quotes, scheduling, invoices, and card payments that go through Jobber.</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2.5 flex-shrink-0"></span>

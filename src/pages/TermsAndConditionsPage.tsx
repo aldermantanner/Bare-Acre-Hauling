@@ -167,7 +167,7 @@ export function TermsAndConditionsPage() {
               7. Payment
             </h2>
             <p className="text-gray-600">
-              You pay through Jobber when the job is complete, at the price you approved before we started. We do not take payment card numbers on this website.
+              We accept cash or card only. Payment is collected when the job is done, at the price you approved before we started. Card payments and invoices may be handled through Jobber. We do not take payment card numbers on this website.
             </p>
           </section>
 

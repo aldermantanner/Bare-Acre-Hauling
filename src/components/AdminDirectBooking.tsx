@@ -33,7 +33,7 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
     notes: '',
     total_price: 0,
     deposit_amount: 50,
-    payment_method: 'jobber' as 'cash' | 'card' | 'jobber' | '',
+    payment_method: 'card' as 'cash' | 'card' | '',
   });
 
   const [files, setFiles] = useState<{
@@ -436,7 +436,6 @@ export function AdminDirectBooking({ onClose, onSuccess }: AdminDirectBookingPro
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                   >
                     <option value="">Select payment method</option>
-                    <option value="jobber">Jobber</option>
                     <option value="cash">Cash</option>
                     <option value="card">Card</option>
                   </select>
