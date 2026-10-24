@@ -62,8 +62,8 @@ export function AdminBookings() {
 
     const confirmMessages: Record<string, string> = {
       confirmed: `Approve and confirm booking for ${booking.customer_name}?`,
-      active: `Mark rental as ACTIVE for ${booking.customer_name}? (Customer currently has the trailer)`,
-      overdue: `Mark rental as OVERDUE for ${booking.customer_name}? Customer will be notified.`,
+      active: `Mark the junk removal as in progress for ${booking.customer_name}?`,
+      overdue: `Mark this job as needing a follow-up for ${booking.customer_name}?`,
       completed: `Mark booking for ${booking.customer_name} as completed?`,
       cancelled: `Cancel booking for ${booking.customer_name}? This cannot be undone.`,
       pending: `Move booking back to pending?`,

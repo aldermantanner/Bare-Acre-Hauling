@@ -259,7 +259,7 @@ export function BookingForm() {
         </h3>
         <p className="text-green-800 mb-6">
           {awaitingApproval
-            ? "Thank you for submitting your junk removal request with photos! We'll review your photos, send you a detailed quote via email, and provide payment instructions within 24 hours."
+            ? "Thank you for submitting your junk removal request with photos! We'll review your photos and send you a detailed quote via email. We accept cash or card. Payment is collected when the job is done, at the price you approved before we started."
             : "Thank you for your interest! Click below to complete your booking on our secure scheduling system."}
         </p>
         {!awaitingApproval && (
@@ -426,7 +426,7 @@ export function BookingForm() {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">Photos (Optional)</label>
           <p className="text-sm text-gray-600 mb-3">
-            Upload photos to help us provide an accurate quote. Your booking will be reviewed and you'll receive an invoice with payment instructions.
+            Upload photos to help us provide an accurate quote. We accept cash or card. Payment is collected when the job is done, at the price you approved before we started. Card payments and invoices may be handled through Jobber.
           </p>
           <div className="space-y-3">
             <input

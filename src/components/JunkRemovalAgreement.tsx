@@ -48,7 +48,7 @@ export default function JunkRemovalAgreement({ bookingData, onComplete, onCancel
               <FileText className="h-8 w-8" />
               <div>
                 <h2 className="text-2xl font-bold">Junk Removal Agreement</h2>
-                <p className="text-slate-200 text-sm">You Fill, We Dump Package</p>
+                <p className="text-slate-200 text-sm">Junk removal service</p>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@ export default function JunkRemovalAgreement({ bookingData, onComplete, onCancel
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">1. Prohibited Materials</h4>
                   <p className="text-sm text-gray-800 mb-2">
-                    You agree that you will <strong>NOT</strong> place any of the following hazardous or prohibited materials in the trailer:
+                    You agree that the load will <strong>NOT</strong> include any of the following hazardous or prohibited materials:
                   </p>
                   <ul className="space-y-1 text-sm text-gray-800">
                     <li className="flex items-center gap-2">
@@ -123,11 +123,10 @@ export default function JunkRemovalAgreement({ bookingData, onComplete, onCancel
                     You understand and agree that you are <strong>fully responsible and liable</strong> for any and all damages, costs, fines, penalties, or expenses incurred by Bare Acre Hauling as a result of:
                   </p>
                   <ul className="list-disc list-inside text-sm text-gray-800 mt-2 space-y-1 ml-4">
-                    <li>Placing prohibited or hazardous materials in the trailer</li>
+                    <li>Including prohibited or hazardous materials in the load</li>
                     <li>Disposal facility rejection fees or special handling charges</li>
                     <li>Regulatory fines or penalties assessed due to prohibited materials</li>
-                    <li>Cleanup costs for contaminated trailers or disposal sites</li>
-                    <li>Damage to the trailer caused by prohibited materials</li>
+                    <li>Cleanup costs if a disposal site is contaminated by those materials</li>
                     <li>Any legal fees or costs associated with improper disposal</li>
                   </ul>
                 </div>
@@ -135,14 +134,14 @@ export default function JunkRemovalAgreement({ bookingData, onComplete, onCancel
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">3. Inspection Rights</h4>
                   <p className="text-sm text-gray-800">
-                    Bare Acre Hauling reserves the right to inspect the trailer contents before removal. If prohibited materials are found, we may refuse to haul the load until such materials are removed at your expense, or we may charge additional fees for special handling and disposal.
+                    Bare Acre Hauling may look over the load before hauling it. If we find something we cannot take, we can decline that item or the load and leave it with you.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">4. Additional Charges</h4>
                   <p className="text-sm text-gray-800">
-                    If prohibited materials are discovered after pickup, you agree to pay all additional costs including but not limited to: special disposal fees, contamination cleanup, trailer decontamination, regulatory fines, and administrative fees. A minimum charge of <strong>$500</strong> will be assessed for any prohibited material violations, in addition to actual costs incurred.
+                    If prohibited materials are discovered after pickup, you agree to pay the actual extra costs that result, such as special disposal fees, contamination cleanup, regulatory fines, and related costs. We would rather decline the item before it is loaded.
                   </p>
                 </div>
               </div>
@@ -157,7 +156,7 @@ export default function JunkRemovalAgreement({ bookingData, onComplete, onCancel
                   className="mt-1 h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <span className="text-sm text-gray-800">
-                  <strong>I have read and understand the above agreement.</strong> I agree that I will not place any prohibited or hazardous materials in the trailer, and I accept full responsibility and liability for any damages, costs, fines, or penalties resulting from my violation of this agreement.
+                  <strong>I have read and understand the above agreement.</strong> I agree the load will not include prohibited or hazardous materials, I own the items or have permission to dispose of them, and I will point out anything that must not be removed.
                 </span>
               </label>
             </div>

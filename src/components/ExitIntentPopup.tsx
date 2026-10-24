@@ -126,16 +126,16 @@ export function ExitIntentPopup({ onBookClick }: ExitIntentPopupProps) {
         <div className="mt-6 pt-6 border-t border-gray-200">
           <div className="grid grid-cols-3 gap-4 text-center text-sm">
             <div>
-              <div className="font-bold text-slate-800">500+</div>
-              <div className="text-gray-600">Happy Customers</div>
+              <div className="font-bold text-slate-800">Veteran</div>
+              <div className="text-gray-600">Owned</div>
             </div>
             <div>
-              <div className="font-bold text-slate-800">5.0★</div>
-              <div className="text-gray-600">Rating</div>
+              <div className="font-bold text-slate-800">Molalla</div>
+              <div className="text-gray-600">Oregon</div>
             </div>
             <div>
               <div className="font-bold text-slate-800">Same Day</div>
-              <div className="text-gray-600">Available</div>
+              <div className="text-gray-600">Often available</div>
             </div>
           </div>
         </div>

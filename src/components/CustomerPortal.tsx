@@ -491,8 +491,7 @@ export function CustomerPortal() {
                 {booking.status === 'confirmed' && (
                   <div className="bg-green-50 px-4 sm:px-6 py-3 sm:py-4 border-t border-green-100">
                     <p className="text-sm sm:text-base text-green-800 font-medium">
-                      Your booking is confirmed! We'll contact you at {booking.customer_phone} with delivery
-                      details.
+                      Your booking is confirmed! We'll contact you at {booking.customer_phone} to confirm your pickup.
                     </p>
                   </div>
                 )}
@@ -523,12 +522,12 @@ export function CustomerPortal() {
                         ) : (
                           <>
                             <XCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-                            <span>Cancel Booking & Request Refund</span>
+                            <span>Request Cancellation</span>
                           </>
                         )}
                       </button>
                       <p className="text-xs text-gray-600 mt-2 text-center">
-                        Refund amount varies by timing. See service agreement for details.
+                        Call or text 503-874-3705 if you need to cancel or reschedule.
                       </p>
                     </div>
                   )}
@@ -566,24 +565,18 @@ export function CustomerPortal() {
           handleRefund();
           setConfirmDialog({ isOpen: false, bookingId: null });
         }}
-        title="Cancel Booking & Request Refund"
+        title="Request a cancellation"
         message={
           <div className="space-y-3">
             <p>Are you sure you want to cancel this booking?</p>
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm">
-              <p className="font-semibold text-yellow-900 mb-2">Refund Policy:</p>
-              <ul className="space-y-1 text-yellow-800">
-                <li>• More than 24 hours: 100% refund (minus $50 deposit)</li>
-                <li>• 12-24 hours: 50% refund (minus $50 deposit)</li>
-                <li>• Less than 12 hours: NO REFUND</li>
-              </ul>
-              <p className="mt-2 text-yellow-900 font-semibold">
-                The $50 deposit is non-refundable upon cancellation.
+              <p className="text-yellow-900">
+                Call or text 503-874-3705, or email BareAcreHauling@outlook.com, and we will cancel or reschedule the job. We accept cash or card. Payment is collected when the job is done, at the price you approved before we started. Card payments and invoices may be handled through Jobber.
               </p>
             </div>
           </div>
         }
-        confirmText="Cancel & Refund"
+        confirmText="Request Cancellation"
         confirmButtonClass="bg-red-600 hover:bg-red-700"
       />
     </section>
