@@ -2,7 +2,9 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Layout } from './components/Layout';
+import { GoogleAdsCallTracking } from './components/GoogleAdsCallTracking';
 import { HomePage } from './pages/HomePage';
+import { ThankYouPage } from './pages/ThankYouPage';
 import { ToastProvider } from './components/Toast';
 
 function ScrollToTop() {
@@ -61,6 +63,7 @@ function App() {
       <ToastProvider>
         <BrowserRouter>
           <ScrollToTop />
+          <GoogleAdsCallTracking />
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/ad" element={<AdCampaignPage />} />
@@ -74,6 +77,8 @@ function App() {
               <Route path="/admin" element={<Layout><AdminPage /></Layout>} />
               <Route path="/privacypolicy" element={<Layout><PrivacyPolicyPage /></Layout>} />
               <Route path="/termsandconditions" element={<Layout><TermsAndConditionsPage /></Layout>} />
+              <Route path="/thank-you" element={<Layout><ThankYouPage /></Layout>} />
+              <Route path="/thank-you/" element={<Layout><ThankYouPage /></Layout>} />
               <Route path="/availability" element={<Navigate to="/" replace />} />
               <Route path="/specifications" element={<Navigate to="/" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />

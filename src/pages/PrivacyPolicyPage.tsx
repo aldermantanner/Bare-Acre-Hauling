@@ -24,7 +24,7 @@ export function PrivacyPolicyPage() {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Privacy Policy</h1>
-              <p className="text-slate-300 mt-1">Last updated: October 24, 2026</p>
+              <p className="text-slate-300 mt-1">Last updated: October 25, 2026</p>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@ export function PrivacyPolicyPage() {
               5. Cookies and ads
             </h2>
             <p className="text-gray-600 mb-4">
-              This site loads Google's tag (gtag.js) for Google Ads, using conversion ID AW-17076418361. Google may set cookies or similar identifiers to tell which visits came from our ads and to measure conversions. The site code does not load a separate Google Analytics property.
+              This site loads Google's tag (gtag.js) for Google Ads, using conversion IDs AW-18481474642 and AW-17076418361. Google may set cookies or similar identifiers to tell which visits came from our ads and to measure conversions. The site code does not load a separate Google Analytics property.
             </p>
             <p className="text-gray-600">
               You can block or delete cookies in your browser. The site also stores a timestamp in your browser so the exit offer is not shown again for about a week. That timestamp stays on your device. It is not a customer account.
