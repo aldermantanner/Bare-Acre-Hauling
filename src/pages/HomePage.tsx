@@ -106,7 +106,7 @@ export function HomePage() {
                 </div>
                 <div className="bg-yellow-400 text-slate-900 px-4 py-3 rounded-lg inline-flex items-center gap-2 font-bold shadow-lg w-fit">
                   <Star className="h-5 w-5 fill-slate-900" />
-                  <span>New customers save $10 with code FIRST10</span>
+                  <span>First-time customers get 10% off.</span>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
