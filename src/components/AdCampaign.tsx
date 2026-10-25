@@ -26,7 +26,7 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
               className="bg-green-600 text-white px-10 py-5 rounded-xl text-xl font-bold hover:bg-green-700 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3"
             >
               <Calendar className="h-6 w-6" />
-              Book Now - Get 10% Off
+              Book Now
             </button>
             <a
               href="tel:503-874-3705"
@@ -37,7 +37,7 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
             </a>
           </div>
           <p className="text-gray-600 text-lg">
-            <span className="font-bold text-green-600">Limited Time Offer:</span> Book online and save 10% on your first junk removal
+            First-time customers get 10% off.
           </p>
         </div>
 
@@ -128,7 +128,7 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
         <div className="mt-16 text-center">
           <h2 className="text-4xl font-extrabold text-slate-900 mb-6">Ready to Get Started?</h2>
           <p className="text-2xl text-gray-700 mb-8">
-            Book online now and save 10% on your first junk removal
+            First-time customers get 10% off.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -136,7 +136,7 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
               className="bg-green-600 text-white px-12 py-6 rounded-xl text-2xl font-bold hover:bg-green-700 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3"
             >
               <Calendar className="h-7 w-7" />
-              Book Now & Save 10%
+              Book Now
             </button>
             <a
               href="tel:503-874-3705"
