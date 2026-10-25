@@ -10,7 +10,6 @@ import { ServiceSchema } from '../components/ServiceSchema';
 import { ReviewSchema } from '../components/ReviewSchema';
 import { BreadcrumbSchema } from '../components/BreadcrumbSchema';
 import { LocalSEOContent } from '../components/LocalSEOContent';
-import { ExitIntentPopup } from '../components/ExitIntentPopup';
 import { ChatWidget } from '../components/ChatWidget';
 
 const services = [
@@ -446,7 +445,6 @@ export function HomePage() {
       </div>
 
       <ChatWidget />
-      <ExitIntentPopup onBookClick={() => {}} />
     </div>
   );
 }
