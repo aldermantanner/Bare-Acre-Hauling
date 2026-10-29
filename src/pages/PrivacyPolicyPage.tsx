@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, ArrowLeft } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead';
 
 export function PrivacyPolicyPage() {
   useEffect(() => {
@@ -9,6 +10,11 @@ export function PrivacyPolicyPage() {
 
   return (
     <div className="bg-white">
+      <SEOHead
+        title="Privacy Policy | Bare Acre Hauling"
+        description="Privacy policy for Bare Acre Hauling in Molalla, OR."
+        canonical="https://bareacrehauling.com/privacypolicy"
+      />
       <div className="bg-slate-800 py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <Link

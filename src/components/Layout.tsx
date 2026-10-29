@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, Menu, X, Facebook, Lock, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { Phone, Menu, X, Facebook, Mail, MapPin, MessageSquare } from 'lucide-react';
 import { Logo } from './Logo';
+import { LocalBusinessSchema } from './LocalBusinessSchema';
+import { HoursNote } from './HoursNote';
+import { TOWN_PAGES, townPath } from '../data/towns';
 import { JOBBER_REQUEST_URL, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -13,19 +16,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <LocalBusinessSchema />
       <header className="bg-slate-800 shadow-lg sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-5">
           <div className="flex items-center justify-between gap-12">
             <div className="flex items-center gap-12">
-              <Link
-                to="/admin"
-                onClick={() => window.scrollTo(0, 0)}
-                className="hidden lg:flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
-              >
-                <Lock className="h-4 w-4" />
-                <span>Admin</span>
-              </Link>
-
               <a
                 href="/"
                 onClick={(e) => {
@@ -152,14 +147,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {mobileMenuOpen && (
             <div className="lg:hidden mt-6 pb-4 border-t border-slate-700 pt-6">
               <div className="flex flex-col space-y-4">
-                <Link
-                  to="/admin"
-                  onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }}
-                  className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors py-2 text-sm"
-                >
-                  <Lock className="h-4 w-4" />
-                  Admin Portal
-                </Link>
                 <a
                   href="/#services"
                   onClick={(e) => {
@@ -242,6 +229,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <h3 className="font-semibold text-lg mb-2">Call or Text</h3>
                   <a href={PHONE_TEL_HREF} className="hover:text-green-400 transition-colors text-xl font-semibold">{PHONE_DISPLAY}</a>
                   <a href={PHONE_SMS_HREF} className="block mt-1 text-green-300 hover:text-green-200 font-medium">Text a photo for a quote</a>
+                  <div className="mt-3">
+                    <HoursNote tone="on-dark" />
+                  </div>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -254,15 +244,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <div className="flex items-start space-x-4">
                 <MapPin className="h-6 w-6 mt-1 flex-shrink-0 text-green-400" />
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Service Area</h3>
+                  <h3 className="font-semibold text-lg mb-2">Based in</h3>
                   <p>Molalla, OR<br />& Surrounding Areas</p>
                 </div>
               </div>
             </div>
             <div className="mt-12 pt-8 border-t border-slate-600">
               <p className="text-lg font-semibold mb-4">Clackamas County & Surrounding Areas</p>
-              <p className="text-2xl font-bold text-green-400 mb-2">Call or Text: {PHONE_DISPLAY}</p>
-              <p className="opacity-90">Professional junk removal — we haul it all so you don't have to</p>
+              <p className="text-2xl font-bold text-green-400 mb-2">
+                <a href={PHONE_TEL_HREF} className="hover:text-green-300">Call or Text: {PHONE_DISPLAY}</a>
+              </p>
+              <div className="flex justify-center">
+                <HoursNote tone="on-dark" />
+              </div>
             </div>
           </div>
         </section>
@@ -281,7 +275,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Logo className="h-10 w-10 object-contain" loading="lazy" />
             <span className="text-xl font-bold text-white">Bare Acre Hauling</span>
           </a>
-          <p className="mb-4">Veteran Owned & Operated</p>
+          <p className="mb-2">Veteran Owned & Operated</p>
+          <p className="mb-2 text-white">Molalla, OR</p>
+          <p className="mb-4">
+            <a href={PHONE_TEL_HREF} className="text-lg font-semibold text-green-400 hover:text-green-300">
+              {PHONE_DISPLAY}
+            </a>
+          </p>
+          <div className="mx-auto mb-6 max-w-md">
+            <HoursNote tone="on-dark" />
+          </div>
+
+          <nav aria-label="Service areas" className="mb-6">
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">Service Areas</h2>
+            <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
+              <li>
+                <Link to="/" className="text-gray-300 hover:text-white">Molalla</Link>
+              </li>
+              {TOWN_PAGES.map((town) => (
+                <li key={town.slug}>
+                  <Link to={townPath(town.slug)} onClick={() => window.scrollTo(0, 0)} className="text-gray-300 hover:text-white">
+                    {town.city}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <div className="flex items-center justify-center gap-6 mb-6">
             <a

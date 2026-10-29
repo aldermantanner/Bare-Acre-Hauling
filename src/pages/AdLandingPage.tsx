@@ -4,7 +4,9 @@ import { SEOHead } from '../components/SEOHead';
 import { TESTIMONIALS } from '../data/testimonials';
 import { Logo } from '../components/Logo';
 import { QuoteActions } from '../components/QuoteActions';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '../lib/contact';
+import { HoursNote } from '../components/HoursNote';
+import { LocalBusinessSchema } from '../components/LocalBusinessSchema';
+import { PHONE_DISPLAY, PHONE_TEL_HREF, QUOTE_REQUESTS_ANYTIME } from '../lib/contact';
 
 const HAUL_ITEMS = [
   'Furniture',
@@ -80,6 +82,7 @@ export function AdLandingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-slate-800">
+      <LocalBusinessSchema />
       <SEOHead
         title="Junk removal in Clackamas County | Bare Acre Hauling"
         description="Veteran-owned junk removal based in Molalla. Call 503-874-3705 or request a quote. Serving Clackamas County and the Salem area."
@@ -136,6 +139,10 @@ export function AdLandingPage() {
           <div className="max-w-3xl mx-auto mt-6 space-y-2 text-center text-slate-700">
             <p>First-time customers get 10% off.</p>
             <p>Veterans, first responders, and police get 10% off.</p>
+            <div className="pt-2">
+              <HoursNote />
+              <p className="mt-2 text-sm text-slate-600">{QUOTE_REQUESTS_ANYTIME}</p>
+            </div>
           </div>
         </section>
 
@@ -210,6 +217,21 @@ export function AdLandingPage() {
           </div>
         </section>
       </main>
+      <footer className="bg-slate-900 px-4 py-8 text-center text-sm text-slate-300">
+        <p className="font-semibold text-white">Bare Acre Hauling</p>
+        <p className="mt-1">Molalla, OR</p>
+        <p className="mt-2">
+          <a href={PHONE_TEL_HREF} className="text-lg font-bold text-green-400">{PHONE_DISPLAY}</a>
+        </p>
+        <div className="mx-auto mt-3 max-w-md">
+          <HoursNote tone="on-dark" />
+        </div>
+        <p className="mt-4">
+          <a href="/privacypolicy" className="underline underline-offset-2 hover:text-white">Privacy Policy</a>
+          <span className="mx-2 text-slate-500">|</span>
+          <a href="/termsandconditions" className="underline underline-offset-2 hover:text-white">Terms & Conditions</a>
+        </p>
+      </footer>
     </div>
   );
 }

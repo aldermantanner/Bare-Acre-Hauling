@@ -1,1 +1,12 @@
-/*    /index.html   200
+/junk-removal-pricing   /pricing               301
+/availability           /                      301
+/specifications         /                      301
+/privacy                /privacypolicy         301
+/terms                  /termsandconditions    301
+/admin                  /index.html            200
+/admin/*                /index.html            200
+/mybookings             /index.html            200
+/success                /index.html            200
+/thank-you              /index.html            200
+/thank-you/             /index.html            200
+/ad                     /index.html            200

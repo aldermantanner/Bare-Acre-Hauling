@@ -30,8 +30,8 @@ export function LocalBusinessSchema() {
         "dayOfWeek": [
           "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
         ],
-        "opens": "00:00",
-        "closes": "23:59"
+        "opens": "07:00",
+        "closes": "20:00"
       },
       "sameAs": [
         "https://www.facebook.com/bareacrehauling"
@@ -109,13 +109,16 @@ export function LocalBusinessSchema() {
       }
     };
 
+    const id = 'local-business-schema';
+    document.getElementById(id)?.remove();
     const script = document.createElement('script');
     script.type = 'application/ld+json';
+    script.id = id;
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script);
+      document.getElementById(id)?.remove();
     };
   }, []);
 

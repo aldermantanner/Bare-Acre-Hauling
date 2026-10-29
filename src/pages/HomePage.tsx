@@ -4,8 +4,8 @@ import { Testimonials } from '../components/Testimonials';
 import { FAQ } from '../components/FAQ';
 import { ServiceArea } from '../components/ServiceArea';
 import { SocialProof } from '../components/SocialProof';
-import { LocalBusinessSchema } from '../components/LocalBusinessSchema';
 import { FAQSchema } from '../components/FAQSchema';
+import { SEOHead } from '../components/SEOHead';
 import { ServiceSchema } from '../components/ServiceSchema';
 import { ReviewSchema } from '../components/ReviewSchema';
 import { BreadcrumbSchema } from '../components/BreadcrumbSchema';
@@ -77,7 +77,11 @@ const services = [
 export function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <LocalBusinessSchema />
+      <SEOHead
+        title="Bare Acre Hauling | Junk Removal in Molalla, OR"
+        description="Veteran-owned junk removal in Molalla, OR. Text a photo for a quote. Jobs start at $150. You approve the price before we load. Open 7:00 AM to 8:00 PM every day. Call 503-874-3705."
+        canonical="https://bareacrehauling.com/"
+      />
       <FAQSchema />
       <ServiceSchema />
       <ReviewSchema />

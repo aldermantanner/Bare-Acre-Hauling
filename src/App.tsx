@@ -6,6 +6,9 @@ import { GoogleAdsCallTracking } from './components/GoogleAdsCallTracking';
 import { MobileQuoteBar } from './components/MobileQuoteBar';
 import { HomePage } from './pages/HomePage';
 import { ThankYouPage } from './pages/ThankYouPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { TownServicePage } from './pages/TownServicePage';
+import { TOWN_PAGES } from './data/towns';
 import { ToastProvider } from './components/Toast';
 
 function ScrollToTop() {
@@ -73,6 +76,13 @@ function App() {
               <Route path="/" element={<Layout><HomePage /></Layout>} />
               <Route path="/booking" element={<Layout><BookingPage /></Layout>} />
               <Route path="/pricing" element={<Layout><PricingPage /></Layout>} />
+              {TOWN_PAGES.map((town) => (
+                <Route
+                  key={town.slug}
+                  path={`/${town.slug}`}
+                  element={<Layout><TownServicePage town={town} /></Layout>}
+                />
+              ))}
               <Route path="/junk-removal-pricing" element={<Navigate to="/pricing" replace />} />
               <Route path="/mybookings" element={<Layout><CustomerPortalPage /></Layout>} />
               <Route path="/admin" element={<Layout><AdminPage /></Layout>} />
@@ -82,7 +92,7 @@ function App() {
               <Route path="/thank-you/" element={<Layout><ThankYouPage /></Layout>} />
               <Route path="/availability" element={<Navigate to="/" replace />} />
               <Route path="/specifications" element={<Navigate to="/" replace />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
             </Routes>
           </Suspense>
           <MobileQuoteBar />

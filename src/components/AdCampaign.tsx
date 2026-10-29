@@ -1,6 +1,7 @@
 import { Truck, Star, Shield, Clock, Trash2 } from 'lucide-react';
 import { QuoteActions } from './QuoteActions';
-import { MINIMUM_PRICE_NOTE } from '../lib/contact';
+import { HoursNote } from './HoursNote';
+import { MINIMUM_PRICE_NOTE, QUOTE_REQUESTS_ANYTIME } from '../lib/contact';
 
 export function AdCampaign() {
   return (
@@ -98,9 +99,13 @@ export function AdCampaign() {
               <p className="text-xl text-gray-300">Service Available</p>
             </div>
             <div>
-              <div className="text-5xl font-extrabold text-green-400 mb-2">24/7</div>
-              <p className="text-xl text-gray-300">Online Booking</p>
+              <div className="text-3xl font-extrabold text-green-400 mb-2 md:text-4xl">7:00 AM–8:00 PM</div>
+              <p className="text-xl text-gray-300">Every day</p>
             </div>
+          </div>
+          <div className="mx-auto mt-8 max-w-xl text-gray-200">
+            <HoursNote tone="on-dark" />
+            <p className="mt-3 text-lg">{QUOTE_REQUESTS_ANYTIME}</p>
           </div>
         </div>
 

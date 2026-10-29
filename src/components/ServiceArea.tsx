@@ -1,12 +1,14 @@
-import { MapPin, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, CheckCircle, Clock } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
+import { HoursNote } from './HoursNote';
 import { InteractiveMap } from './InteractiveMap';
 
 export function ServiceArea() {
-  const serviceAreas = [
-    { name: 'Molalla', featured: true },
-    { name: 'Canby', featured: true },
-    { name: 'Oregon City', featured: true },
+  const serviceAreas: { name: string; featured: boolean; to?: string }[] = [
+    { name: 'Molalla', featured: true, to: '/' },
+    { name: 'Canby', featured: true, to: '/junk-removal-canby' },
+    { name: 'Oregon City', featured: true, to: '/junk-removal-oregon-city' },
     { name: 'Woodburn', featured: false },
     { name: 'Silverton', featured: false },
     { name: 'Estacada', featured: false },
@@ -16,8 +18,8 @@ export function ServiceArea() {
     { name: 'Gladstone', featured: false },
     { name: 'Milwaukie', featured: false },
     { name: 'Sandy', featured: false },
-    { name: 'Salem', featured: false },
-    { name: 'Keizer', featured: false }
+    { name: 'Salem', featured: false, to: '/junk-removal-salem' },
+    { name: 'Keizer', featured: false, to: '/junk-removal-keizer' }
   ];
 
   return (
@@ -41,10 +43,14 @@ export function ServiceArea() {
               <div className="grid grid-cols-2 gap-3">
                 {serviceAreas
                   .filter((area) => area.featured)
-                  .map((area, index) => (
-                    <div key={index} className="flex items-center gap-2">
+                  .map((area) => (
+                    <div key={area.name} className="flex items-center gap-2">
                       <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      <span className="font-semibold text-slate-800">{area.name}</span>
+                      {area.to ? (
+                        <Link to={area.to} className="font-semibold text-slate-800 underline-offset-2 hover:underline">{area.name}</Link>
+                      ) : (
+                        <span className="font-semibold text-slate-800">{area.name}</span>
+                      )}
                     </div>
                   ))}
               </div>
@@ -55,10 +61,14 @@ export function ServiceArea() {
               <div className="grid grid-cols-2 gap-3">
                 {serviceAreas
                   .filter((area) => !area.featured)
-                  .map((area, index) => (
-                    <div key={index} className="flex items-center gap-2">
+                  .map((area) => (
+                    <div key={area.name} className="flex items-center gap-2">
                       <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      <span className="text-gray-700">{area.name}</span>
+                      {area.to ? (
+                        <Link to={area.to} className="text-gray-700 underline-offset-2 hover:underline">{area.name}</Link>
+                      ) : (
+                        <span className="text-gray-700">{area.name}</span>
+                      )}
                     </div>
                   ))}
               </div>
@@ -114,11 +124,21 @@ export function ServiceArea() {
 
                   <div className="flex items-start gap-3">
                     <div className="bg-green-100 rounded-full p-2 flex-shrink-0">
+                      <Clock className="h-5 w-5 text-green-600" />
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-slate-800 text-sm mb-1">Hours</h5>
+                      <HoursNote />
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="bg-green-100 rounded-full p-2 flex-shrink-0">
                       <CheckCircle className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
                       <h5 className="font-semibold text-slate-800 text-sm mb-1">Same-Day Available</h5>
-                      <p className="text-gray-600 text-sm">Call or text to check availability</p>
+                      <p className="text-gray-600 text-sm">Call or text during open hours to check today's schedule</p>
                     </div>
                   </div>
 

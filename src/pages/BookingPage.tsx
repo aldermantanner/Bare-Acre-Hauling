@@ -1,5 +1,6 @@
 import { SEOHead } from '../components/SEOHead';
 import { QuoteActions } from '../components/QuoteActions';
+import { HoursNote } from '../components/HoursNote';
 import { MINIMUM_PRICE_NOTE } from '../lib/contact';
 
 export function BookingPage() {
@@ -14,8 +15,11 @@ export function BookingPage() {
         <div className="mx-auto max-w-xl text-center text-white">
           <h1 className="text-3xl font-bold sm:text-4xl">Text a photo for a quote</h1>
           <p className="mt-4 text-lg leading-relaxed text-slate-200">
-            Send a picture of what you need hauled. We will reply with a price, and you approve it before we load.
+            Send a picture of what you need hauled. We'll reply the same day, usually within an hour, with a price you approve before we load.
           </p>
+          <div className="mt-4 flex justify-center">
+            <HoursNote tone="on-dark" />
+          </div>
           <p className="mt-4 text-lg font-semibold text-green-300">{MINIMUM_PRICE_NOTE}</p>
           <div className="mt-8">
             <QuoteActions tone="on-dark" align="center" />
