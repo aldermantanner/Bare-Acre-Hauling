@@ -29,7 +29,7 @@ export function ChatWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-green-600 text-white p-4 rounded-full shadow-2xl hover:bg-green-700 transition-all hover:scale-110 z-50 flex items-center gap-2 group"
+          className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-4 z-50 flex items-center gap-2 rounded-full bg-green-600 p-4 text-white shadow-2xl transition-all hover:scale-110 hover:bg-green-700 lg:bottom-6 lg:right-6 group"
           aria-label="Open chat"
         >
           <MessageCircle className="h-6 w-6" />
@@ -40,7 +40,7 @@ export function ChatWidget() {
       )}
 
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 max-w-[calc(100vw-3rem)] bg-white rounded-lg shadow-2xl z-50 flex flex-col max-h-[600px]">
+        <div className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-4 z-50 flex max-h-[min(600px,calc(100vh-8rem))] w-96 max-w-[calc(100vw-2rem)] flex-col rounded-lg bg-white shadow-2xl lg:bottom-6 lg:right-6">
           <div className="bg-green-600 text-white p-4 rounded-t-lg flex justify-between items-center">
             <div className="flex items-center gap-2">
               <MessageCircle className="h-5 w-5" />

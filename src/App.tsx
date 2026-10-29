@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { ErrorBoundary } from 'react-error-boundary';
 import { Layout } from './components/Layout';
 import { GoogleAdsCallTracking } from './components/GoogleAdsCallTracking';
+import { MobileQuoteBar } from './components/MobileQuoteBar';
 import { HomePage } from './pages/HomePage';
 import { ThankYouPage } from './pages/ThankYouPage';
 import { ToastProvider } from './components/Toast';
@@ -84,6 +85,7 @@ function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
+          <MobileQuoteBar />
         </BrowserRouter>
       </ToastProvider>
     </ErrorBoundary>

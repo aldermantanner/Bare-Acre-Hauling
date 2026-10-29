@@ -1,10 +1,8 @@
-import { Calendar, Phone, Truck, CheckCircle, ArrowRight, Star, Shield, Clock, Trash2 } from 'lucide-react';
+import { Truck, Star, Shield, Clock, Trash2 } from 'lucide-react';
+import { QuoteActions } from './QuoteActions';
+import { MINIMUM_PRICE_NOTE } from '../lib/contact';
 
-interface AdCampaignProps {
-  onBookNow: () => void;
-}
-
-export function AdCampaign({ onBookNow }: AdCampaignProps) {
+export function AdCampaign() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -18,23 +16,10 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
             <span className="text-green-600">We Show Up Today</span>
           </h1>
           <p className="text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
-            Professional junk removal starting at $150. Serving Molalla & surrounding areas with same-day service available.
+            {MINIMUM_PRICE_NOTE} Serving Molalla and surrounding areas, with same-day service often available.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <button
-              onClick={onBookNow}
-              className="bg-green-600 text-white px-10 py-5 rounded-xl text-xl font-bold hover:bg-green-700 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3"
-            >
-              <Calendar className="h-6 w-6" />
-              Book Now
-            </button>
-            <a
-              href="tel:503-874-3705"
-              className="bg-slate-800 text-white px-10 py-5 rounded-xl text-xl font-bold hover:bg-slate-700 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3"
-            >
-              <Phone className="h-6 w-6" />
-              Call: 503-874-3705
-            </a>
+          <div className="mb-6 flex justify-center">
+            <QuoteActions tone="on-light" align="center" />
           </div>
           <p className="text-gray-600 text-lg">
             First-time customers get 10% off.
@@ -92,14 +77,8 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
               </div>
             ))}
           </div>
-          <div className="p-8 bg-gray-50 text-center">
-            <button
-              onClick={onBookNow}
-              className="bg-green-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-2 text-lg"
-            >
-              Get a Free Quote
-              <ArrowRight className="h-5 w-5" />
-            </button>
+          <div className="flex justify-center bg-gray-50 p-8">
+            <QuoteActions tone="on-light" align="center" />
           </div>
         </div>
 
@@ -130,21 +109,8 @@ export function AdCampaign({ onBookNow }: AdCampaignProps) {
           <p className="text-2xl text-gray-700 mb-8">
             First-time customers get 10% off.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onBookNow}
-              className="bg-green-600 text-white px-12 py-6 rounded-xl text-2xl font-bold hover:bg-green-700 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3"
-            >
-              <Calendar className="h-7 w-7" />
-              Book Now
-            </button>
-            <a
-              href="tel:503-874-3705"
-              className="bg-white text-slate-800 border-4 border-slate-800 px-12 py-6 rounded-xl text-2xl font-bold hover:bg-slate-50 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3"
-            >
-              <Phone className="h-7 w-7" />
-              Call: 503-874-3705
-            </a>
+          <div className="flex justify-center">
+            <QuoteActions tone="on-light" align="center" />
           </div>
           <p className="mt-6 text-gray-600 text-lg">
             Serving Molalla, Canby, Oregon City, Woodburn, Silverton, Salem, Keizer & surrounding areas

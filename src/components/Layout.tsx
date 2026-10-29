@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, Menu, X, Facebook, Lock, Mail, MapPin } from 'lucide-react';
+import { Phone, Menu, X, Facebook, Lock, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { Logo } from './Logo';
+import { JOBBER_REQUEST_URL, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,16 +34,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 }}
                 className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
               >
-                <img
-                  src="/Bare_Arce_Hauling_high_res_PNG.png"
-                  alt="Bare Acre Hauling"
-                  className="h-10 sm:h-12 w-auto object-contain flex-shrink-0"
-                />
+                <Logo className="h-10 sm:h-12 w-10 sm:w-12 object-contain flex-shrink-0" />
                 <span className="text-lg sm:text-2xl font-bold text-white whitespace-nowrap">Bare Acre Hauling</span>
               </a>
             </div>
 
-            <div className="hidden lg:flex items-center gap-6 flex-1 justify-center">
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6 flex-1 justify-center">
               <a
                 href="/#services"
                 onClick={(e) => {
@@ -50,7 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   const el = document.getElementById('services');
                   el?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="text-gray-200 hover:text-green-400 transition-colors font-medium"
+                className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap"
               >
                 Services
               </a>
@@ -62,34 +60,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   const el = document.getElementById('reviews');
                   el?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="text-gray-200 hover:text-green-400 transition-colors font-medium"
+                className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap"
               >
                 Reviews
               </a>
-              <Link to="/pricing" onClick={() => window.scrollTo(0, 0)} className="text-gray-200 hover:text-green-400 transition-colors font-medium">Pricing</Link>
+              <Link to="/pricing" onClick={() => window.scrollTo(0, 0)} className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap">Pricing</Link>
               <a
                 href="https://clienthub.getjobber.com/client_hubs/935796ca-8da1-401b-a3dd-604659dcbf70/login/new?source=share_login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-200 hover:text-green-400 transition-colors font-medium"
+                className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap"
               >
                 My Bookings
               </a>
             </div>
 
             <div className="hidden lg:flex items-center gap-4">
-              <a href="tel:503-874-3705" className="text-white hover:text-green-400 transition-colors font-semibold flex items-center gap-2">
+              <a href={PHONE_TEL_HREF} className="text-white hover:text-green-400 transition-colors font-semibold flex items-center gap-2">
                 <Phone className="h-5 w-5" />
-                <span className="whitespace-nowrap">503-874-3705</span>
+                <span className="whitespace-nowrap">{PHONE_DISPLAY}</span>
               </a>
 
               <a
-                href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-all font-bold shadow-lg hover:shadow-xl whitespace-nowrap"
+                href={PHONE_SMS_HREF}
+                className="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition-all font-bold shadow-lg hover:shadow-xl whitespace-nowrap inline-flex items-center gap-2"
               >
-                Book Now
+                <MessageSquare className="h-5 w-5" aria-hidden="true" />
+                Text a photo
               </a>
 
               <div className="relative">
@@ -103,6 +100,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </button>
                 {resourcesOpen && (
                   <div className="absolute top-full mt-2 right-0 bg-white rounded-lg shadow-xl border border-gray-200 py-2 min-w-[220px] z-50">
+                    <a
+                      href={JOBBER_REQUEST_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setResourcesOpen(false)}
+                      className="block px-4 py-3 text-slate-700 hover:bg-green-50 hover:text-green-600 transition-colors font-medium"
+                    >
+                      Request a quote form
+                    </a>
                     <a
                       href="/#faq"
                       onClick={(e) => {
@@ -193,17 +199,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
                 <div className="flex flex-col gap-3 pt-6 border-t border-slate-700 mt-4">
                   <a
-                    href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
+                    href={PHONE_SMS_HREF}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="bg-green-600 text-white px-6 py-4 rounded-lg hover:bg-green-700 transition-colors font-bold text-center text-lg shadow-lg inline-flex items-center justify-center gap-2"
+                  >
+                    <MessageSquare className="h-5 w-5" aria-hidden="true" />
+                    Text a photo for a quote
+                  </a>
+                  <a href={PHONE_TEL_HREF} className="bg-slate-700 text-white px-6 py-4 rounded-lg hover:bg-slate-600 transition-colors font-bold text-center text-lg shadow-lg flex items-center justify-center gap-2">
+                    <Phone className="h-5 w-5" />
+                    Call {PHONE_DISPLAY}
+                  </a>
+                  <a
+                    href={JOBBER_REQUEST_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="bg-green-600 text-white px-6 py-4 rounded-lg hover:bg-green-700 transition-colors font-bold text-center text-lg shadow-lg"
+                    className="text-center text-sm text-slate-300 underline underline-offset-2"
                   >
-                    Book Now
-                  </a>
-                  <a href="tel:503-874-3705" className="bg-slate-700 text-white px-6 py-4 rounded-lg hover:bg-slate-600 transition-colors font-bold text-center text-lg shadow-lg flex items-center justify-center gap-2">
-                    <Phone className="h-5 w-5" />
-                    503-874-3705
+                    Or send a request form
                   </a>
                 </div>
               </div>
@@ -226,7 +240,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Phone className="h-6 w-6 mt-1 flex-shrink-0 text-green-400" />
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Call or Text</h3>
-                  <a href="tel:503-874-3705" className="hover:text-green-400 transition-colors text-xl font-semibold">503-874-3705</a>
+                  <a href={PHONE_TEL_HREF} className="hover:text-green-400 transition-colors text-xl font-semibold">{PHONE_DISPLAY}</a>
+                  <a href={PHONE_SMS_HREF} className="block mt-1 text-green-300 hover:text-green-200 font-medium">Text a photo for a quote</a>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -246,7 +261,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <div className="mt-12 pt-8 border-t border-slate-600">
               <p className="text-lg font-semibold mb-4">Clackamas County & Surrounding Areas</p>
-              <p className="text-2xl font-bold text-green-400 mb-2">Call or Text: 503-874-3705</p>
+              <p className="text-2xl font-bold text-green-400 mb-2">Call or Text: {PHONE_DISPLAY}</p>
               <p className="opacity-90">Professional junk removal — we haul it all so you don't have to</p>
             </div>
           </div>
@@ -263,11 +278,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             }}
             className="flex items-center justify-center space-x-2 mb-4 hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <img
-              src="/Bare_Arce_Hauling_high_res_PNG.png"
-              alt="Bare Acre Hauling"
-              className="h-10 w-auto object-contain"
-            />
+            <Logo className="h-10 w-10 object-contain" loading="lazy" />
             <span className="text-xl font-bold text-white">Bare Acre Hauling</span>
           </a>
           <p className="mb-4">Veteran Owned & Operated</p>

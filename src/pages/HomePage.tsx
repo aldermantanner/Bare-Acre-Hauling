@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Star, CheckCircle, Shield, Truck, Phone, Facebook, Trash2, Home, Package, Leaf, Wrench, Building2, Archive, MapPin } from 'lucide-react';
+import { Star, CheckCircle, Shield, Truck, Facebook, Trash2, Home, Package, Leaf, Wrench, Building2, Archive, MapPin } from 'lucide-react';
 import { Testimonials } from '../components/Testimonials';
 import { FAQ } from '../components/FAQ';
 import { ServiceArea } from '../components/ServiceArea';
@@ -11,6 +11,9 @@ import { ReviewSchema } from '../components/ReviewSchema';
 import { BreadcrumbSchema } from '../components/BreadcrumbSchema';
 import { LocalSEOContent } from '../components/LocalSEOContent';
 import { ChatWidget } from '../components/ChatWidget';
+import { Photo } from '../components/Photo';
+import { QuoteActions } from '../components/QuoteActions';
+import { MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
 
 const services = [
   {
@@ -81,84 +84,68 @@ export function HomePage() {
       <BreadcrumbSchema />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        </div>
-        <div className="max-w-7xl mx-auto relative">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                <span className="text-yellow-400 font-semibold">Veteran Owned & Operated</span>
+      <section className="bg-slate-800">
+        <div className="mx-auto grid max-w-7xl lg:grid-cols-2 lg:min-h-[640px]">
+          <div className="relative h-52 sm:h-72 lg:order-2 lg:h-auto lg:min-h-full">
+            <Photo
+              webp="/crew-loading.webp"
+              jpg="/crew-loading.jpg"
+              alt="Loading a refrigerator, mattress, and furniture onto the trailer"
+              width={1280}
+              height={853}
+              pictureClassName="absolute inset-0"
+              className="h-full w-full object-cover object-center"
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
+          <div className="flex flex-col justify-center py-6 pl-4 pr-20 sm:px-8 sm:py-10 lg:px-12 lg:py-16">
+            <div className="mb-4 flex items-center space-x-2">
+              <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+              <span className="font-semibold text-yellow-400">Veteran Owned & Operated</span>
+            </div>
+            <h1 className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+              We Take It<br />
+              <span className="text-green-400">From Here.</span>
+            </h1>
+            <p className="mb-3 text-base leading-relaxed text-gray-300 sm:mb-4 sm:text-xl">
+              Bare Acre Hauling is Molalla's trusted, veteran-owned junk removal company. Appliances, debris, full estate cleanouts — we haul it all so you don't have to.
+            </p>
+            <p className="mb-4 font-semibold text-white">{MINIMUM_PRICE_NOTE}</p>
+            <div className="mb-4 flex flex-col gap-2 sm:mb-6 sm:gap-3">
+              <div className="flex w-full items-start gap-2 rounded-lg bg-red-600 px-3 py-2.5 text-sm font-bold text-white shadow-lg sm:w-fit sm:px-4 sm:py-3 sm:text-base">
+                <Shield className="mt-0.5 h-5 w-5 shrink-0" />
+                <span>10% OFF for Veterans, First Responders & Police</span>
               </div>
-              <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
-                We Take It<br />
-                <span className="text-green-400">From Here.</span>
-              </h1>
-              <p className="text-xl text-gray-300 mb-6 leading-relaxed">
-                Bare Acre Hauling is Molalla's trusted, veteran-owned junk removal company. Appliances, debris, full estate cleanouts — we haul it all so you don't have to.
-              </p>
-              <div className="flex flex-col gap-3 mb-8">
-                <div className="bg-red-600 text-white px-4 py-3 rounded-lg inline-flex items-center gap-2 font-bold shadow-lg w-fit">
-                  <Shield className="h-5 w-5" />
-                  <span>10% OFF for Veterans, First Responders & Police</span>
-                </div>
-                <div className="bg-yellow-400 text-slate-900 px-4 py-3 rounded-lg inline-flex items-center gap-2 font-bold shadow-lg w-fit">
-                  <Star className="h-5 w-5 fill-slate-900" />
-                  <span>First-time customers get 10% off.</span>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition-all text-center shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2"
-                >
-                  <Trash2 className="h-5 w-5" />
-                  Get a Free Quote
-                </a>
-                <a
-                  href="tel:503-874-3705"
-                  className="bg-white text-slate-800 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-all text-center shadow-lg flex items-center justify-center gap-2"
-                >
-                  <Phone className="h-5 w-5" />
-                  503-874-3705
-                </a>
+              <div className="flex w-full items-start gap-2 rounded-lg bg-yellow-400 px-3 py-2.5 text-sm font-bold text-slate-900 shadow-lg sm:w-fit sm:px-4 sm:py-3 sm:text-base">
+                <Star className="mt-0.5 h-5 w-5 shrink-0 fill-slate-900" />
+                <span>First-time customers get 10% off.</span>
               </div>
             </div>
-            <div className="relative flex flex-col items-center justify-center space-y-6">
-              <img
-                src="/Bare_Arce_Hauling_high_res_PNG.png"
-                alt="Bare Acre Hauling junk removal service"
-                className="rounded-2xl shadow-2xl w-auto max-w-full h-auto max-h-96 object-contain"
-                loading="eager"
-              />
-              <div className="flex items-center gap-4">
-                <a
-                  href="https://www.facebook.com/bareacrehauling"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 hover:bg-white/20 transition-all duration-300 shadow-lg"
-                  aria-label="Visit our Facebook page"
-                >
-                  <Facebook className="h-5 w-5 text-white group-hover:scale-110 transition-transform" />
-                  <span className="text-white font-medium">Facebook</span>
-                </a>
-                <a
-                  href="https://www.tiktok.com/@bareacrehauling"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 hover:bg-white/20 transition-all duration-300 shadow-lg"
-                  aria-label="Visit our TikTok page"
-                >
-                  <svg className="h-5 w-5 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                  </svg>
-                  <span className="text-white font-medium">TikTok</span>
-                </a>
-              </div>
+            <QuoteActions tone="on-dark" />
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href="https://www.facebook.com/bareacrehauling"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                aria-label="Visit our Facebook page"
+              >
+                <Facebook className="h-5 w-5 text-white group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-white">Facebook</span>
+              </a>
+              <a
+                href="https://www.tiktok.com/@bareacrehauling"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                aria-label="Visit our TikTok page"
+              >
+                <svg className="h-5 w-5 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+                <span className="font-medium text-white">TikTok</span>
+              </a>
             </div>
           </div>
         </div>
@@ -222,21 +209,14 @@ export function HomePage() {
           </div>
           <div className="mt-12 text-center">
             <p className="text-gray-600 mb-6 text-lg">Not sure if we haul it? Just ask — if it's not hazardous, we probably do.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-green-700 transition-colors shadow-lg text-lg"
-              >
-                Book a Pickup
-              </a>
+            <div className="flex flex-col items-center gap-4">
+              <QuoteActions tone="on-light" align="center" />
               <Link
                 to="/pricing"
                 onClick={() => window.scrollTo(0, 0)}
-                className="bg-slate-700 text-white px-8 py-4 rounded-lg font-bold hover:bg-slate-600 transition-colors shadow-lg text-lg"
+                className="font-semibold text-slate-700 underline underline-offset-2 hover:text-slate-900"
               >
-                View Pricing
+                See the pricing calculator
               </Link>
             </div>
           </div>
@@ -253,49 +233,58 @@ export function HomePage() {
           </div>
 
           {/* Photo pair */}
-          <div className="grid grid-cols-2 gap-4 rounded-2xl overflow-hidden shadow-2xl mb-10" style={{height: '480px'}}>
+          <div className="mb-10 grid h-64 grid-cols-2 gap-2 overflow-hidden rounded-2xl shadow-2xl sm:h-80 sm:gap-4 md:h-[420px]">
             {/* Before */}
             <div className="relative overflow-hidden">
-              <img
-                src="/before-real.jpg"
+              <Photo
+                webp="/before-real.webp"
+                jpg="/before-real.jpg"
                 alt="Driveway covered in junk and debris before removal"
-                className="w-full h-full object-cover object-top"
-                loading="lazy"
+                width={1200}
+                height={900}
+                pictureClassName="absolute inset-0"
+                className="h-full w-full object-cover object-[center_30%]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute top-5 left-5">
-                <span className="bg-red-600 text-white text-sm font-bold px-4 py-2 rounded-lg uppercase tracking-widest shadow-lg">Before</span>
+                <span className="rounded-lg bg-red-600 px-2 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-lg sm:px-4 sm:py-2 sm:text-sm sm:tracking-widest">Before</span>
               </div>
               <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-white font-semibold text-base leading-snug drop-shadow-lg">Driveway packed with scrap, debris, and junk</p>
+                <p className="text-sm font-semibold leading-snug text-white drop-shadow-lg sm:text-base">Driveway packed with scrap, debris, and junk</p>
               </div>
             </div>
 
             {/* After */}
             <div className="relative overflow-hidden">
-              <img
-                src="/after.jpg"
+              <Photo
+                webp="/after.webp"
+                jpg="/after.jpg"
                 alt="Clean cleared driveway after junk removal"
-                className="w-full h-full object-cover"
-                loading="lazy"
+                width={1050}
+                height={1400}
+                pictureClassName="absolute inset-0"
+                className="h-full w-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
               <div className="absolute top-5 right-5">
-                <span className="bg-green-600 text-white text-sm font-bold px-4 py-2 rounded-lg uppercase tracking-widest shadow-lg">After</span>
+                <span className="rounded-lg bg-green-600 px-2 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-lg sm:px-4 sm:py-2 sm:text-sm sm:tracking-widest">After</span>
               </div>
               <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-white font-semibold text-base leading-snug drop-shadow-lg">Completely cleared — same day</p>
+                <p className="text-sm font-semibold leading-snug text-white drop-shadow-lg sm:text-base">Completely cleared — same day</p>
               </div>
             </div>
           </div>
 
           {/* Review + Tanner (nav "Reviews" link lands here) */}
           <div id="reviews" className="scroll-mt-24 flex flex-col md:flex-row items-center gap-6 bg-slate-50 rounded-2xl p-7 shadow-sm">
-            <img
-              src="/gavin.jpg"
+            <Photo
+              webp="/crew-loading.webp"
+              jpg="/crew-loading.jpg"
               alt="Tanner, owner of Bare Acre Hauling"
-              className="w-20 h-20 rounded-full object-cover object-top flex-shrink-0 border-4 border-white shadow-md"
-              loading="lazy"
+              width={1280}
+              height={853}
+              pictureClassName="shrink-0"
+              className="h-20 w-20 rounded-full border-4 border-white object-cover object-left shadow-md"
             />
             <div className="flex-1 text-center md:text-left">
               <div className="flex justify-center md:justify-start gap-0.5 mb-2">
@@ -310,16 +299,8 @@ export function HomePage() {
             </div>
           </div>
 
-          <div className="mt-10 text-center">
-            <a
-              href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-green-700 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-lg"
-            >
-              <Trash2 className="h-5 w-5" />
-              Book Your Cleanout
-            </a>
+          <div className="mt-10 flex justify-center">
+            <QuoteActions tone="on-light" align="center" />
           </div>
         </div>
       </section>
@@ -332,8 +313,8 @@ export function HomePage() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg">1</div>
-              <h3 className="text-xl font-bold text-slate-800 mb-3">Book or Call</h3>
-              <p className="text-gray-600">Schedule online or call 503-874-3705. We'll confirm your appointment and give you an upfront quote — no surprises.</p>
+              <h3 className="text-xl font-bold text-slate-800 mb-3">Text or Call</h3>
+              <p className="text-gray-600">Text a photo to {PHONE_DISPLAY} or give us a call. You approve the price before we load.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg">2</div>
@@ -350,35 +331,14 @@ export function HomePage() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-green-600 to-green-700">
+      <section className="bg-slate-800 px-4 py-10 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-2xl md:text-3xl font-bold mb-2">Ready to Reclaim Your Space?</h2>
           <p className="text-base md:text-lg opacity-90 mb-5">
             Text us a photo and get a quote in minutes. Same-day service often available.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-green-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors shadow-lg flex items-center justify-center gap-2"
-            >
-              <Trash2 className="h-5 w-5" />
-              Book Online Now
-            </a>
-            <a
-              href="tel:503-874-3705"
-              className="bg-slate-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-slate-700 transition-colors shadow-lg flex items-center justify-center gap-2"
-            >
-              <Phone className="h-5 w-5" />
-              Call: 503-874-3705
-            </a>
-            <a
-              href="sms:503-874-3705"
-              className="bg-slate-700 text-white px-6 py-3 rounded-lg font-bold hover:bg-slate-600 transition-colors shadow-lg flex items-center justify-center gap-2"
-            >
-              Text for Fast Quote
-            </a>
+          <div className="flex justify-center">
+            <QuoteActions tone="on-dark" align="center" />
           </div>
         </div>
       </section>
@@ -419,13 +379,15 @@ export function HomePage() {
           </div>
 
           {/* Action photo */}
-          <div className="rounded-2xl overflow-hidden shadow-2xl">
-            <img
-              src="/gavin-loading.jpg"
-              alt="Bare Acre Hauling crew loading furniture and appliances"
-              className="w-full object-cover object-center"
-              style={{ maxHeight: '520px' }}
-              loading="lazy"
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl shadow-2xl">
+            <Photo
+              webp="/crew-loading.webp"
+              jpg="/crew-loading.jpg"
+              alt="Loading appliances and furniture onto the trailer"
+              width={1280}
+              height={853}
+              pictureClassName="block w-full"
+              className="aspect-[3/2] w-full object-cover object-center"
             />
           </div>
         </div>

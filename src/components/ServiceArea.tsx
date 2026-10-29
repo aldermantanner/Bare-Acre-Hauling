@@ -1,4 +1,5 @@
 import { MapPin, CheckCircle } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 import { InteractiveMap } from './InteractiveMap';
 
 export function ServiceArea() {
@@ -68,12 +69,20 @@ export function ServiceArea() {
               <p className="text-green-800 mb-4">
                 We may still be able to serve your area! Contact us to confirm availability for your location.
               </p>
-              <a
-                href="tel:503-874-3705"
-                className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
-              >
-                Call: 503-874-3705
-              </a>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a
+                  href={PHONE_SMS_HREF}
+                  className="inline-block rounded-lg bg-green-600 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-green-700"
+                >
+                  Text a photo for a quote
+                </a>
+                <a
+                  href={PHONE_TEL_HREF}
+                  className="inline-block rounded-lg bg-slate-800 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-slate-700"
+                >
+                  Call {PHONE_DISPLAY}
+                </a>
+              </div>
             </div>
           </div>
 
@@ -125,19 +134,27 @@ export function ServiceArea() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-gray-200">
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
                     <a
-                      href="tel:503-874-3705"
-                      className="flex-1 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors font-semibold text-center text-sm"
+                      href={PHONE_SMS_HREF}
+                      className="rounded-lg bg-green-600 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-green-700"
                     >
-                      Call Now
+                      Text a photo
                     </a>
-                    <a
-                      href="mailto:BareAcreHauling@outlook.com"
-                      className="flex-1 bg-slate-700 text-white px-4 py-2.5 rounded-lg hover:bg-slate-600 transition-colors font-semibold text-center text-sm"
-                    >
-                      Email Us
-                    </a>
+                    <div className="flex gap-2">
+                      <a
+                        href={PHONE_TEL_HREF}
+                        className="flex-1 rounded-lg bg-slate-800 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-slate-700"
+                      >
+                        Call
+                      </a>
+                      <a
+                        href="mailto:BareAcreHauling@outlook.com"
+                        className="flex-1 rounded-lg bg-slate-700 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-slate-600"
+                      >
+                        Email Us
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

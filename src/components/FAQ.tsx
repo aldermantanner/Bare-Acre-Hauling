@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, MessageSquare, Phone } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 
 interface FAQItem {
   question: string;
@@ -13,11 +14,11 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'How much does junk removal cost?',
-    answer: 'Our pricing is volume-based — you pay based on how much of our truck you fill. Prices start at $150 for small loads (1–2 yards), $250–$350 for mid-size loads (3–4 yards), $425–$550 for larger loads (5–7 yards), and $650–$800 for a full truck (8–15 yards). Final pricing is confirmed on-site.'
+    answer: 'Jobs start at $150. You approve the price before we load. Text a photo of the junk and we will reply with a price for that job.'
   },
   {
     question: 'Do you do same-day junk removal?',
-    answer: 'Yes, same-day service is often available depending on schedule. Call or text us at 503-874-3705 and we\'ll do our best to get to you quickly. Priority pickup add-on (+$95) guarantees you the first available slot.'
+    answer: 'Yes, same-day service is often available depending on schedule. Call or text us at 503-874-3705 and we\'ll do our best to get to you quickly.'
   },
   {
     question: 'Do I need to be home during the junk removal?',
@@ -107,14 +108,22 @@ export function FAQ() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:503-874-3705"
-              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
+              href={PHONE_SMS_HREF}
+              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold inline-flex items-center justify-center gap-2"
             >
-              Call: 503-874-3705
+              <MessageSquare className="h-5 w-5" aria-hidden="true" />
+              Text a photo for a quote
+            </a>
+            <a
+              href={PHONE_TEL_HREF}
+              className="bg-slate-800 text-white px-6 py-3 rounded-lg hover:bg-slate-700 transition-colors font-semibold inline-flex items-center justify-center gap-2"
+            >
+              <Phone className="h-5 w-5" aria-hidden="true" />
+              Call {PHONE_DISPLAY}
             </a>
             <a
               href="mailto:BareAcreHauling@outlook.com"
-              className="bg-slate-700 text-white px-6 py-3 rounded-lg hover:bg-slate-600 transition-colors font-semibold"
+              className="bg-white text-slate-700 border border-slate-300 px-6 py-3 rounded-lg hover:bg-slate-50 transition-colors font-semibold"
             >
               Email Us
             </a>

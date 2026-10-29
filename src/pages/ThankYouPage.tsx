@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { SEOHead } from '../components/SEOHead';
 import { trackJobberRequestSubmitted } from '../lib/googleAds';
+import { PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 
 const ROBOTS_CONTENT = 'noindex, nofollow';
 
@@ -53,15 +54,15 @@ export function ThankYouPage() {
       <div className="max-w-3xl mx-auto px-4 py-16">
         <p className="text-lg text-gray-600 leading-relaxed">
           We'll reach out shortly to confirm. Questions?{' '}
-          <a href="tel:503-874-3705" className="text-green-600 hover:text-green-700 font-medium">
+          <a href={PHONE_TEL_HREF} className="text-green-600 hover:text-green-700 font-medium">
             Call
           </a>{' '}
           or{' '}
-          <a href="sms:503-874-3705" className="text-green-600 hover:text-green-700 font-medium">
+          <a href={PHONE_SMS_HREF} className="text-green-600 hover:text-green-700 font-medium">
             text
           </a>{' '}
-          <a href="tel:503-874-3705" className="text-green-600 hover:text-green-700 font-medium">
-            503-874-3705
+          <a href={PHONE_TEL_HREF} className="text-green-600 hover:text-green-700 font-medium">
+            {PHONE_DISPLAY}
           </a>
           .
         </p>
