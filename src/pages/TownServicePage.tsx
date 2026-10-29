@@ -4,7 +4,7 @@ import { SEOHead } from '../components/SEOHead';
 import { Photo } from '../components/Photo';
 import { QuoteActions } from '../components/QuoteActions';
 import { HoursNote } from '../components/HoursNote';
-import { TOWN_PAGES, townPath, type TownPage } from '../data/towns';
+import { townBySlug, townPath, type TownPage } from '../data/towns';
 import { BUSINESS_DAYS, MINIMUM_PRICE_NOTE } from '../lib/contact';
 
 function useTownSchema(town: TownPage) {
@@ -17,11 +17,11 @@ function useTownSchema(town: TownPage) {
       name: town.h1,
       serviceType: 'Junk Removal',
       url: `https://bareacrehauling.com/${town.slug}`,
-      areaServed: {
-        '@type': 'City',
-        name: town.city,
-        containedInPlace: { '@type': 'State', name: 'Oregon' },
-      },
+        areaServed: {
+          '@type': town.placeType,
+          name: town.city,
+          containedInPlace: { '@type': 'State', name: 'Oregon' },
+        },
       provider: {
         '@type': 'LocalBusiness',
         '@id': 'https://bareacrehauling.com',
@@ -44,7 +44,7 @@ function useTownSchema(town: TownPage) {
           closes: '20:00',
         },
         areaServed: {
-          '@type': 'City',
+          '@type': town.placeType,
           name: town.city,
         },
       },
@@ -68,7 +68,9 @@ function useTownSchema(town: TownPage) {
 
 export function TownServicePage({ town }: { town: TownPage }) {
   useTownSchema(town);
-  const others = TOWN_PAGES.filter((page) => page.slug !== town.slug);
+  const nearby = town.nearby
+    .map((slug) => townBySlug(slug))
+    .filter((page): page is TownPage => Boolean(page));
 
   return (
     <>
@@ -101,6 +103,11 @@ export function TownServicePage({ town }: { town: TownPage }) {
               <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl">{town.h1}</h1>
               <p className="mt-4 text-base leading-relaxed text-slate-200">{town.lead}</p>
               <p className="mt-4 font-semibold text-white">{MINIMUM_PRICE_NOTE}</p>
+              <p className="mt-2">
+                <Link to="/pricing" className="text-sm font-semibold text-green-300 underline underline-offset-2">
+                  See the pricing calculator
+                </Link>
+              </p>
               <div className="mt-6">
                 <QuoteActions tone="on-dark" />
               </div>
@@ -113,17 +120,24 @@ export function TownServicePage({ town }: { town: TownPage }) {
           <div className="mt-6">
             <HoursNote />
           </div>
-          <p className="mt-8 text-slate-700">
-            We also haul in{' '}
-            {others.map((page, index) => (
-              <span key={page.slug}>
-                {index > 0 && (index === others.length - 1 ? ', and ' : ', ')}
-                <Link to={townPath(page.slug)} className="font-semibold text-green-700 hover:text-green-800">
-                  {page.city}
-                </Link>
-              </span>
-            ))}
-            .
+          {nearby.length > 0 && (
+            <p className="mt-8 text-slate-700">
+              Nearby: {' '}
+              {nearby.map((page, index) => (
+                <span key={page.slug}>
+                  {index > 0 && (index === nearby.length - 1 ? ', and ' : ', ')}
+                  <Link to={townPath(page.slug)} className="font-semibold text-green-700 hover:text-green-800">
+                    {page.city}
+                  </Link>
+                </span>
+              ))}
+              .
+            </p>
+          )}
+          <p className="mt-4">
+            <Link to="/service-areas" className="font-semibold text-green-700 underline underline-offset-2">
+              All towns we cover
+            </Link>
           </p>
           <p className="mt-4">
             <Link to="/" className="font-semibold text-slate-700 underline underline-offset-2">

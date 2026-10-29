@@ -4,7 +4,6 @@ import { Phone, Menu, X, Facebook, Mail, MapPin, MessageSquare } from 'lucide-re
 import { Logo } from './Logo';
 import { LocalBusinessSchema } from './LocalBusinessSchema';
 import { HoursNote } from './HoursNote';
-import { TOWN_PAGES, townPath } from '../data/towns';
 import { JOBBER_REQUEST_URL, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -287,19 +286,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <nav aria-label="Service areas" className="mb-6">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">Service Areas</h2>
-            <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
-              <li>
-                <Link to="/" className="text-gray-300 hover:text-white">Molalla</Link>
-              </li>
-              {TOWN_PAGES.map((town) => (
-                <li key={town.slug}>
-                  <Link to={townPath(town.slug)} onClick={() => window.scrollTo(0, 0)} className="text-gray-300 hover:text-white">
-                    {town.city}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <Link
+              to="/service-areas"
+              onClick={() => window.scrollTo(0, 0)}
+              className="text-sm font-semibold uppercase tracking-wide text-slate-300 hover:text-white"
+            >
+              Service areas
+            </Link>
+            <p className="mt-2 text-sm text-gray-400">Molalla and the towns we cover from there</p>
           </nav>
 
           <div className="flex items-center justify-center gap-6 mb-6">

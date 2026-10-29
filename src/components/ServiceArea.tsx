@@ -3,24 +3,9 @@ import { MapPin, CheckCircle, Clock } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 import { HoursNote } from './HoursNote';
 import { InteractiveMap } from './InteractiveMap';
+import { TOWN_GROUPS, TOWN_PAGES, townPath } from '../data/towns';
 
 export function ServiceArea() {
-  const serviceAreas: { name: string; featured: boolean; to?: string }[] = [
-    { name: 'Molalla', featured: true, to: '/' },
-    { name: 'Canby', featured: true, to: '/junk-removal-canby' },
-    { name: 'Oregon City', featured: true, to: '/junk-removal-oregon-city' },
-    { name: 'Woodburn', featured: false },
-    { name: 'Silverton', featured: false },
-    { name: 'Estacada', featured: false },
-    { name: 'Wilsonville', featured: false },
-    { name: 'West Linn', featured: false },
-    { name: 'Lake Oswego', featured: false },
-    { name: 'Gladstone', featured: false },
-    { name: 'Milwaukie', featured: false },
-    { name: 'Sandy', featured: false },
-    { name: 'Salem', featured: false, to: '/junk-removal-salem' },
-    { name: 'Keizer', featured: false, to: '/junk-removal-keizer' }
-  ];
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
@@ -38,40 +23,23 @@ export function ServiceArea() {
               Based in Molalla, Oregon, we specialize in serving homeowners, landlords, contractors, and businesses throughout the region. Whether you need a garage cleanout in Canby or an estate cleanout in Oregon City, we've got you covered with professional service and fair pricing.
             </p>
 
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-slate-800 mb-4">Primary Service Areas</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {serviceAreas
-                  .filter((area) => area.featured)
-                  .map((area) => (
-                    <div key={area.name} className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      {area.to ? (
-                        <Link to={area.to} className="font-semibold text-slate-800 underline-offset-2 hover:underline">{area.name}</Link>
-                      ) : (
-                        <span className="font-semibold text-slate-800">{area.name}</span>
-                      )}
-                    </div>
-                  ))}
-              </div>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-slate-800 mb-4">Extended Service Areas</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {serviceAreas
-                  .filter((area) => !area.featured)
-                  .map((area) => (
-                    <div key={area.name} className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      {area.to ? (
-                        <Link to={area.to} className="text-gray-700 underline-offset-2 hover:underline">{area.name}</Link>
-                      ) : (
-                        <span className="text-gray-700">{area.name}</span>
-                      )}
-                    </div>
-                  ))}
-              </div>
+            <div className="space-y-6 mb-8">
+              {TOWN_GROUPS.map((group) => (
+                <div key={group.id} className="bg-gray-50 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold text-slate-800 mb-1">{group.title}</h3>
+                  <p className="text-sm text-gray-600 mb-4">{group.note}</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {TOWN_PAGES.filter((town) => town.group === group.id).map((town) => (
+                      <div key={town.slug} className="flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                        <Link to={townPath(town.slug)} className="font-semibold text-slate-800 underline-offset-2 hover:underline">
+                          {town.city}
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-6">

@@ -8,6 +8,7 @@ import { HomePage } from './pages/HomePage';
 import { ThankYouPage } from './pages/ThankYouPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { TownServicePage } from './pages/TownServicePage';
+import { ServiceAreasPage } from './pages/ServiceAreasPage';
 import { TOWN_PAGES } from './data/towns';
 import { ToastProvider } from './components/Toast';
 
@@ -76,6 +77,7 @@ function App() {
               <Route path="/" element={<Layout><HomePage /></Layout>} />
               <Route path="/booking" element={<Layout><BookingPage /></Layout>} />
               <Route path="/pricing" element={<Layout><PricingPage /></Layout>} />
+              <Route path="/service-areas" element={<Layout><ServiceAreasPage /></Layout>} />
               {TOWN_PAGES.map((town) => (
                 <Route
                   key={town.slug}

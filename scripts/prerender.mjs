@@ -9,14 +9,16 @@ const dist = path.join(root, 'dist');
 const port = 4173;
 const origin = `http://127.0.0.1:${port}`;
 
+const townSlugs = [
+  ...fs.readFileSync(path.join(root, 'src/data/towns.ts'), 'utf8').matchAll(/slug: '([^']+)'/g),
+].map((match) => match[1]);
+
 const routes = [
   '/',
   '/pricing',
   '/booking',
-  '/junk-removal-canby',
-  '/junk-removal-oregon-city',
-  '/junk-removal-salem',
-  '/junk-removal-keizer',
+  '/service-areas',
+  ...townSlugs.map((slug) => `/${slug}`),
   '/privacypolicy',
   '/termsandconditions',
   '/ad-landing',

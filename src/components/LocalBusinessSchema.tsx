@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { TOWN_PAGES } from '../data/towns';
 
 export function LocalBusinessSchema() {
   useEffect(() => {
@@ -44,14 +45,12 @@ export function LocalBusinessSchema() {
         "availableLanguage": "English"
       },
       "areaServed": [
-        { "@type": "City", "name": "Molalla" },
-        { "@type": "City", "name": "Canby" },
-        { "@type": "City", "name": "Oregon City" },
-        { "@type": "City", "name": "Woodburn" },
-        { "@type": "City", "name": "Wilsonville" },
-        { "@type": "City", "name": "Salem" },
-        { "@type": "City", "name": "Keizer" },
-        { "@type": "AdministrativeArea", "name": "Clackamas County" }
+        ...TOWN_PAGES.map((town) => ({
+          "@type": town.placeType,
+          "name": town.city,
+        })),
+        { "@type": "AdministrativeArea", "name": "Clackamas County" },
+        { "@type": "AdministrativeArea", "name": "Marion County" },
       ],
       "additionalType": "https://en.wikipedia.org/wiki/Veteran-owned_business",
       "description": "Veteran-owned junk removal company serving Molalla and Clackamas County, Oregon. Appliance removal, debris removal, garage cleanouts, estate cleanouts, hoarder house cleanouts, yard cleanup, and more.",
