@@ -59,6 +59,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 Reviews
               </a>
               <Link to="/pricing" onClick={() => window.scrollTo(0, 0)} className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap">Pricing</Link>
+              <Link to="/service-areas" onClick={() => window.scrollTo(0, 0)} className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap">Service Areas</Link>
               <a
                 href="https://clienthub.getjobber.com/client_hubs/935796ca-8da1-401b-a3dd-604659dcbf70/login/new?source=share_login"
                 target="_blank"
@@ -173,6 +174,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   Reviews
                 </a>
                 <Link to="/pricing" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-gray-200 hover:text-green-400 transition-colors py-2 text-lg">Pricing</Link>
+                <Link to="/service-areas" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-gray-200 hover:text-green-400 transition-colors py-2 text-lg">Service Areas</Link>
                 <a
                   href="https://clienthub.getjobber.com/client_hubs/935796ca-8da1-401b-a3dd-604659dcbf70/login/new?source=share_login"
                   target="_blank"
