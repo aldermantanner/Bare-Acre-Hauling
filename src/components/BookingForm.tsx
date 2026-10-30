@@ -634,7 +634,7 @@ export function BookingForm() {
               )}
               <div className="bg-white border border-green-300 rounded-lg p-3 mt-3">
                 <p className="text-xs text-gray-700">
-                  <strong>How it works:</strong> This is an estimate based on your selections. Final pricing will be confirmed after we review your request. We'll contact you within 24 hours.
+                  <strong>How it works:</strong> This is an estimate based on your selections. Final pricing will be confirmed after we review your request. We'll reply the same day, usually within an hour.
                 </p>
               </div>
             </div>

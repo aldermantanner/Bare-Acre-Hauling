@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { TOWN_PAGES } from '../data/towns';
 
 export function LocalBusinessSchema() {
   useEffect(() => {
@@ -6,8 +7,8 @@ export function LocalBusinessSchema() {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Bare Acre Hauling",
-      "image": "https://bareacrehauling.com/Bare_Arce_Hauling_high_res_PNG.png",
-      "logo": "https://bareacrehauling.com/web-app-manifest-512x512.png",
+      "image": "https://bareacrehauling.com/og-image.jpg",
+      "logo": "https://bareacrehauling.com/logo.png",
       "@id": "https://bareacrehauling.com",
       "url": "https://bareacrehauling.com",
       "telephone": "+15038743705",
@@ -30,8 +31,8 @@ export function LocalBusinessSchema() {
         "dayOfWeek": [
           "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
         ],
-        "opens": "00:00",
-        "closes": "23:59"
+        "opens": "07:00",
+        "closes": "20:00"
       },
       "sameAs": [
         "https://www.facebook.com/bareacrehauling"
@@ -44,14 +45,12 @@ export function LocalBusinessSchema() {
         "availableLanguage": "English"
       },
       "areaServed": [
-        { "@type": "City", "name": "Molalla" },
-        { "@type": "City", "name": "Canby" },
-        { "@type": "City", "name": "Oregon City" },
-        { "@type": "City", "name": "Woodburn" },
-        { "@type": "City", "name": "Wilsonville" },
-        { "@type": "City", "name": "Salem" },
-        { "@type": "City", "name": "Keizer" },
-        { "@type": "AdministrativeArea", "name": "Clackamas County" }
+        ...TOWN_PAGES.map((town) => ({
+          "@type": town.placeType,
+          "name": town.city,
+        })),
+        { "@type": "AdministrativeArea", "name": "Clackamas County" },
+        { "@type": "AdministrativeArea", "name": "Marion County" },
       ],
       "additionalType": "https://en.wikipedia.org/wiki/Veteran-owned_business",
       "description": "Veteran-owned junk removal company serving Molalla and Clackamas County, Oregon. Appliance removal, debris removal, garage cleanouts, estate cleanouts, hoarder house cleanouts, yard cleanup, and more.",
@@ -109,13 +108,16 @@ export function LocalBusinessSchema() {
       }
     };
 
+    const id = 'local-business-schema';
+    document.getElementById(id)?.remove();
     const script = document.createElement('script');
     script.type = 'application/ld+json';
+    script.id = id;
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script);
+      document.getElementById(id)?.remove();
     };
   }, []);
 

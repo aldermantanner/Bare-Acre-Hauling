@@ -1,3 +1,5 @@
+import { QuoteActions } from './QuoteActions';
+
 export function LocalSEOContent() {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
@@ -130,22 +132,7 @@ export function LocalSEOContent() {
             <p className="text-lg mb-6 opacity-90">
               Same-day service available throughout Clackamas County. Text a photo for a fast quote or book online now.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="tel:503-874-3705"
-                className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold text-lg"
-              >
-                Call: 503-874-3705
-              </a>
-              <a
-                href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-white text-slate-800 px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold text-lg"
-              >
-                Book Online
-              </a>
-            </div>
+            <QuoteActions tone="on-dark" align="center" />
           </div>
         </div>
       </div>

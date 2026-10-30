@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { Phone, Shield, MapPin, CheckCircle } from 'lucide-react';
 import { SEOHead } from '../components/SEOHead';
 import { TESTIMONIALS } from '../data/testimonials';
-
-const PHONE = '503-874-3705';
-const PHONE_HREF = 'tel:503-874-3705';
-const JOBBER_URL = 'https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new';
+import { Logo } from '../components/Logo';
+import { QuoteActions } from '../components/QuoteActions';
+import { HoursNote } from '../components/HoursNote';
+import { LocalBusinessSchema } from '../components/LocalBusinessSchema';
+import { PHONE_DISPLAY, PHONE_TEL_HREF, QUOTE_REQUESTS_ANYTIME } from '../lib/contact';
 
 const HAUL_ITEMS = [
   'Furniture',
@@ -39,8 +40,8 @@ function citySentence(cities: string[]): string {
 
 const STEPS = [
   {
-    title: 'Call or request a quote',
-    text: 'Tell us what needs to go and where you are.',
+    title: 'Text a photo',
+    text: 'Send a picture of what needs to go and where you are.',
   },
   {
     title: 'We confirm the price',
@@ -76,36 +77,12 @@ function useNoIndex() {
   }, []);
 }
 
-function QuoteActions() {
-  return (
-    <div className="flex flex-col gap-3 w-full max-w-md mx-auto">
-      <a
-        href={PHONE_HREF}
-        className="flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-4 rounded-lg text-xl font-bold hover:bg-green-700 transition-colors shadow-lg"
-      >
-        <Phone className="h-6 w-6" aria-hidden="true" />
-        Call {PHONE}
-      </a>
-      <a
-        href={JOBBER_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center justify-center gap-2 bg-white text-slate-800 border-2 border-white px-6 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
-      >
-        Request a quote
-      </a>
-      <p className="text-sm text-slate-300 text-center">
-        The quote button opens the same request form as our website. We'll follow up to confirm.
-      </p>
-    </div>
-  );
-}
-
 export function AdLandingPage() {
   useNoIndex();
 
   return (
     <div className="min-h-screen bg-gray-50 text-slate-800">
+      <LocalBusinessSchema />
       <SEOHead
         title="Junk removal in Clackamas County | Bare Acre Hauling"
         description="Veteran-owned junk removal based in Molalla. Call 503-874-3705 or request a quote. Serving Clackamas County and the Salem area."
@@ -116,19 +93,15 @@ export function AdLandingPage() {
       <header className="bg-slate-800 text-white sticky top-0 z-40 border-b border-slate-700">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
-            <img
-              src="/Bare_Arce_Hauling_high_res_PNG.png"
-              alt=""
-              className="h-9 w-auto object-contain flex-shrink-0"
-            />
+            <Logo className="h-9 w-9 object-contain flex-shrink-0" alt="" />
             <span className="font-bold text-sm sm:text-base truncate">Bare Acre Hauling</span>
           </div>
           <a
-            href={PHONE_HREF}
+            href={PHONE_TEL_HREF}
             className="flex items-center gap-1.5 text-white font-semibold text-sm sm:text-base whitespace-nowrap hover:text-green-400 transition-colors"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
-            {PHONE}
+            {PHONE_DISPLAY}
           </a>
         </div>
       </header>
@@ -143,7 +116,7 @@ export function AdLandingPage() {
               {citySentence(CITIES)}.
             </p>
             <div className="mt-6">
-              <QuoteActions />
+              <QuoteActions align="center" />
             </div>
           </div>
         </section>
@@ -166,6 +139,10 @@ export function AdLandingPage() {
           <div className="max-w-3xl mx-auto mt-6 space-y-2 text-center text-slate-700">
             <p>First-time customers get 10% off.</p>
             <p>Veterans, first responders, and police get 10% off.</p>
+            <div className="pt-2">
+              <HoursNote />
+              <p className="mt-2 text-sm text-slate-600">{QUOTE_REQUESTS_ANYTIME}</p>
+            </div>
           </div>
         </section>
 
@@ -234,12 +211,27 @@ export function AdLandingPage() {
 
         <section className="bg-slate-800 text-white px-4 py-12">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-2">Call or request a quote</h2>
+            <h2 className="text-2xl font-bold mb-2">Text a photo for a quote</h2>
             <p className="text-slate-300 mb-6">Questions are fine. We will tell you if we can take the load.</p>
-            <QuoteActions />
+            <QuoteActions align="center" />
           </div>
         </section>
       </main>
+      <footer className="bg-slate-900 px-4 py-8 text-center text-sm text-slate-300">
+        <p className="font-semibold text-white">Bare Acre Hauling</p>
+        <p className="mt-1">Molalla, OR</p>
+        <p className="mt-2">
+          <a href={PHONE_TEL_HREF} className="text-lg font-bold text-green-400">{PHONE_DISPLAY}</a>
+        </p>
+        <div className="mx-auto mt-3 max-w-md">
+          <HoursNote tone="on-dark" />
+        </div>
+        <p className="mt-4">
+          <a href="/privacypolicy" className="underline underline-offset-2 hover:text-white">Privacy Policy</a>
+          <span className="mx-2 text-slate-500">|</span>
+          <a href="/termsandconditions" className="underline underline-offset-2 hover:text-white">Terms & Conditions</a>
+        </p>
+      </footer>
     </div>
   );
 }

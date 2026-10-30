@@ -1,6 +1,6 @@
 [build]
 publish = "dist"
-command = "npm ci && npm run build"
+command = "npm ci && npx playwright install chromium && npm run build"
 
 [build.environment]
 NODE_VERSION = "20.11.0"
@@ -13,7 +13,63 @@ status = 301
 force = true
 
 [[redirects]]
-from = "/*"
+from = "/junk-removal-pricing"
+to = "/pricing"
+status = 301
+
+[[redirects]]
+from = "/availability"
+to = "/"
+status = 301
+
+[[redirects]]
+from = "/specifications"
+to = "/"
+status = 301
+
+[[redirects]]
+from = "/privacy"
+to = "/privacypolicy"
+status = 301
+
+[[redirects]]
+from = "/terms"
+to = "/termsandconditions"
+status = 301
+
+# Client-rendered routes that are not prerendered. Unknown paths fall through to 404.html.
+[[redirects]]
+from = "/admin"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/admin/*"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/mybookings"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/success"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/thank-you"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/thank-you/"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/ad"
 to = "/index.html"
 status = 200
 

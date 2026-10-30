@@ -19,7 +19,7 @@ export function FAQSchema() {
           "name": "How much does junk removal cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Our pricing is volume-based. Small loads (1-2 yards) start at $150, mid-size loads (3-4 yards) are $275-$375, larger loads (5-6 yards) are $425-$550, and full truck loads (7-15 yards) are $625-$750. Final pricing is confirmed on-site."
+            "text": "Jobs start at $150. You approve the price before we load. Text a photo of the junk and we will reply with a price for that job."
           }
         },
         {

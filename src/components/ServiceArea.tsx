@@ -1,23 +1,11 @@
-import { MapPin, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, CheckCircle, Clock } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
+import { HoursNote } from './HoursNote';
 import { InteractiveMap } from './InteractiveMap';
+import { TOWN_GROUPS, TOWN_PAGES, townPath } from '../data/towns';
 
 export function ServiceArea() {
-  const serviceAreas = [
-    { name: 'Molalla', featured: true },
-    { name: 'Canby', featured: true },
-    { name: 'Oregon City', featured: true },
-    { name: 'Woodburn', featured: false },
-    { name: 'Silverton', featured: false },
-    { name: 'Estacada', featured: false },
-    { name: 'Wilsonville', featured: false },
-    { name: 'West Linn', featured: false },
-    { name: 'Lake Oswego', featured: false },
-    { name: 'Gladstone', featured: false },
-    { name: 'Milwaukie', featured: false },
-    { name: 'Sandy', featured: false },
-    { name: 'Salem', featured: false },
-    { name: 'Keizer', featured: false }
-  ];
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
@@ -35,32 +23,23 @@ export function ServiceArea() {
               Based in Molalla, Oregon, we specialize in serving homeowners, landlords, contractors, and businesses throughout the region. Whether you need a garage cleanout in Canby or an estate cleanout in Oregon City, we've got you covered with professional service and fair pricing.
             </p>
 
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-slate-800 mb-4">Primary Service Areas</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {serviceAreas
-                  .filter((area) => area.featured)
-                  .map((area, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      <span className="font-semibold text-slate-800">{area.name}</span>
-                    </div>
-                  ))}
-              </div>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-slate-800 mb-4">Extended Service Areas</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {serviceAreas
-                  .filter((area) => !area.featured)
-                  .map((area, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      <span className="text-gray-700">{area.name}</span>
-                    </div>
-                  ))}
-              </div>
+            <div className="space-y-6 mb-8">
+              {TOWN_GROUPS.map((group) => (
+                <div key={group.id} className="bg-gray-50 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold text-slate-800 mb-1">{group.title}</h3>
+                  <p className="text-sm text-gray-600 mb-4">{group.note}</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {TOWN_PAGES.filter((town) => town.group === group.id).map((town) => (
+                      <div key={town.slug} className="flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                        <Link to={townPath(town.slug)} className="font-semibold text-slate-800 underline-offset-2 hover:underline">
+                          {town.city}
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-6">
@@ -68,12 +47,20 @@ export function ServiceArea() {
               <p className="text-green-800 mb-4">
                 We may still be able to serve your area! Contact us to confirm availability for your location.
               </p>
-              <a
-                href="tel:503-874-3705"
-                className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
-              >
-                Call: 503-874-3705
-              </a>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a
+                  href={PHONE_SMS_HREF}
+                  className="inline-block rounded-lg bg-green-600 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-green-700"
+                >
+                  Text a photo for a quote
+                </a>
+                <a
+                  href={PHONE_TEL_HREF}
+                  className="inline-block rounded-lg bg-slate-800 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-slate-700"
+                >
+                  Call {PHONE_DISPLAY}
+                </a>
+              </div>
             </div>
           </div>
 
@@ -105,11 +92,21 @@ export function ServiceArea() {
 
                   <div className="flex items-start gap-3">
                     <div className="bg-green-100 rounded-full p-2 flex-shrink-0">
+                      <Clock className="h-5 w-5 text-green-600" />
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-slate-800 text-sm mb-1">Hours</h5>
+                      <HoursNote />
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="bg-green-100 rounded-full p-2 flex-shrink-0">
                       <CheckCircle className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
                       <h5 className="font-semibold text-slate-800 text-sm mb-1">Same-Day Available</h5>
-                      <p className="text-gray-600 text-sm">Call or text to check availability</p>
+                      <p className="text-gray-600 text-sm">Call or text during open hours to check today's schedule</p>
                     </div>
                   </div>
 
@@ -125,19 +122,27 @@ export function ServiceArea() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-gray-200">
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
                     <a
-                      href="tel:503-874-3705"
-                      className="flex-1 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors font-semibold text-center text-sm"
+                      href={PHONE_SMS_HREF}
+                      className="rounded-lg bg-green-600 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-green-700"
                     >
-                      Call Now
+                      Text a photo
                     </a>
-                    <a
-                      href="mailto:BareAcreHauling@outlook.com"
-                      className="flex-1 bg-slate-700 text-white px-4 py-2.5 rounded-lg hover:bg-slate-600 transition-colors font-semibold text-center text-sm"
-                    >
-                      Email Us
-                    </a>
+                    <div className="flex gap-2">
+                      <a
+                        href={PHONE_TEL_HREF}
+                        className="flex-1 rounded-lg bg-slate-800 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-slate-700"
+                      >
+                        Call
+                      </a>
+                      <a
+                        href="mailto:BareAcreHauling@outlook.com"
+                        className="flex-1 rounded-lg bg-slate-700 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-slate-600"
+                      >
+                        Email Us
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

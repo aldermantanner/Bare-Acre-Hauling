@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, ArrowLeft } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead';
 
 export function TermsAndConditionsPage() {
   useEffect(() => {
@@ -9,6 +10,11 @@ export function TermsAndConditionsPage() {
 
   return (
     <div className="bg-white">
+      <SEOHead
+        title="Terms and Conditions | Bare Acre Hauling"
+        description="Terms and conditions for Bare Acre Hauling junk removal in Molalla, OR."
+        canonical="https://bareacrehauling.com/termsandconditions"
+      />
       <div className="bg-slate-800 py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <Link

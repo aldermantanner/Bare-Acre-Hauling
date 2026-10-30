@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import {
-  Truck, Clock, Users, Trash2, TrendingUp, Check, X, Phone,
+  Users, Trash2, Check, X,
   Package, Home, Leaf, Wrench, Archive, Building2, Calculator, DollarSign, MapPin,
 } from 'lucide-react';
+import { QuoteActions } from './QuoteActions';
+import { MINIMUM_PRICE_NOTE } from '../lib/contact';
 
 type LoadSize = 'small' | 'medium' | 'large' | 'full';
 type DriveZone = 'local' | 'nearby' | 'far' | 'distant';
@@ -46,7 +48,6 @@ const factorDetails = [
   { icon: MapPin,      title: 'Drive Time',      desc: 'Round-trip travel to your location. Closer jobs cost less — that savings passes to you.',     color: 'text-blue-600',   bg: 'bg-blue-100' },
   { icon: Users,       title: 'Labor',           desc: 'Crew size and time on-site. Bigger loads take more hands and more hours.',                    color: 'text-green-600',  bg: 'bg-green-100' },
   { icon: Trash2,      title: 'Dump Fees',       desc: 'Disposal costs at the transfer station, based on weight and material type.',                  color: 'text-orange-600', bg: 'bg-orange-100' },
-  { icon: TrendingUp,  title: 'Profit Margin',   desc: 'A modest 30% margin keeps the business running. No hidden fees on top.',                      color: 'text-slate-600',  bg: 'bg-slate-100' },
 ];
 
 export function JunkRemovalPricing() {
@@ -83,16 +84,16 @@ export function JunkRemovalPricing() {
           Fair Pricing. Built From Real Costs.
         </h2>
         <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-          No flat-rate guessing. Every job is priced on four simple factors: drive time, labor, dump fees, and a modest margin.
+          Every estimate is built from drive time, labor, and dump fees. You approve the price before we load.
         </p>
-        <div className="mt-4 inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-full text-sm sm:text-base font-semibold shadow-lg">
-          <DollarSign className="h-5 w-5" />
-          $150 minimum on all jobs
+        <div className="mt-4 inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-full text-sm sm:text-base font-semibold shadow-lg max-w-xl">
+          <DollarSign className="h-5 w-5 shrink-0" />
+          <span>{MINIMUM_PRICE_NOTE}</span>
         </div>
       </div>
 
       {/* Four Factors */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-10">
         {factorDetails.map((f, i) => (
           <div key={i} className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-gray-100 text-center">
             <div className={`inline-flex items-center justify-center w-12 h-12 ${f.bg} rounded-full mb-3`}>
@@ -259,10 +260,6 @@ export function JunkRemovalPricing() {
                 <span className="text-gray-600 flex items-center gap-2"><Trash2 className="h-4 w-4 text-orange-500" />Dump fees ({materialType === 'heavy' ? 'heavy material' : 'standard material'})</span>
                 <span className="font-semibold text-slate-700">{fmt(dumpFee)}</span>
               </div>
-              <div className="flex items-center justify-between py-1">
-                <span className="text-gray-600 flex items-center gap-2"><TrendingUp className="h-4 w-4 text-slate-500" />Margin (30%)</span>
-                <span className="font-semibold text-slate-700">{fmt(profit)}</span>
-              </div>
               <div className="border-t border-gray-300 pt-3 mt-3" />
               <div className="flex items-center justify-between py-1">
                 <span className="font-bold text-slate-800">Estimated Total</span>
@@ -285,22 +282,7 @@ export function JunkRemovalPricing() {
                 <strong>This is an estimate.</strong> Heavy materials such as dirt and concrete are priced using a larger disposal allowance because a full load can exceed 2 tons. Final pricing is confirmed on-site based on actual load size, material type, and disposal weight.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href="https://clienthub.getjobber.com/hubs/935796ca-8da1-401b-a3dd-604659dcbf70/public/requests/2258657/new"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-green-600 text-white px-6 py-3.5 rounded-lg hover:bg-green-700 transition-colors font-bold text-center text-sm sm:text-base"
-              >
-                Get a Firm Quote
-              </a>
-              <a
-                href="sms:503-874-3705"
-                className="flex-1 bg-slate-700 text-white px-6 py-3.5 rounded-lg hover:bg-slate-600 transition-colors font-bold text-center text-sm sm:text-base"
-              >
-                Text Photos: 503-874-3705
-              </a>
-            </div>
+            <QuoteActions tone="on-light" />
           </div>
         </div>
       </div>
@@ -380,15 +362,7 @@ export function JunkRemovalPricing() {
           10% OFF for Veterans, First Responders & Police
         </div>
         <h3 className="text-xl sm:text-2xl font-bold mb-4">Ready to Get Started?</h3>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="tel:503-874-3705" className="inline-flex items-center justify-center gap-2 bg-white text-slate-800 px-6 py-3.5 rounded-lg hover:bg-gray-100 transition-colors font-semibold text-sm sm:text-base">
-            <Phone className="h-5 w-5" />
-            Call: 503-874-3705
-          </a>
-          <a href="sms:503-874-3705" className="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3.5 rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm sm:text-base">
-            Text for Fast Quote
-          </a>
-        </div>
+        <QuoteActions tone="on-dark" align="center" />
         <p className="text-slate-300 mt-4 text-xs sm:text-sm">Serving Molalla & surrounding areas in Clackamas County</p>
       </div>
 
