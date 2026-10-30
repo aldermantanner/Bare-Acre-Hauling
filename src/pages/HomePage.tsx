@@ -14,6 +14,7 @@ import { ChatWidget } from '../components/ChatWidget';
 import { Photo } from '../components/Photo';
 import { QuoteActions } from '../components/QuoteActions';
 import { MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
+import { TOWN_GROUPS, TOWN_PAGES, townPath } from '../data/towns';
 
 const services = [
   {
@@ -331,6 +332,38 @@ export function HomePage() {
               <p className="text-gray-600">We load everything, clean up the area, and haul it to proper disposal. You're left with a clean space.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="areas" className="bg-white px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-center text-3xl font-bold text-slate-800">Junk removal around Molalla</h2>
+          <p className="mx-auto mt-2 max-w-xl text-center text-gray-600">
+            Tap your town. We haul from Molalla out to these places.
+          </p>
+          <div className="mt-8 space-y-6">
+            {TOWN_GROUPS.map((group) => (
+              <div key={group.id}>
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500">{group.title}</h3>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {TOWN_PAGES.filter((town) => town.group === group.id).map((town) => (
+                    <Link
+                      key={town.slug}
+                      to={townPath(town.slug)}
+                      className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-center text-sm font-semibold text-slate-800 hover:border-green-600 hover:text-green-700"
+                    >
+                      {town.city}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-center">
+            <Link to="/service-areas" className="font-semibold text-green-700 underline underline-offset-2 hover:text-green-800">
+              See all service areas
+            </Link>
+          </p>
         </div>
       </section>
 
