@@ -19,7 +19,7 @@ export function ServiceAreasPage() {
           <p className="text-sm font-semibold uppercase tracking-wide text-green-300">Based in Molalla</p>
           <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Towns we haul in</h1>
           <p className="mt-4 text-lg leading-relaxed text-slate-200">
-            Bare Acre Hauling starts in Molalla. The closer towns are up OR-213, down 213 toward Silverton, and west on OR-211. Farther places, out toward Sandy, Salem, or the I-5 towns, are longer drives, so a photo helps us price the trip.
+            We're based in Molalla and we haul in the towns below. Text a photo of what you've got and we'll send a price.
           </p>
           <p className="mt-4 font-semibold">{MINIMUM_PRICE_NOTE}</p>
           <div className="mt-6">

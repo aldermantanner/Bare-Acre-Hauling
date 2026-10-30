@@ -83,7 +83,7 @@ export const TOWN_GROUPS: { id: TownPage['group']; title: string; note: string }
   {
     id: 'metro',
     title: 'Farther north and west',
-    note: 'I-5, I-205, and the towns west of the Willamette. These are longer drives from Molalla.',
+    note: 'I-5, I-205, and the towns west of the Willamette.',
   },
 ];
 
@@ -100,9 +100,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Veteran-owned junk removal based in Molalla, OR. Garage cleanouts, yard debris, rural property cleanups, and estate cleanouts. Jobs start at $150. Text a photo to 503-874-3705.',
     h1: 'Junk Removal in Molalla, OR',
     lead:
-      'Molalla is home. The shop is here, downtown is a few minutes away, and OR-213 runs north through town toward Mulino while OR-211 heads east and west. Jobs in Molalla are the ones we start the day with: a garage on an in-town lot, furniture and appliances from a house near Main Street, yard debris, or a rural cleanup on acreage outside the grid.',
+      'This is home. Downtown is a few minutes from the shop. OR-213 runs north toward Mulino, and OR-211 heads east and west. We do garage cleanouts, furniture and appliances, yard debris, and cleanups on the acreage outside town.',
     detail:
-      'Out toward the Molalla River the properties spread out, and the pile is often behind a shop or along a fence line rather than at the curb. Text a photo. Jobs start at $150, and you approve the price before we load.',
+      'Out by the Molalla River, the pile is often behind a shop or along a fence line. Text a photo and we\'ll send a price.',
     hero: CREW,
   },
   {
@@ -117,9 +117,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Mulino, OR from a crew based a few miles south in Molalla. Rural property cleanups, garage cleanouts, and yard debris. Jobs start at $150.',
     h1: 'Junk Removal in Mulino, OR',
     lead:
-      'Mulino is the next community north of Molalla on OR-213, a short drive up the highway before the road continues toward Oregon City. It is mostly houses on larger lots and small acreage, not a downtown street grid. The loads match that: garage cleanouts, brush and yard debris, and junk cleared out of a shop or outbuilding.',
+      'Mulino is the next stop north of Molalla on OR-213, a short drive before the highway keeps going toward Oregon City. Houses sit on bigger lots, with small acreage mixed in.',
     detail:
-      'Because Mulino sits on the same highway as our Molalla base, we can often take it on a day we are already running north. You still get a price from a photo, and nothing is loaded until you approve it.',
+      'Garage cleanouts, brush, and junk from a shop or outbuilding are the usual jobs. Text a photo and we\'ll send a price.',
     hero: BEFORE,
   },
   {
@@ -134,9 +134,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal for Beavercreek, OR. Bare Acre Hauling is based in Molalla and hauls yard debris, garage cleanouts, and rural property junk. Jobs start at $150.',
     h1: 'Junk Removal in Beavercreek, OR',
     lead:
-      'Beavercreek is rural Clackamas County northeast of Molalla, stretched along Beavercreek Road between the Oregon City side and the way out toward Estacada. Places sit apart from each other. What we haul there is usually yard debris, a shop or barn cleanup, or household junk that piled up on acreage.',
+      'Beavercreek is northeast of Molalla, along Beavercreek Road between Oregon City and the road out to Estacada. The places are spread out.',
     detail:
-      'From Molalla we go north on OR-213 and then east. The gate and the pile both matter on these lots, so a photo is how we price the job before we drive out.',
+      'We haul yard debris, shop and barn cleanups, and household junk off acreage. From Molalla we head north on OR-213, then east. Text a photo of the pile.',
     hero: AFTER,
   },
   {
@@ -151,9 +151,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Veteran-owned junk removal for Canby, OR, based in Molalla. Garage cleanouts, furniture, appliances, yard debris, and estate cleanouts. Jobs start at $150. Text a photo to 503-874-3705.',
     h1: 'Junk Removal in Canby, OR',
     lead:
-      'Canby is just north of Molalla on the 99E side of Clackamas County, a mix of neighborhoods and acreage between our home base and Oregon City. Bare Acre Hauling drives up from Molalla for the loads people in Canby actually have: a garage that turned into storage, a washer and fridge that have to go, furniture after a move, and brush or yard debris from a cleanup.',
+      'Canby is just north of us, on the 99E side of Clackamas County, between Molalla and Oregon City. Neighborhoods and acreage both.',
     detail:
-      'Estate and move-out cleanouts are part of the same trip when a Canby house is changing hands. Text a photo of the pile. We reply with a price for that job, and you approve it before we load.',
+      'We come up for garages that turned into storage, a washer or fridge, furniture after a move, brush, and estate or move-out cleanouts. Text a photo of the pile.',
     hero: CREW,
   },
   {
@@ -168,9 +168,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Oregon City from a Molalla-based, veteran-owned crew. Appliances, furniture, garage cleanouts, yard debris, and estate cleanouts. Jobs start at $150.',
     h1: 'Junk Removal in Oregon City, OR',
     lead:
-      'Oregon City is the Clackamas County seat, north of Molalla where the Willamette runs and neighborhoods climb the hill above the river. The houses range from older streets near downtown to places farther out, and the haul-away work follows the house: appliances that quit, furniture that no longer fits, a packed garage, or a full estate cleanout.',
+      'Oregon City is north of Molalla on OR-213, where the Willamette runs and the neighborhoods climb the hill above the river. Older streets near downtown, and houses farther out.',
     detail:
-      'Hill lots also mean yard debris and leftover remodel material. We are based in Molalla and schedule Oregon City from there, up OR-213. A photo of the load is the fastest way to get a price you can approve before we start.',
+      'Appliances, furniture, a packed garage, a full estate cleanout, plus yard debris and remodel leftovers on the hill lots. Text a photo and we\'ll get you a price.',
     hero: BEFORE,
   },
   {
@@ -185,9 +185,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Gladstone, OR by Bare Acre Hauling in Molalla. Garage cleanouts, appliances, furniture, and small estate cleanouts. Jobs start at $150.',
     h1: 'Junk Removal in Gladstone, OR',
     lead:
-      'Gladstone sits between Oregon City and Milwaukie, near where the Clackamas River meets the Willamette. Portland Avenue and the blocks of houses between the rivers are close together. From Molalla the drive is OR-213 to Oregon City and a few minutes past it. The jobs are usually a garage, appliances, furniture, or a small move-out.',
+      'Gladstone sits between Oregon City and Milwaukie, where the Clackamas River meets the Willamette. From Molalla it is OR-213 to Oregon City, then a few more minutes.',
     detail:
-      'On these lots the junk is often in the garage, a basement, or the side yard rather than spread across acreage. Text a photo and we will price that pile before we come north.',
+      'Most jobs are a garage, a basement, appliances, furniture, or a small move-out. Text a photo and we\'ll price it.',
     hero: AFTER,
   },
   {
@@ -202,9 +202,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Milwaukie, OR from a Molalla-based crew. Furniture, appliances, garage cleanouts, and move-outs. Jobs start at $150. You approve the price before we load.',
     h1: 'Junk Removal in Milwaukie, OR',
     lead:
-      'Milwaukie is farther north, on 99E, with a downtown by the Willamette and neighborhoods rising toward OR-224. It is one of the longer runs from Molalla: up OR-213, through Oregon City, and on past Gladstone. What we haul is furniture, appliances, a packed garage, or the contents of a move-out.',
+      'Milwaukie is up 99E, with downtown by the Willamette and neighborhoods toward OR-224. From Molalla we come up OR-213, through Oregon City, and on past Gladstone.',
     detail:
-      'We book Milwaukie when the load fits the drive. A photo tells us that before we commit the truck for the morning.',
+      'We haul furniture, appliances, packed garages, and move-outs. Text a photo and we\'ll send a price.',
     hero: CREW,
   },
   {
@@ -219,9 +219,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Silverton, OR. Bare Acre Hauling drives down OR-213 from Molalla for garage cleanouts, furniture, appliances, yard debris, and estate cleanouts. Jobs start at $150.',
     h1: 'Junk Removal in Silverton, OR',
     lead:
-      'Silverton is south of Molalla on OR-213, with an older downtown and houses spreading toward the Oregon Garden side of town. The drive from our shop is about twenty minutes down that highway. We pick up garage cleanouts, furniture, appliances, yard debris, and estate cleanouts when a Silverton house is being emptied.',
+      'Silverton is south of Molalla on OR-213, about twenty minutes from the shop. Older downtown, and houses out toward the Oregon Garden side of town.',
     detail:
-      'Silver Falls is farther east of town. We are hauling from homes and properties in and around Silverton, not from the park. Text a photo of what is actually on the ground and you approve the price before we load.',
+      'Garage cleanouts, furniture, appliances, yard debris, and estate cleanouts. From Mt. Angel over to Silverton is an easy loop for us. Text a photo and we\'ll price the job.',
     hero: BEFORE,
   },
   {
@@ -236,9 +236,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Mt. Angel, OR from Bare Acre Hauling in Molalla. House and garage cleanouts, furniture, and yard debris. Jobs start at $150.',
     h1: 'Junk Removal in Mt. Angel, OR',
     lead:
-      'Mt. Angel is west of Silverton on OR-214, a small downtown with the abbey on the hill above it, between Silverton and Woodburn. From Molalla we take OR-213 south and cut over. The loads are the size of the town: a house cleanout, a garage, furniture, and yard debris on a residential lot.',
+      'Mt. Angel is west of Silverton on OR-214, between Silverton and Woodburn. The abbey sits on the hill above a small downtown. From Molalla we take OR-213 south and cut over.',
     detail:
-      'The abbey and the festival grounds are landmarks on the hill, not a promise about where we have worked. If the junk is at a house in town, send a photo and we will price that job.',
+      'House cleanouts, garages, furniture, and yard debris. Text a photo and we\'ll send a price.',
     hero: AFTER,
   },
   {
@@ -253,9 +253,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Woodburn, OR. Veteran-owned Bare Acre Hauling comes west on OR-211 from Molalla for furniture, appliances, garage cleanouts, and move-outs. Jobs start at $150.',
     h1: 'Junk Removal in Woodburn, OR',
     lead:
-      'Woodburn is west of Molalla where OR-211 meets I-5. Downtown, the 99E corridor, and the neighborhoods around the outlet shops are different kinds of stops: a house garage, a rental move-out, or furniture and appliances stacked by a driveway. The drive from Molalla is about twenty minutes on 211.',
+      'Woodburn is west of Molalla, where OR-211 meets I-5. About twenty minutes from the shop. Downtown, 99E, and the neighborhoods around the outlet shops.',
     detail:
-      'Estate cleanouts come up when an older house in town turns over. Send a photo so we know if it is one garage or a full load before we head west.',
+      'House garages, rental move-outs, furniture and appliances by the driveway, and estate cleanouts when an older house turns over. Text a photo so we can see the pile.',
     hero: CREW,
   },
   {
@@ -270,9 +270,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Hubbard, OR by a Molalla-based crew. Garage cleanouts, appliances, and yard debris along 99E. Jobs start at $150. You approve the price before we load.',
     h1: 'Junk Removal in Hubbard, OR',
     lead:
-      'Hubbard is a small Marion County town on 99E, south of Aurora and north of Woodburn. From Molalla we take OR-211 west into Woodburn and a short hop up the highway. Most of the work is houses and the acreage at the edge of town: a garage cleanout, appliances, and yard debris.',
+      'Hubbard is a small town on 99E, south of Aurora and north of Woodburn. From Molalla we take OR-211 west, then a short hop up the highway.',
     detail:
-      'It is not a long trip from our shop. You get a price from the photo, and we load only after you approve it.',
+      'Garage cleanouts, appliances, and yard debris, in town and on the acreage at the edge. Text a photo and we\'ll send a price.',
     hero: BEFORE,
   },
   {
@@ -287,9 +287,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Aurora, OR from Bare Acre Hauling in Molalla. Estate cleanouts, furniture, garage loads, and yard debris. Jobs start at $150.',
     h1: 'Junk Removal in Aurora, OR',
     lead:
-      'Aurora’s old downtown sits on 99E, with the colony-era houses and antique shops along the highway and homes on the streets behind them. It is north of Hubbard and south of Canby. From Molalla we come across to 99E. Older houses often mean furniture and estate cleanouts. Newer streets mean garage loads and yard debris.',
+      'Aurora sits on 99E, north of Hubbard and south of Canby. The old downtown has colony-era houses and antique shops along the highway, with homes on the streets behind them. From Molalla we come across to 99E.',
     detail:
-      'The highway frontage and a back-street driveway are different jobs. A photo shows which one you have, and you approve the price before we load.',
+      'Furniture and estate cleanouts in the older houses. Garage loads and yard debris on the newer streets. Text a photo and we\'ll price it.',
     hero: AFTER,
   },
   {
@@ -304,9 +304,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Salem, OR from Bare Acre Hauling in Molalla. Furniture, appliances, garage cleanouts, yard debris, and estate cleanouts. Jobs start at $150. You approve the price before we load.',
     h1: 'Junk Removal in Salem, OR',
     lead:
-      'Salem is the state capital, southwest of Molalla in Marion County. It spreads from the downtown streets out through residential neighborhoods, so a job might be one apartment’s worth of furniture or a whole house cleanout. We come down from Molalla for furniture removal, appliance haul-away, garage cleanouts, yard debris, and estate cleanouts.',
+      'Salem is the state capital, southwest of Molalla in Marion County. Downtown streets, then neighborhoods spread out from there.',
     detail:
-      'Because Salem covers more ground than Molalla, a photo plus the cross street helps us price the trip before we roll. You still approve the price before anything is loaded.',
+      'One apartment of furniture or a whole house. We come down for furniture, appliances, garages, yard debris, and estate cleanouts. Text a photo and the cross street and we\'ll send a price.',
     hero: AFTER,
   },
   {
@@ -321,9 +321,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Veteran-owned junk removal for Keizer, OR. Bare Acre Hauling is based in Molalla and hauls furniture, appliances, garage cleanouts, yard debris, and estate cleanouts. Jobs start at $150.',
     h1: 'Junk Removal in Keizer, OR',
     lead:
-      'Keizer sits directly north of Salem, on the Marion County side of the Willamette and west of Molalla. Most of the town is houses, and the jobs match that: garages used as storage, couches and mattresses, old appliances, and yard debris from established lots.',
+      'Keizer is just north of Salem, on the Marion County side of the Willamette and west of Molalla. Mostly houses.',
     detail:
-      'When a Keizer home turns over, the same crew handles the estate or move-out cleanout. Bare Acre Hauling is veteran-owned and works from Molalla. Text a photo and we will price that load before we load it.',
+      'Garages used as storage, couches and mattresses, old appliances, yard debris, and estate or move-out cleanouts. Text a photo and we\'ll price the load.',
     hero: CREW,
   },
   {
@@ -338,9 +338,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Estacada, OR. Bare Acre Hauling drives east from Molalla on OR-211 for garage cleanouts, yard debris, and rural property cleanups. Jobs start at $150.',
     h1: 'Junk Removal in Estacada, OR',
     lead:
-      'Estacada is east of Molalla. OR-211 leaves town toward the Clackamas River, and OR-224 carries you into Estacada proper. Downtown is small, and a lot of the properties on the way in are acreage or houses set back from the road. We haul garage cleanouts, yard debris, and junk from shops and outbuildings.',
+      'Estacada is east of Molalla. OR-211 heads toward the Clackamas River, and OR-224 brings you into town. About half an hour from the shop. Downtown is small, with acreage and houses set back off the road on the way in.',
     detail:
-      'The drive from Molalla on 211 is roughly half an hour. Estate cleanouts come up when a house in town is being cleared. Text a photo before we head east so the price is set for that load.',
+      'Garage cleanouts, yard debris, and junk from shops and outbuildings. Estate cleanouts too, when a house in town is being cleared. Text a photo and we\'ll set the price.',
     hero: BEFORE,
   },
   {
@@ -352,12 +352,12 @@ export const TOWN_PAGES: TownPage[] = [
     nearby: ['junk-removal-estacada', 'junk-removal-happy-valley', 'junk-removal-molalla'],
     title: 'Junk Removal in Sandy, OR | Bare Acre Hauling',
     description:
-      'Junk removal in Sandy, OR from Molalla. Furniture, appliances, garage cleanouts, and yard debris for a longer drive up OR-211 to US-26. Jobs start at $150.',
+      'Junk removal in Sandy, OR from Molalla. Furniture, appliances, garage cleanouts, and yard debris up OR-211 to US-26. Jobs start at $150.',
     h1: 'Junk Removal in Sandy, OR',
     lead:
-      'Sandy is where OR-211 from Molalla meets US-26, at the base of the Mount Hood highway. Downtown Sandy and the streets off the highway are a longer haul than Estacada. We take furniture, appliances, garage cleanouts, and yard debris when the load is worth the trip.',
+      'Sandy is where OR-211 from Molalla meets US-26, at the start of the Mount Hood highway. We cover downtown and the streets off the highway.',
     detail:
-      'Places between Estacada and Sandy along 211 are the same kind of rural cleanup: brush, an outbuilding, and household junk that accumulated. Send a photo. You approve the price before we load.',
+      'Furniture, appliances, garage cleanouts, and yard debris. Places between Estacada and Sandy along 211 are the same kind of work: brush, an outbuilding, household junk. Text a photo and we\'ll send a price.',
     hero: AFTER,
   },
   {
@@ -372,9 +372,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Wilsonville, OR. A Molalla-based, veteran-owned crew hauls furniture, appliances, and garage cleanouts. Jobs start at $150. You approve the price before we load.',
     h1: 'Junk Removal in Wilsonville, OR',
     lead:
-      'Wilsonville is north of Canby, where I-5 crosses the Willamette. Villebois is on the west side, older streets sit nearer the river, and Wilsonville Road carries the commercial strip. From Molalla we come up through the Canby side, on the order of half an hour. The work is apartment and house furniture, appliances, garage cleanouts, and move-outs.',
+      'Wilsonville is north of Canby, where I-5 crosses the Willamette. Villebois is on the west side, older streets are closer to the river, and Wilsonville Road is the commercial strip. From Molalla we come up through Canby, about half an hour.',
     detail:
-      'We are not based on I-5. The photo and the nearest cross street tell us whether the load fits a run north from Molalla.',
+      'Apartment and house furniture, appliances, garage cleanouts, and move-outs. Text a photo with the nearest cross street and we\'ll send a price.',
     hero: CREW,
   },
   {
@@ -389,9 +389,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in West Linn, OR from Bare Acre Hauling in Molalla. Garage cleanouts, furniture, appliances, and yard debris. Jobs start at $150.',
     h1: 'Junk Removal in West Linn, OR',
     lead:
-      'West Linn is north of Oregon City along the Willamette. Bolton and the Willamette neighborhood sit down by the river, and houses climb toward I-205 and OR-43. From Molalla we take OR-213 north through Oregon City and then into West Linn, about half an hour or a little more. Sloped lots mean yard debris as well as garage cleanouts, furniture, and appliances.',
+      'West Linn is north of Oregon City along the Willamette. Bolton and the Willamette neighborhood are down by the river, and houses climb toward I-205 and OR-43. From Molalla it is OR-213 through Oregon City, about half an hour.',
     detail:
-      'Estate cleanouts show up in the older parts of town. The price you approve is the price before we carry anything out.',
+      'Garage cleanouts, furniture, appliances, and yard debris on the sloped lots. Estate cleanouts in the older parts of town too. Text a photo and we\'ll price it.',
     hero: BEFORE,
   },
   {
@@ -406,9 +406,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Happy Valley, OR. Bare Acre Hauling comes north from Molalla for garage cleanouts, furniture, appliances, and yard debris. Jobs start at $150.',
     h1: 'Junk Removal in Happy Valley, OR',
     lead:
-      'Happy Valley is east of I-205, newer subdivisions off Sunnyside Road and 172nd, uphill from the Clackamas area. From Molalla we drive north and then east of Oregon City. The calls are garage cleanouts in those subdivisions, furniture after a move, appliances, and yard debris on newer lots.',
+      'Happy Valley is east of I-205, in the newer subdivisions off Sunnyside Road and 172nd, uphill from Clackamas. From Molalla we drive north, then east of Oregon City.',
     detail:
-      'It is a longer drive than Canby or Oregon City, roughly 35 to 40 minutes. Text a photo so the quote includes getting there, and approve it before we load.',
+      'Garage cleanouts, furniture after a move, appliances, and yard debris. Text a photo and we\'ll send a price.',
     hero: AFTER,
   },
   {
@@ -423,9 +423,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Tualatin, OR from a veteran-owned crew in Molalla. Furniture, appliances, garage cleanouts, and move-outs. Jobs start at $150.',
     h1: 'Junk Removal in Tualatin, OR',
     lead:
-      'Tualatin is northwest of Molalla on the I-5 side, past Wilsonville, along Tualatin-Sherwood Road and the downtown blocks by the Tualatin River. We haul furniture, appliances, garage cleanouts, and move-outs from houses and townhouses there.',
+      'Tualatin is northwest of Molalla on the I-5 side, past Wilsonville. Tualatin-Sherwood Road and the downtown blocks by the Tualatin River.',
     detail:
-      'The trip from Molalla is a real drive, not a neighboring street. A photo is how we decide the load is worth rolling northwest, and you approve the price before we load.',
+      'Furniture, appliances, garage cleanouts, and move-outs from houses and townhouses. Text a photo and we\'ll send a price.',
     hero: CREW,
   },
   {
@@ -440,9 +440,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Lake Oswego, OR. Bare Acre Hauling is based in Molalla and hauls furniture, appliances, garage cleanouts, and estate cleanouts. Jobs start at $150.',
     h1: 'Junk Removal in Lake Oswego, OR',
     lead:
-      'Lake Oswego is northwest of Molalla: OR-43 along the Willamette, downtown beside the lake, and neighborhoods such as Mountain Park up the hill. We get there past West Linn, a longer northbound trip from the shop. The hauls are furniture, appliances, a garage that filled up, or an estate cleanout.',
+      'Lake Oswego is northwest of Molalla. OR-43 runs along the Willamette, downtown sits by the lake, and Mountain Park is up the hill. We come up past West Linn.',
     detail:
-      'The quote is for the pile in the photo, not for the zip code. You approve it before we load.',
+      'Furniture, appliances, a garage that filled up, or an estate cleanout. Text a photo and we\'ll price the pile.',
     hero: BEFORE,
   },
   {
@@ -457,9 +457,9 @@ export const TOWN_PAGES: TownPage[] = [
       'Junk removal in Newberg, OR from Molalla. Furniture, appliances, garage cleanouts, yard debris, and estate cleanouts across the river on 99W. Jobs start at $150.',
     h1: 'Junk Removal in Newberg, OR',
     lead:
-      'Newberg is west of the Willamette in Yamhill County, on OR-99W. Downtown and the residential streets around it, including the hill toward George Fox, are a different direction from our usual OR-213 runs. From Molalla we go west toward Woodburn and across, or up through the Wilsonville side. We haul furniture, appliances, garage cleanouts, yard debris, and estate cleanouts.',
+      'Newberg is west of the Willamette in Yamhill County, on OR-99W. Downtown, and the streets up the hill toward George Fox. From Molalla we head west toward Woodburn and across, or up through Wilsonville.',
     detail:
-      'It is not next door to the shop. A photo lets us price the miles and the load together before we commit to the trip.',
+      'Furniture, appliances, garage cleanouts, yard debris, and estate cleanouts. Text a photo and we\'ll send a price.',
     hero: AFTER,
   },
 ];
