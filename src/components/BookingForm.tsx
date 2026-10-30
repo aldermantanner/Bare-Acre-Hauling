@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Calendar, MapPin, Phone, Mail, User, MessageSquare, CheckCircle, Camera, Info, X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import JunkRemovalAgreement from './JunkRemovalAgreement';
 import { Link } from 'react-router-dom';
 
-type JunkServiceLevel = 'you_fill' | 'full_service' | 'cleanout_special';
+type JunkServiceLevel = 'full_service' | 'cleanout_special';
 type JunkVolume = '1-2' | '3-4' | '5-6' | '7-9';
 
 export function BookingForm() {
@@ -19,13 +18,11 @@ export function BookingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [showJunkAgreement, setShowJunkAgreement] = useState(false);
   const [pendingBookingId, setPendingBookingId] = useState<string | null>(null);
   const [uploadingFiles, setUploadingFiles] = useState(false);
   const [awaitingApproval, setAwaitingApproval] = useState(false);
 
   const [junkServiceLevel, setJunkServiceLevel] = useState<JunkServiceLevel>('full_service');
-  const [junkDays, setJunkDays] = useState(1);
   const [junkVolume, setJunkVolume] = useState<JunkVolume>('3-4');
   const [junkAddOns, setJunkAddOns] = useState({
     noLift: false,
@@ -52,12 +49,9 @@ export function BookingForm() {
       '7-9': { min: 625, max: 750 },
     };
 
-    let estimate = volumePricing[junkVolume];
-    if (junkServiceLevel === 'you_fill') {
-      estimate = { min: 250 * junkDays, max: 250 * junkDays };
-    }
+    const estimate = volumePricing[junkVolume];
 
-    return { min: estimate.min + addOnCost, max: estimate.max + addOnCost, isFixed: junkServiceLevel === 'you_fill' };
+    return { min: estimate.min + addOnCost, max: estimate.max + addOnCost, isFixed: false };
   };
 
   const uploadJunkPhotos = async (bookingId: string): Promise<string[]> => {
@@ -95,12 +89,10 @@ export function BookingForm() {
     try {
       const estimate = calculateJunkRemovalEstimate();
       const serviceLevelNames = {
-        you_fill: 'You Load, We Haul — $250/day',
         full_service: 'Full-Service Junk Removal',
         cleanout_special: 'Cleanout Special',
       };
       let bookingNotes = `Service Level: ${serviceLevelNames[junkServiceLevel]}\n`;
-      if (junkServiceLevel === 'you_fill') bookingNotes += `Number of Days: ${junkDays}\n`;
       bookingNotes += `Estimated Volume: ${junkVolume} cubic yards\n`;
       if (junkMaterialType) bookingNotes += `Material Type: ${junkMaterialType}\n`;
       if (junkAddOns.noLift) bookingNotes += `Add-on: No-Lift Guarantee (+$75)\n`;
@@ -179,8 +171,6 @@ export function BookingForm() {
         setSubmitStatus('success');
         setPendingBookingId(null);
         resetForm();
-      } else if (junkServiceLevel === 'you_fill') {
-        setShowJunkAgreement(true);
       } else {
         setSubmitStatus('success');
         setPendingBookingId(null);
@@ -195,58 +185,10 @@ export function BookingForm() {
     }
   };
 
-  const handleJunkAgreementComplete = async (agreementData: any) => {
-    if (!pendingBookingId) return;
-    setIsSubmitting(true);
-    try {
-      const { error: updateError } = await supabase
-        .from('bookings')
-        .update({
-          junk_agreement_signature: agreementData.customer_signature,
-          junk_agreement_date: agreementData.agreed_date,
-          agreement_completed: true,
-        })
-        .eq('id', pendingBookingId);
-
-      if (updateError) throw new Error('Failed to save junk removal agreement');
-
-      setSubmitStatus('success');
-      setShowJunkAgreement(false);
-      setPendingBookingId(null);
-      setFormData({ customer_name: '', customer_email: '', customer_phone: '', start_date: '', delivery_address: '', notes: '' });
-    } catch (error) {
-      console.error('Error completing junk removal agreement:', error);
-      setErrorMessage('Failed to save agreement. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleJunkAgreementCancel = () => {
-    setShowJunkAgreement(false);
-    setPendingBookingId(null);
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-
-  if (showJunkAgreement && pendingBookingId) {
-    return (
-      <JunkRemovalAgreement
-        bookingData={{
-          customer_name: formData.customer_name,
-          customer_email: formData.customer_email,
-          customer_phone: formData.customer_phone,
-          start_date: formData.start_date,
-          delivery_address: formData.delivery_address,
-        }}
-        onComplete={handleJunkAgreementComplete}
-        onCancel={handleJunkAgreementCancel}
-      />
-    );
-  }
 
   if (submitStatus === 'success') {
     return (
@@ -320,18 +262,7 @@ export function BookingForm() {
           <label className="block text-sm font-semibold text-gray-700 mb-3">
             Choose Your Service Level *
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-            <button
-              type="button"
-              onClick={() => setJunkServiceLevel('you_fill')}
-              className={`p-4 rounded-lg border-2 transition-all text-left ${
-                junkServiceLevel === 'you_fill' ? 'border-gray-600 bg-gray-50' : 'border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <div className="font-semibold text-gray-900 mb-1">You Load, We Haul</div>
-              <div className="text-xs text-gray-600 mb-2">$250 per day</div>
-              <div className="text-sm text-gray-700">You load it, we haul and dispose of it</div>
-            </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <button
               type="button"
               onClick={() => setJunkServiceLevel('full_service')}
@@ -356,26 +287,6 @@ export function BookingForm() {
               <div className="text-sm text-gray-700">Full load, $799</div>
             </button>
           </div>
-          {junkServiceLevel === 'you_fill' && (
-            <div className="mt-4 max-w-sm">
-              <label htmlFor="junk-days" className="block text-sm font-semibold text-gray-700 mb-2">
-                How many days do you need? *
-              </label>
-              <select
-                id="junk-days"
-                value={junkDays}
-                onChange={(event) => setJunkDays(Number(event.target.value))}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-              >
-                {[1, 2, 3, 4, 5, 6, 7].map((days) => (
-                  <option key={days} value={days}>
-                    {days} {days === 1 ? 'day' : 'days'} — ${(days * 250).toLocaleString()}
-                  </option>
-                ))}
-              </select>
-              <p className="text-xs text-gray-500 mt-1">You Load, We Haul is $250 per day.</p>
-            </div>
-          )}
         </div>
 
         {junkServiceLevel !== 'cleanout_special' && (

@@ -8,8 +8,6 @@ import { BALLPARK_NOTE, HEAVY_MATERIAL_NOTE, MINIMUM_PRICE_NOTE } from '../lib/c
 
 type LoadSize = 'small' | 'medium' | 'large' | 'full';
 type DriveZone = 'local' | 'nearby' | 'far' | 'distant';
-type ServiceLevel = 'diy' | 'full';
-
 type MaterialType = 'standard' | 'heavy';
 
 const LOAD_SIZES: Record<LoadSize, { label: string; yards: string; laborHours: number; standardDumpFee: number; heavyDumpFee: number; desc: string }> = {
@@ -53,11 +51,9 @@ const factorDetails = [
 export function JunkRemovalPricing() {
   const [loadSize, setLoadSize] = useState<LoadSize>('small');
   const [driveZone, setDriveZone] = useState<DriveZone>('local');
-  const [serviceLevel, setServiceLevel] = useState<ServiceLevel>('full');
-  const [diyDays, setDiyDays] = useState(1);
   const [materialType, setMaterialType] = useState<MaterialType>('standard');
 
-  const workers = serviceLevel === 'full' ? 2 : 0;
+  const workers = 2;
   const load = LOAD_SIZES[loadSize];
   const zone = DRIVE_ZONES[driveZone];
 
@@ -65,8 +61,7 @@ export function JunkRemovalPricing() {
   const wearCost = zone.miles * VEHICLE_WEAR_PER_MILE;
   const driverTimeCost = zone.minutes * DRIVER_RATE_PER_MIN;
   const driveCost = fuelCost + wearCost + driverTimeCost;
-  const laborCost = workers * load.laborHours * LABOR_RATE_PER_HOUR;
-  const serviceCost = serviceLevel === 'diy' ? 250 * diyDays : laborCost;
+  const serviceCost = workers * load.laborHours * LABOR_RATE_PER_HOUR;
   const dumpFee = materialType === 'heavy' ? load.heavyDumpFee : load.standardDumpFee;
   const subtotal = driveCost + serviceCost + dumpFee;
   const profit = subtotal * PROFIT_MARGIN;
@@ -195,52 +190,6 @@ export function JunkRemovalPricing() {
             )}
           </div>
 
-          {/* Service Level */}
-          <div>
-            <label className="block text-sm font-bold text-slate-700 mb-3">Service level?</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-              <button
-                onClick={() => setServiceLevel('diy')}
-                className={`rounded-xl p-4 text-left border-2 transition-all ${serviceLevel === 'diy' ? 'border-green-500 bg-green-50 shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className={`font-bold text-sm sm:text-base ${serviceLevel === 'diy' ? 'text-green-700' : 'text-slate-700'}`}>You Load, We Haul — $250/Day</span>
-                  {serviceLevel === 'diy' && <Check className="h-5 w-5 text-green-600" />}
-                </div>
-                <div className="text-xs text-gray-500">$250 per day — you do the loading, we handle hauling and disposal</div>
-              </button>
-              <button
-                onClick={() => setServiceLevel('full')}
-                className={`rounded-xl p-4 text-left border-2 transition-all ${serviceLevel === 'full' ? 'border-green-500 bg-green-50 shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className={`font-bold text-sm sm:text-base ${serviceLevel === 'full' ? 'text-green-700' : 'text-slate-700'}`}>Full Service</span>
-                  {serviceLevel === 'full' && <Check className="h-5 w-5 text-green-600" />}
-                </div>
-                <div className="text-xs text-gray-500">2 workers — we load everything, haul it, and clean up</div>
-              </button>
-            </div>
-            {serviceLevel === 'diy' && (
-              <div className="mt-3 max-w-sm">
-                <label htmlFor="diy-days" className="block text-sm font-semibold text-slate-700 mb-2">
-                  How many days?
-                </label>
-                <select
-                  id="diy-days"
-                  value={diyDays}
-                  onChange={(event) => setDiyDays(Number(event.target.value))}
-                  className="w-full rounded-lg border-2 border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-700 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
-                >
-                  {[1, 2, 3, 4, 5, 6, 7].map((days) => (
-                    <option key={days} value={days}>
-                      {days} {days === 1 ? 'day' : 'days'} — ${(days * 250).toLocaleString()}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-          </div>
-
           {/* Cost Breakdown */}
           <div className="bg-gradient-to-br from-slate-50 to-gray-100 rounded-xl p-5 sm:p-6 border border-gray-200">
             <h4 className="font-bold text-slate-800 mb-4 text-sm sm:text-base flex items-center gap-2">
@@ -253,7 +202,7 @@ export function JunkRemovalPricing() {
                 <span className="font-semibold text-slate-700">{fmt(driveCost)}</span>
               </div>
               <div className="flex items-center justify-between py-1">
-                <span className="text-gray-600 flex items-center gap-2"><Users className="h-4 w-4 text-green-500" />{serviceLevel === 'diy' ? `Service day rate (${diyDays} ${diyDays === 1 ? 'day' : 'days'})` : `Labor (${workers} workers × ${load.laborHours} ${load.laborHours === 1 ? 'hr' : 'hrs'})`}</span>
+                <span className="text-gray-600 flex items-center gap-2"><Users className="h-4 w-4 text-green-500" />{`Labor (${workers} workers × ${load.laborHours} ${load.laborHours === 1 ? 'hr' : 'hrs'})`}</span>
                 <span className="font-semibold text-slate-700">{fmt(serviceCost)}</span>
               </div>
               <div className="flex items-center justify-between py-1">
