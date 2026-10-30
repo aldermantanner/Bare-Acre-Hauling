@@ -10,6 +10,8 @@ export const JOBBER_REQUEST_URL =
 export const JOBBER_CLIENT_LOGIN_URL =
   'https://clienthub.getjobber.com/client_hubs/935796ca-8da1-401b-a3dd-604659dcbf70/login/new?source=share_login';
 
+export const GOOGLE_REVIEW_URL = 'https://g.page/r/CSEQQJyBYM0QEBE/review';
+
 export const MINIMUM_PRICE_NOTE = 'Jobs start at $150. You approve the price before we load.';
 
 export const REPLY_TIME = 'We usually reply within a few hours during business hours.';
