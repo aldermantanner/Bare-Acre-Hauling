@@ -1,16 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Star, CheckCircle, Shield, Truck, Facebook, Trash2, Home, Package, Leaf, Wrench, Building2, Archive, MapPin } from 'lucide-react';
-import { Testimonials } from '../components/Testimonials';
 import { FAQ } from '../components/FAQ';
-import { ServiceArea } from '../components/ServiceArea';
-import { SocialProof } from '../components/SocialProof';
 import { FAQSchema } from '../components/FAQSchema';
 import { SEOHead } from '../components/SEOHead';
 import { ServiceSchema } from '../components/ServiceSchema';
 import { ReviewSchema } from '../components/ReviewSchema';
 import { BreadcrumbSchema } from '../components/BreadcrumbSchema';
-import { LocalSEOContent } from '../components/LocalSEOContent';
-import { ChatWidget } from '../components/ChatWidget';
 import { Photo } from '../components/Photo';
 import { QuoteActions } from '../components/QuoteActions';
 import { MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
@@ -91,49 +86,44 @@ export function HomePage() {
       {/* Hero Section */}
       <section className="bg-slate-800">
         <div className="mx-auto grid max-w-7xl lg:grid-cols-2 lg:min-h-[640px]">
-          <div className="relative h-52 sm:h-72 lg:order-2 lg:h-auto lg:min-h-full">
+          <div className="relative h-28 sm:h-72 lg:order-2 lg:h-auto lg:min-h-full">
             <Photo
               webp="/crew-loading.webp"
               jpg="/crew-loading.jpg"
+              webpSrcSet="/crew-loading-640.webp 640w, /crew-loading.webp 1280w"
+              sizes="(min-width: 1024px) 50vw, 100vw"
               alt="Loading a refrigerator, mattress, and furniture onto the trailer"
               width={1280}
               height={853}
               pictureClassName="absolute inset-0"
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full object-cover object-[center_30%]"
               loading="eager"
               fetchPriority="high"
             />
           </div>
-          <div className="flex flex-col justify-center py-6 pl-4 pr-20 sm:px-8 sm:py-10 lg:px-12 lg:py-16">
-            <div className="mb-4 flex items-center space-x-2">
+          <div className="flex flex-col justify-center px-4 py-4 sm:px-8 sm:py-10 lg:px-12 lg:py-16">
+            <div className="mb-2 flex items-center space-x-2 sm:mb-4">
               <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
               <span className="font-semibold text-yellow-400">Veteran Owned & Operated</span>
             </div>
-            <h1 className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mb-2 text-3xl font-bold leading-tight text-white sm:mb-4 sm:text-5xl lg:text-6xl">
               We Take It<br />
               <span className="text-green-400">From Here.</span>
             </h1>
-            <p className="mb-3 text-base leading-relaxed text-gray-300 sm:mb-4 sm:text-xl">
-              Bare Acre Hauling is Molalla's trusted, veteran-owned junk removal company. Appliances, debris, full estate cleanouts — we haul it all so you don't have to.
+            <p className="mb-2 text-sm leading-snug text-gray-300 sm:mb-4 sm:text-xl sm:leading-relaxed">
+              Veteran-owned junk removal out of Molalla. Appliances, debris, and cleanouts.
             </p>
-            <p className="mb-4 font-semibold text-white">{MINIMUM_PRICE_NOTE}</p>
-            <div className="mb-4 flex flex-col gap-2 sm:mb-6 sm:gap-3">
-              <div className="flex w-full items-start gap-2 rounded-lg bg-red-600 px-3 py-2.5 text-sm font-bold text-white shadow-lg sm:w-fit sm:px-4 sm:py-3 sm:text-base">
-                <Shield className="mt-0.5 h-5 w-5 shrink-0" />
-                <span>10% OFF for Veterans, First Responders & Police</span>
-              </div>
-              <div className="flex w-full items-start gap-2 rounded-lg bg-yellow-400 px-3 py-2.5 text-sm font-bold text-slate-900 shadow-lg sm:w-fit sm:px-4 sm:py-3 sm:text-base">
-                <Star className="mt-0.5 h-5 w-5 shrink-0 fill-slate-900" />
-                <span>First-time customers get 10% off.</span>
-              </div>
-            </div>
+            <p className="mb-2 text-sm font-semibold text-white sm:mb-4 sm:text-base">{MINIMUM_PRICE_NOTE}</p>
+            <p className="mb-3 rounded-lg bg-yellow-400 px-3 py-2 text-sm font-bold leading-snug text-slate-900 sm:mb-6">
+              10% off for veterans, first responders, police, and first-time customers.
+            </p>
             <QuoteActions tone="on-dark" />
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
                 href="https://www.facebook.com/bareacrehauling"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
                 aria-label="Visit our Facebook page"
               >
                 <Facebook className="h-5 w-5 text-white group-hover:scale-110 transition-transform" />
@@ -143,7 +133,7 @@ export function HomePage() {
                 href="https://www.tiktok.com/@bareacrehauling"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
                 aria-label="Visit our TikTok page"
               >
                 <svg className="h-5 w-5 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
@@ -157,7 +147,7 @@ export function HomePage() {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-100">
+      <section className="border-b border-gray-100 bg-white px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
             <div className="text-center">
@@ -193,9 +183,9 @@ export function HomePage() {
       </section>
 
       {/* Services Grid */}
-      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section id="services" className="bg-gray-50 px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="mb-8 text-center sm:mb-16">
             <h2 className="text-4xl font-bold text-slate-800 mb-4">Our Junk Removal Services</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               From a single appliance to an entire property cleanout — we handle it all. Fast scheduling, fair pricing, zero hassle.
@@ -212,26 +202,23 @@ export function HomePage() {
               </div>
             ))}
           </div>
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-6 text-lg">Not sure if we haul it? Just ask — if it's not hazardous, we probably do.</p>
-            <div className="flex flex-col items-center gap-4">
-              <QuoteActions tone="on-light" align="center" />
-              <Link
-                to="/pricing"
-                onClick={() => window.scrollTo(0, 0)}
-                className="font-semibold text-slate-700 underline underline-offset-2 hover:text-slate-900"
-              >
-                See the pricing calculator
-              </Link>
-            </div>
+          <div className="mt-8 text-center">
+            <p className="mb-4 text-gray-600">Not sure if we haul it? Just ask. If it's not hazardous, we probably do.</p>
+            <Link
+              to="/pricing"
+              onClick={() => window.scrollTo(0, 0)}
+              className="inline-flex min-h-11 items-center font-semibold text-slate-700 underline underline-offset-2 hover:text-slate-900"
+            >
+              See the pricing calculator
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Before & After */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="bg-white px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="mb-8 text-center sm:mb-12">
             <span className="inline-block bg-green-100 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wide">Real Results</span>
             <h2 className="text-4xl font-bold text-slate-800 mb-4">See the Difference We Make</h2>
             <p className="text-lg text-gray-600 max-w-xl mx-auto">One visit. One crew. A completely cleared space — same day.</p>
@@ -280,7 +267,7 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* Review + Tanner (nav "Reviews" link lands here) */}
+          {/* One real customer note. Not linked from the nav. */}
           <div id="reviews" className="scroll-mt-24 flex flex-col md:flex-row items-center gap-6 bg-slate-50 rounded-2xl p-7 shadow-sm">
             <Photo
               webp="/crew-loading.webp"
@@ -304,17 +291,14 @@ export function HomePage() {
             </div>
           </div>
 
-          <div className="mt-10 flex justify-center">
-            <QuoteActions tone="on-light" align="center" />
-          </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="bg-gray-50 px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-slate-800 mb-4">How It Works</h2>
-          <p className="text-xl text-gray-600 text-center mb-16">Three simple steps to a clutter-free space.</p>
+          <h2 className="mb-4 text-center text-3xl font-bold text-slate-800 sm:text-4xl">How It Works</h2>
+          <p className="mb-8 text-center text-lg text-gray-600 sm:mb-16 sm:text-xl">Three simple steps to a clutter-free space.</p>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg">1</div>
@@ -350,7 +334,7 @@ export function HomePage() {
                     <Link
                       key={town.slug}
                       to={townPath(town.slug)}
-                      className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-center text-sm font-semibold text-slate-800 hover:border-green-600 hover:text-green-700"
+                      className="flex min-h-11 items-center justify-center rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-center text-sm font-semibold text-slate-800 hover:border-green-600 hover:text-green-700"
                     >
                       {town.city}
                     </Link>
@@ -372,7 +356,7 @@ export function HomePage() {
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-2xl md:text-3xl font-bold mb-2">Ready to Reclaim Your Space?</h2>
           <p className="text-base md:text-lg opacity-90 mb-5">
-            Text us a photo and get a quote in minutes. Same-day service often available.
+            Free quotes by text. We usually reply within a few hours during business hours. Same-day service often available.
           </p>
           <div className="flex justify-center">
             <QuoteActions tone="on-dark" align="center" />
@@ -381,10 +365,10 @@ export function HomePage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="bg-gray-50 px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-slate-800 mb-16">Why Bare Acre Hauling?</h2>
-          <div className="grid md:grid-cols-4 gap-8 mb-16">
+          <h2 className="mb-8 text-center text-3xl font-bold text-slate-800 sm:mb-16 sm:text-4xl">Why Bare Acre Hauling?</h2>
+          <div className="grid gap-6 md:grid-cols-4">
             <div className="text-center p-6 rounded-xl hover:shadow-xl transition-shadow bg-white">
               <div className="inline-block p-4 bg-red-100 rounded-full mb-6">
                 <Star className="h-10 w-10 text-red-600" />
@@ -414,36 +398,12 @@ export function HomePage() {
               <p className="text-gray-600">Local, veteran-owned junk removal out of Molalla, serving Clackamas County.</p>
             </div>
           </div>
-
-          {/* Action photo */}
-          <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl shadow-2xl">
-            <Photo
-              webp="/crew-loading.webp"
-              jpg="/crew-loading.jpg"
-              alt="Loading appliances and furniture onto the trailer"
-              width={1280}
-              height={853}
-              pictureClassName="block w-full"
-              className="aspect-[3/2] w-full object-cover object-center"
-            />
-          </div>
         </div>
       </section>
-
-      <SocialProof />
-
-      {/* Extra reviews (Alex M. is already shown in the card above) */}
-      <Testimonials excludeIds={['alex-m']} />
-
-      <ServiceArea />
-
-      <LocalSEOContent />
 
       <div id="faq">
         <FAQ />
       </div>
-
-      <ChatWidget />
     </div>
   );
 }

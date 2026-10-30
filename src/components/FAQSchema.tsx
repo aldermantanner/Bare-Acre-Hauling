@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { HEAVY_MATERIAL_NOTE, PHONE_DISPLAY, REPLY_TIME } from '../lib/contact';
 
 export function FAQSchema() {
   useEffect(() => {
@@ -51,7 +52,7 @@ export function FAQSchema() {
           "name": "Can you help with hoarder house and estate cleanouts?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We offer discreet, respectful hoarder house cleanouts and full estate cleanouts for foreclosures, move-outs, and property transitions. We can clear an entire home in a single visit or across multiple trips. Call us to schedule a walkthrough and estimate."
+            "text": "Yes. We offer discreet, respectful hoarder house cleanouts and full estate cleanouts for foreclosures, move-outs, and property transitions. We can clear an entire home in a single visit or across multiple trips. Text a photo for a quote. You approve the price before we load."
           }
         },
         {
@@ -59,7 +60,15 @@ export function FAQSchema() {
           "name": "What items do you not take?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We cannot take hazardous materials, chemicals, liquids, paint, or asbestos. Items like concrete, dirt, brick, or roofing shingles require a custom quote due to weight surcharges at the dump."
+            "text": `We cannot take hazardous materials, chemicals, liquids, paint, or asbestos. ${HEAVY_MATERIAL_NOTE}`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get a quote?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Text a photo of what you need removed to ${PHONE_DISPLAY}. ${REPLY_TIME} You can also call, or send the request form. You approve the price before we load.`
           }
         },
         {

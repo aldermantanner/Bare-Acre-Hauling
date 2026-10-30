@@ -4,7 +4,7 @@ import { Phone, Menu, X, Facebook, Mail, MapPin, MessageSquare } from 'lucide-re
 import { Logo } from './Logo';
 import { LocalBusinessSchema } from './LocalBusinessSchema';
 import { HoursNote } from './HoursNote';
-import { JOBBER_REQUEST_URL, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
+import { JOBBER_CLIENT_LOGIN_URL, JOBBER_REQUEST_URL, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,28 +46,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               >
                 Services
               </a>
-              <a
-                href="/#reviews"
-                onClick={(e) => {
-                  if (location.pathname !== '/') return;
-                  e.preventDefault();
-                  const el = document.getElementById('reviews');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap"
-              >
-                Reviews
-              </a>
               <Link to="/pricing" onClick={() => window.scrollTo(0, 0)} className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap">Pricing</Link>
               <Link to="/service-areas" onClick={() => window.scrollTo(0, 0)} className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap">Service Areas</Link>
-              <a
-                href="https://clienthub.getjobber.com/client_hubs/935796ca-8da1-401b-a3dd-604659dcbf70/login/new?source=share_login"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-200 hover:text-green-400 transition-colors font-medium whitespace-nowrap"
-              >
-                My Bookings
-              </a>
             </div>
 
             <div className="hidden lg:flex items-center gap-4">
@@ -78,7 +58,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
               <a
                 href={PHONE_SMS_HREF}
-                className="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition-all font-bold shadow-lg hover:shadow-xl whitespace-nowrap inline-flex items-center gap-2"
+                className="inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-lg bg-green-800 px-5 py-3 font-bold text-white shadow-lg transition-all hover:bg-green-900 hover:shadow-xl"
               >
                 <MessageSquare className="h-5 w-5" aria-hidden="true" />
                 Text a photo
@@ -137,7 +117,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden text-white p-2 hover:bg-slate-700 rounded-lg transition-colors ml-auto"
+              className="ml-auto inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg p-2 text-white transition-colors hover:bg-slate-700 lg:hidden"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -156,40 +136,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     const el = document.getElementById('services');
                     el?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="text-gray-200 hover:text-green-400 transition-colors py-2 text-lg"
+                  className="flex min-h-11 items-center py-2 text-lg text-gray-200 transition-colors hover:text-green-400"
                 >
                   Services
                 </a>
-                <a
-                  href="/#reviews"
-                  onClick={(e) => {
-                    setMobileMenuOpen(false);
-                    if (location.pathname !== '/') return;
-                    e.preventDefault();
-                    const el = document.getElementById('reviews');
-                    el?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="text-gray-200 hover:text-green-400 transition-colors py-2 text-lg"
-                >
-                  Reviews
-                </a>
-                <Link to="/pricing" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-gray-200 hover:text-green-400 transition-colors py-2 text-lg">Pricing</Link>
-                <Link to="/service-areas" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-gray-200 hover:text-green-400 transition-colors py-2 text-lg">Service Areas</Link>
-                <a
-                  href="https://clienthub.getjobber.com/client_hubs/935796ca-8da1-401b-a3dd-604659dcbf70/login/new?source=share_login"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-200 hover:text-green-400 transition-colors py-2 text-lg"
-                >
-                  My Bookings
-                </a>
+                <Link to="/pricing" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }} className="flex min-h-11 items-center py-2 text-lg text-gray-200 transition-colors hover:text-green-400">Pricing</Link>
+                <Link to="/service-areas" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }} className="flex min-h-11 items-center py-2 text-lg text-gray-200 transition-colors hover:text-green-400">Service Areas</Link>
 
                 <div className="flex flex-col gap-3 pt-6 border-t border-slate-700 mt-4">
                   <a
                     href={PHONE_SMS_HREF}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="bg-green-600 text-white px-6 py-4 rounded-lg hover:bg-green-700 transition-colors font-bold text-center text-lg shadow-lg inline-flex items-center justify-center gap-2"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-green-800 px-6 py-4 text-center text-lg font-bold text-white shadow-lg transition-colors hover:bg-green-900"
                   >
                     <MessageSquare className="h-5 w-5" aria-hidden="true" />
                     Text a photo for a quote
@@ -203,7 +161,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-center text-sm text-slate-300 underline underline-offset-2"
+                    className="inline-flex min-h-11 items-center justify-center text-center text-sm text-slate-300 underline underline-offset-2"
                   >
                     Or send a request form
                   </a>
@@ -217,10 +175,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <main>{children}</main>
 
       {isHomePage && (
-        <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-700 to-slate-800 text-white">
+        <section id="contact" className="bg-gradient-to-br from-slate-700 to-slate-800 px-4 py-12 text-white sm:px-6 sm:py-16 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-            <p className="text-xl mb-12 opacity-90">
+            <p className="mb-8 text-xl opacity-90">
               Contact Bare Acre Hauling today for fast, professional junk removal in Molalla and surrounding areas.
             </p>
             <div className="grid md:grid-cols-3 gap-8 text-left">
@@ -248,15 +206,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <h3 className="font-semibold text-lg mb-2">Based in</h3>
                   <p>Molalla, OR<br />& Surrounding Areas</p>
                 </div>
-              </div>
-            </div>
-            <div className="mt-12 pt-8 border-t border-slate-600">
-              <p className="text-lg font-semibold mb-4">Clackamas County & Surrounding Areas</p>
-              <p className="text-2xl font-bold text-green-400 mb-2">
-                <a href={PHONE_TEL_HREF} className="hover:text-green-300">Call or Text: {PHONE_DISPLAY}</a>
-              </p>
-              <div className="flex justify-center">
-                <HoursNote tone="on-dark" />
               </div>
             </div>
           </div>
@@ -291,19 +240,38 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Link
               to="/service-areas"
               onClick={() => window.scrollTo(0, 0)}
-              className="text-sm font-semibold uppercase tracking-wide text-slate-300 hover:text-white"
+              className="inline-flex min-h-11 items-center text-sm font-semibold uppercase tracking-wide text-slate-300 hover:text-white"
             >
               Service areas
             </Link>
             <p className="mt-2 text-sm text-gray-400">Molalla and the towns we cover from there</p>
           </nav>
 
+          <p className="mb-4">
+            <a
+              href="mailto:BareAcreHauling@outlook.com"
+              className="inline-flex min-h-11 items-center text-sm text-gray-300 underline underline-offset-2 hover:text-white"
+            >
+              BareAcreHauling@outlook.com
+            </a>
+          </p>
+          <p className="mb-6">
+            <a
+              href={JOBBER_CLIENT_LOGIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center text-sm text-gray-400 underline underline-offset-2 hover:text-white"
+            >
+              Existing customers
+            </a>
+          </p>
+
           <div className="flex items-center justify-center gap-6 mb-6">
             <a
               href="https://www.facebook.com/bareacrehauling"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+              className="inline-flex min-h-11 items-center gap-2 text-gray-400 transition-colors hover:text-white"
               aria-label="Visit our Facebook page"
             >
               <Facebook className="h-6 w-6" />
@@ -313,7 +281,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               href="https://www.tiktok.com/@bareacrehauling"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+              className="inline-flex min-h-11 items-center gap-2 text-gray-400 transition-colors hover:text-white"
               aria-label="Visit our TikTok page"
             >
               <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

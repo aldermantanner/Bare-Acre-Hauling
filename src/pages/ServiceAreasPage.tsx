@@ -39,7 +39,7 @@ export function ServiceAreasPage() {
                   <li key={town.slug}>
                     <Link
                       to={townPath(town.slug)}
-                      className="block rounded-lg border border-gray-200 bg-white px-4 py-3 font-semibold text-slate-800 hover:border-green-600 hover:text-green-700"
+                      className="flex min-h-11 items-center rounded-lg border border-gray-200 bg-white px-4 py-3 font-semibold text-slate-800 hover:border-green-600 hover:text-green-700"
                     >
                       Junk removal in {town.city}
                     </Link>
