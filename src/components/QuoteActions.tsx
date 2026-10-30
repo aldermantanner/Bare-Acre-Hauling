@@ -20,7 +20,7 @@ export function QuoteActions({ tone = 'on-dark', align = 'start', className = ''
     <div className={`flex w-full max-w-md flex-col gap-3 ${alignment} ${className}`}>
       <a
         href={PHONE_SMS_HREF}
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-green-600 px-6 py-4 text-lg font-bold text-white shadow-lg transition-colors hover:bg-green-700"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-green-800 px-6 py-4 text-lg font-bold text-white shadow-lg transition-colors hover:bg-green-900"
       >
         <MessageSquare className="h-5 w-5 shrink-0" aria-hidden="true" />
         Text a photo for a quote
@@ -36,7 +36,7 @@ export function QuoteActions({ tone = 'on-dark', align = 'start', className = ''
         href={JOBBER_REQUEST_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className={`text-center text-sm font-medium underline underline-offset-2 ${tertiary}`}
+        className={`inline-flex min-h-11 items-center justify-center text-center text-sm font-medium underline underline-offset-2 ${tertiary}`}
       >
         Or send a request form
       </a>

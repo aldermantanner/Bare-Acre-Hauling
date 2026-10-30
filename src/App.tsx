@@ -53,7 +53,7 @@ function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetError
         </div>
         <button
           onClick={resetErrorBoundary}
-          className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
+          className="w-full min-h-11 rounded-lg bg-green-800 px-6 py-3 font-semibold text-white transition-colors hover:bg-green-900"
         >
           Try again
         </button>

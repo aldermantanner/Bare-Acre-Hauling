@@ -10,7 +10,7 @@ export function MobileQuoteBar() {
   return (
     <>
       <div
-        className="h-[calc(9rem+env(safe-area-inset-bottom))] lg:hidden"
+        className="h-[calc(4.5rem+env(safe-area-inset-bottom))] lg:hidden"
         aria-hidden="true"
       />
       <nav
@@ -27,7 +27,7 @@ export function MobileQuoteBar() {
           </a>
           <a
             href={PHONE_SMS_HREF}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-green-600 px-3 py-3 text-base font-bold text-white"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-green-800 px-3 py-3 text-base font-bold text-white"
           >
             <MessageSquare className="h-5 w-5 shrink-0" aria-hidden="true" />
             Text a photo

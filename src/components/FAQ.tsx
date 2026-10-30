@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, MessageSquare, Phone } from 'lucide-react';
-import { PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
+import { HEAVY_MATERIAL_NOTE, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF, REPLY_TIME } from '../lib/contact';
 
 interface FAQItem {
   question: string;
@@ -34,7 +34,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'Can you help with a hoarder house cleanout?',
-    answer: 'Yes. We offer full hoarder house cleanout services. We work discreetly, respectfully, and efficiently. These jobs are quoted on-site given the variety of material and volume involved. Call us to schedule a walkthrough and estimate.'
+    answer: 'Yes. We offer full hoarder house cleanout services. We work discreetly, respectfully, and efficiently. Text a photo for a quote. You approve the price before we load.'
   },
   {
     question: 'Do you do estate and full house cleanouts?',
@@ -42,11 +42,11 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'What do you NOT take?',
-    answer: 'We cannot take hazardous materials, chemicals, liquids, paint, or asbestos. For special disposal items like concrete, dirt, brick, or roofing shingles, those require a custom quote due to weight surcharges at the dump.'
+    answer: `We cannot take hazardous materials, chemicals, liquids, paint, or asbestos. ${HEAVY_MATERIAL_NOTE}`
   },
   {
     question: 'How do I get a quote?',
-    answer: 'The fastest way is to text us photos of what you need removed at 503-874-3705. We\'ll reply with a quick estimate. You can also call us directly or book online and we\'ll reach out to confirm pricing before we show up.'
+    answer: `Text a photo of what you need removed to ${PHONE_DISPLAY}. ${REPLY_TIME} You can also call, or send the request form. You approve the price before we load.`
   },
   {
     question: 'What payment methods do you accept?',
@@ -66,12 +66,12 @@ export function FAQ() {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <section className="bg-gray-50 px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-4xl font-bold text-center text-slate-800 mb-4">
           Frequently Asked Questions
         </h2>
-        <p className="text-xl text-gray-600 text-center mb-16">
+        <p className="mb-8 text-center text-lg text-gray-600 sm:mb-12 sm:text-xl">
           Everything you need to know about our junk removal services
         </p>
         <div className="space-y-4">
@@ -109,21 +109,21 @@ export function FAQ() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href={PHONE_SMS_HREF}
-              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold inline-flex items-center justify-center gap-2"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-green-800 px-6 py-3 font-semibold text-white transition-colors hover:bg-green-900"
             >
               <MessageSquare className="h-5 w-5" aria-hidden="true" />
               Text a photo for a quote
             </a>
             <a
               href={PHONE_TEL_HREF}
-              className="bg-slate-800 text-white px-6 py-3 rounded-lg hover:bg-slate-700 transition-colors font-semibold inline-flex items-center justify-center gap-2"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-slate-800 px-6 py-3 font-semibold text-white transition-colors hover:bg-slate-700"
             >
               <Phone className="h-5 w-5" aria-hidden="true" />
               Call {PHONE_DISPLAY}
             </a>
             <a
               href="mailto:BareAcreHauling@outlook.com"
-              className="bg-white text-slate-700 border border-slate-300 px-6 py-3 rounded-lg hover:bg-slate-50 transition-colors font-semibold"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition-colors hover:bg-slate-50"
             >
               Email Us
             </a>

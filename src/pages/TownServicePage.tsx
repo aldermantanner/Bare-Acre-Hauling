@@ -83,10 +83,11 @@ export function TownServicePage({ town }: { town: TownPage }) {
       <article className="bg-white">
         <div className="bg-slate-800">
           <div className="mx-auto grid max-w-6xl lg:grid-cols-2">
-            <div className="relative h-56 sm:h-72 lg:h-auto lg:min-h-[460px]">
+            <div className="relative h-32 sm:h-72 lg:h-auto lg:min-h-[460px]">
               <Photo
                 webp={town.hero.webp}
                 jpg={town.hero.jpg}
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 alt={town.hero.alt}
                 width={town.hero.width}
                 height={town.hero.height}
@@ -97,21 +98,21 @@ export function TownServicePage({ town }: { town: TownPage }) {
                 fetchPriority="high"
               />
             </div>
-            <div className="px-4 py-8 sm:px-8 lg:py-12">
-              <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-green-300">
+            <div className="px-4 py-4 sm:px-8 sm:py-8 lg:py-12">
+              <p className="mb-1 text-sm font-semibold uppercase tracking-wide text-green-300">
                 Veteran-owned · Based in Molalla
               </p>
               <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl">{town.h1}</h1>
+              <p className="mt-3 font-semibold text-white">{MINIMUM_PRICE_NOTE}</p>
+              <div className="mt-3">
+                <QuoteActions tone="on-dark" />
+              </div>
               <p className="mt-4 text-base leading-relaxed text-slate-200">{town.lead}</p>
-              <p className="mt-4 font-semibold text-white">{MINIMUM_PRICE_NOTE}</p>
               <p className="mt-2">
-                <Link to="/pricing" className="text-sm font-semibold text-green-300 underline underline-offset-2">
+                <Link to="/pricing" className="inline-flex min-h-11 items-center text-sm font-semibold text-green-300 underline underline-offset-2">
                   See the pricing calculator
                 </Link>
               </p>
-              <div className="mt-6">
-                <QuoteActions tone="on-dark" />
-              </div>
             </div>
           </div>
         </div>

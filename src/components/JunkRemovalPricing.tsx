@@ -4,7 +4,7 @@ import {
   Package, Home, Leaf, Wrench, Archive, Building2, Calculator, DollarSign, MapPin,
 } from 'lucide-react';
 import { QuoteActions } from './QuoteActions';
-import { MINIMUM_PRICE_NOTE } from '../lib/contact';
+import { BALLPARK_NOTE, HEAVY_MATERIAL_NOTE, MINIMUM_PRICE_NOTE } from '../lib/contact';
 
 type LoadSize = 'small' | 'medium' | 'large' | 'full';
 type DriveZone = 'local' | 'nearby' | 'far' | 'distant';
@@ -51,7 +51,7 @@ const factorDetails = [
 ];
 
 export function JunkRemovalPricing() {
-  const [loadSize, setLoadSize] = useState<LoadSize>('medium');
+  const [loadSize, setLoadSize] = useState<LoadSize>('small');
   const [driveZone, setDriveZone] = useState<DriveZone>('local');
   const [serviceLevel, setServiceLevel] = useState<ServiceLevel>('full');
   const [diyDays, setDiyDays] = useState(1);
@@ -191,7 +191,7 @@ export function JunkRemovalPricing() {
               </button>
             </div>
             {materialType === 'heavy' && (
-              <p className="mt-2 text-xs text-orange-700">Heavy-material estimates include a larger disposal allowance. Final pricing is confirmed by actual weight.</p>
+              <p className="mt-2 text-xs text-orange-800">{HEAVY_MATERIAL_NOTE}</p>
             )}
           </div>
 
@@ -262,9 +262,10 @@ export function JunkRemovalPricing() {
               </div>
               <div className="border-t border-gray-300 pt-3 mt-3" />
               <div className="flex items-center justify-between py-1">
-                <span className="font-bold text-slate-800">Estimated Total</span>
-                <span className="text-2xl sm:text-3xl font-bold text-green-600">{fmt(total)}</span>
+                <span className="font-bold text-slate-800">Ballpark total</span>
+                <span className="text-2xl sm:text-3xl font-bold text-green-800">{fmt(total)}</span>
               </div>
+              <p className="text-sm font-semibold text-slate-800">{BALLPARK_NOTE}</p>
               {hitMinimum && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-3">
                   <p className="text-xs sm:text-sm text-amber-800">
@@ -279,7 +280,7 @@ export function JunkRemovalPricing() {
           <div className="space-y-3">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-xs sm:text-sm text-blue-900">
-                <strong>This is an estimate.</strong> Heavy materials such as dirt and concrete are priced using a larger disposal allowance because a full load can exceed 2 tons. Final pricing is confirmed on-site based on actual load size, material type, and disposal weight.
+                {HEAVY_MATERIAL_NOTE}
               </p>
             </div>
             <QuoteActions tone="on-light" />
@@ -330,7 +331,7 @@ export function JunkRemovalPricing() {
         </div>
         <div className="bg-amber-50 rounded-xl p-5 sm:p-6 border border-amber-200">
           <h3 className="text-lg font-bold text-slate-800 mb-3">Materials Requiring a Custom Quote</h3>
-          <p className="text-xs sm:text-sm text-gray-600 mb-3">Some materials have special disposal requirements or significant weight surcharges:</p>
+          <p className="text-xs sm:text-sm text-gray-700 mb-3">{HEAVY_MATERIAL_NOTE}</p>
           <ul className="space-y-2">
             {['Concrete, dirt, brick, asphalt', 'Roofing material (shingles)', 'Hazardous or restricted waste'].map((item, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
@@ -339,7 +340,7 @@ export function JunkRemovalPricing() {
               </li>
             ))}
           </ul>
-          <p className="text-xs text-gray-600 mt-3 italic">We'll review materials before loading — no surprises at the dump.</p>
+          <p className="text-xs text-gray-700 mt-3">Text a photo. You approve the price before we load.</p>
         </div>
       </div>
 
@@ -366,8 +367,8 @@ export function JunkRemovalPricing() {
         <p className="text-slate-300 mt-4 text-xs sm:text-sm">Serving Molalla & surrounding areas in Clackamas County</p>
       </div>
 
-      <p className="text-center text-xs text-gray-400 mt-6 italic">
-        *Final pricing confirmed on-site based on actual load size, material type, and disposal weight.
+      <p className="text-center text-xs text-gray-500 mt-6">
+        {BALLPARK_NOTE} {HEAVY_MATERIAL_NOTE}
       </p>
     </div>
   );

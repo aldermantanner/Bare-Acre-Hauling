@@ -30,7 +30,7 @@ export function NotFoundPage() {
         </p>
         <Link
           to="/"
-          className="mt-8 inline-flex rounded-lg bg-green-600 px-6 py-3 font-bold text-white hover:bg-green-700"
+          className="mt-8 inline-flex min-h-11 items-center rounded-lg bg-green-800 px-6 py-3 font-bold text-white hover:bg-green-900"
         >
           Back to home
         </Link>

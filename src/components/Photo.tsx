@@ -9,6 +9,10 @@ type PhotoProps = {
   loading?: 'eager' | 'lazy';
   fetchPriority?: 'high' | 'low' | 'auto';
   objectPosition?: string;
+  /** Width-descriptor srcset for the WebP candidate, e.g. "/img-640.webp 640w, /img.webp 1280w". */
+  webpSrcSet?: string;
+  jpgSrcSet?: string;
+  sizes?: string;
 };
 
 export function Photo({
@@ -22,19 +26,24 @@ export function Photo({
   loading = 'lazy',
   fetchPriority = 'auto',
   objectPosition,
+  webpSrcSet,
+  jpgSrcSet,
+  sizes,
 }: PhotoProps) {
   return (
     <picture className={pictureClassName}>
-      <source srcSet={webp} type="image/webp" />
+      <source srcSet={webpSrcSet ?? webp} type="image/webp" sizes={sizes} />
       <img
         src={jpg}
+        srcSet={jpgSrcSet}
+        sizes={jpgSrcSet ? sizes : undefined}
         alt={alt}
         width={width}
         height={height}
         className={className}
         style={objectPosition ? { objectPosition } : undefined}
         loading={loading}
-        decoding="async"
+        decoding={fetchPriority === 'high' ? 'sync' : 'async'}
         fetchPriority={fetchPriority}
       />
     </picture>
