@@ -4,7 +4,7 @@ import { Phone, Menu, X, Facebook, Mail, MapPin, MessageSquare } from 'lucide-re
 import { Logo } from './Logo';
 import { LocalBusinessSchema } from './LocalBusinessSchema';
 import { HoursNote } from './HoursNote';
-import { JOBBER_CLIENT_LOGIN_URL, JOBBER_REQUEST_URL, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
+import { GOOGLE_REVIEW_URL, JOBBER_CLIENT_LOGIN_URL, JOBBER_REQUEST_URL, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF } from '../lib/contact';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -255,7 +255,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               BareAcreHauling@outlook.com
             </a>
           </p>
-          <p className="mb-6">
+          <p className="mb-2">
             <a
               href={JOBBER_CLIENT_LOGIN_URL}
               target="_blank"
@@ -263,6 +263,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className="inline-flex min-h-11 items-center text-sm text-gray-400 underline underline-offset-2 hover:text-white"
             >
               Existing customers
+            </a>
+          </p>
+          <p className="mb-6">
+            <a
+              href={GOOGLE_REVIEW_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center text-sm text-gray-300 underline underline-offset-2 hover:text-white"
+            >
+              Review us on Google
             </a>
           </p>
 

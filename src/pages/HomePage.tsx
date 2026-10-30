@@ -8,7 +8,7 @@ import { ReviewSchema } from '../components/ReviewSchema';
 import { BreadcrumbSchema } from '../components/BreadcrumbSchema';
 import { Photo } from '../components/Photo';
 import { QuoteActions } from '../components/QuoteActions';
-import { MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
+import { GOOGLE_REVIEW_URL, MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
 import { TOWN_GROUPS, TOWN_PAGES, townPath } from '../data/towns';
 
 const services = [
@@ -267,30 +267,65 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* One real customer note. Not linked from the nav. */}
-          <div id="reviews" className="scroll-mt-24 flex flex-col md:flex-row items-center gap-6 bg-slate-50 rounded-2xl p-7 shadow-sm">
-            <Photo
-              webp="/crew-loading.webp"
-              jpg="/crew-loading.jpg"
-              alt="Tanner, owner of Bare Acre Hauling"
-              width={1280}
-              height={853}
-              pictureClassName="shrink-0"
-              className="h-20 w-20 rounded-full border-4 border-white object-cover object-left shadow-md"
-            />
-            <div className="flex-1 text-center md:text-left">
-              <div className="flex justify-center md:justify-start gap-0.5 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
+          {/* One real customer note, plus a way to leave a Google review. No extra ratings. */}
+          <div id="reviews" className="grid scroll-mt-24 items-stretch gap-4 md:grid-cols-2">
+            <div className="flex flex-col items-center gap-4 rounded-2xl bg-slate-50 p-6 shadow-sm sm:flex-row">
+              <div
+                className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-4 border-white bg-slate-700 text-xl font-bold text-white shadow-md"
+                aria-hidden="true"
+              >
+                AM
               </div>
-              <p className="text-slate-700 text-base italic mb-1">"Quick, efficient service made junk removal easy. Their top-notch customer service is highly recommended!"</p>
-              <p className="text-slate-500 text-sm font-semibold">— Alex M., Molalla OR</p>
+              <div className="flex-1 text-center sm:text-left">
+                <div className="mb-2 flex justify-center gap-0.5 sm:justify-start">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="h-5 w-5 fill-current text-amber-400" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="mb-1 text-base italic text-slate-700">"Quick, efficient service made junk removal easy. Their top-notch customer service is highly recommended!"</p>
+                <p className="text-sm font-semibold text-slate-500">— Alex M., Molalla OR</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800">Had us out?</h3>
+              <p className="text-sm text-gray-600">A Google review helps the next person in town find us.</p>
+              <a
+                href={GOOGLE_REVIEW_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg border-2 border-slate-800 px-5 py-3 text-base font-bold text-slate-800 transition-colors hover:bg-slate-800 hover:text-white"
+              >
+                Leave us a Google review
+              </a>
             </div>
           </div>
 
+        </div>
+      </section>
+
+      <section aria-labelledby="owner-heading" className="bg-white px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-2">
+          <Photo
+            webp="/owner-tanner.webp"
+            jpg="/owner-tanner.jpg"
+            alt="Tanner Alderman, owner of Bare Acre Hauling, standing by the dump trailer"
+            width={600}
+            height={1056}
+            pictureClassName="mx-auto w-full max-w-xs"
+            className="aspect-[600/1056] w-full rounded-2xl object-cover shadow-lg"
+            loading="lazy"
+          />
+          <div>
+            <h2 id="owner-heading" className="text-3xl font-bold text-slate-800">Meet the owner</h2>
+            <p className="mt-4 text-base leading-relaxed text-slate-700">
+              Tanner Alderman owns and runs Bare Acre Hauling, a local veteran-owned business based in Molalla. He served in the U.S. military from 2015 to 2021. He and his crew are licensed, bonded, and insured, and you deal directly with him.
+            </p>
+            <div className="mt-6">
+              <QuoteActions tone="on-light" />
+            </div>
+          </div>
         </div>
       </section>
 

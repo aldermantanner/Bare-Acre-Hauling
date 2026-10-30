@@ -119,6 +119,21 @@ export function TownServicePage({ town }: { town: TownPage }) {
 
         <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
           <p className="text-lg leading-relaxed text-slate-700">{town.detail}</p>
+          <div className="mt-8 flex items-center gap-4 rounded-xl bg-slate-50 p-4">
+            <Photo
+              webp="/owner-tanner.webp"
+              jpg="/owner-tanner.jpg"
+              alt="Tanner Alderman, owner of Bare Acre Hauling, standing by the dump trailer"
+              width={600}
+              height={1056}
+              pictureClassName="shrink-0"
+              className="h-24 w-20 rounded-lg object-cover object-[center_16%]"
+              loading="lazy"
+            />
+            <p className="text-slate-700">
+              Tanner Alderman owns Bare Acre Hauling in Molalla. You deal directly with him.
+            </p>
+          </div>
           <div className="mt-6">
             <HoursNote />
           </div>
