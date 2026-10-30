@@ -91,7 +91,8 @@ export function TownServicePage({ town }: { town: TownPage }) {
                 width={town.hero.width}
                 height={town.hero.height}
                 pictureClassName="absolute inset-0"
-                className="h-full w-full object-cover object-center"
+                className="h-full w-full object-cover"
+                objectPosition={town.hero.objectPosition}
                 loading="eager"
                 fetchPriority="high"
               />
