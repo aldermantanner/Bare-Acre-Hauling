@@ -8,6 +8,7 @@ type PhotoProps = {
   pictureClassName?: string;
   loading?: 'eager' | 'lazy';
   fetchPriority?: 'high' | 'low' | 'auto';
+  objectPosition?: string;
 };
 
 export function Photo({
@@ -20,6 +21,7 @@ export function Photo({
   pictureClassName,
   loading = 'lazy',
   fetchPriority = 'auto',
+  objectPosition,
 }: PhotoProps) {
   return (
     <picture className={pictureClassName}>
@@ -30,6 +32,7 @@ export function Photo({
         width={width}
         height={height}
         className={className}
+        style={objectPosition ? { objectPosition } : undefined}
         loading={loading}
         decoding="async"
         fetchPriority={fetchPriority}

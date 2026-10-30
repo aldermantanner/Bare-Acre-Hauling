@@ -1,14 +1,10 @@
 /**
  * Town landing pages.
  *
- * Hero photos: each town has a photoKey. Until a local photo exists, hero.webp
- * and hero.jpg point at a real job photo already on the site.
- *
- * To use a town photo, add both files:
- *   public/towns/<photoKey>.webp
- *   public/towns/<photoKey>.jpg
- * Then set that town's hero.webp and hero.jpg to /towns/<photoKey>.webp and
- * /towns/<photoKey>.jpg, and update width and height to the new file.
+ * Hero photos are shared job shots in public/towns/<photoKey>.webp and .jpg.
+ * Several towns point at the same photoKey so the file is stored once.
+ * To give one town its own photo later, add public/towns/<new-key>.webp and
+ * .jpg, then change that town's photoKey and hero paths.
  */
 
 export type TownHero = {
@@ -17,6 +13,8 @@ export type TownHero = {
   width: number;
   height: number;
   alt: string;
+  /** CSS object-position so the subject stays in the hero crop. */
+  objectPosition: string;
 };
 
 export type TownPage = {
@@ -35,28 +33,85 @@ export type TownPage = {
   hero: TownHero;
 };
 
-const CREW: TownHero = {
-  webp: '/crew-loading.webp',
-  jpg: '/crew-loading.jpg',
-  width: 1280,
-  height: 853,
-  alt: 'Loading appliances and furniture onto the trailer',
+const YARD: TownHero = {
+  webp: '/towns/yard-debris.webp',
+  jpg: '/towns/yard-debris.jpg',
+  width: 1000,
+  height: 1333,
+  alt: 'Dump trailer loaded with yard debris, branches, and an old lawn mower',
+  objectPosition: 'center 68%',
 };
 
-const BEFORE: TownHero = {
-  webp: '/before-real.webp',
-  jpg: '/before-real.jpg',
-  width: 1200,
-  height: 900,
-  alt: 'Household junk and debris piled before removal',
+const OWNER_UNLOADING: TownHero = {
+  webp: '/towns/owner-unloading.webp',
+  jpg: '/towns/owner-unloading.jpg',
+  width: 901,
+  height: 1600,
+  alt: 'Bare Acre Hauling owner in a green shirt unloading junk from the trailer at a transfer station',
+  objectPosition: '68% 24%',
 };
 
-const AFTER: TownHero = {
-  webp: '/after.webp',
-  jpg: '/after.jpg',
-  width: 1050,
-  height: 1400,
-  alt: 'A cleared driveway after junk removal',
+const LOG_HOME_TRAILER: TownHero = {
+  webp: '/towns/log-home-trailer.webp',
+  jpg: '/towns/log-home-trailer.jpg',
+  width: 920,
+  height: 1227,
+  alt: 'Dump trailer and wheelbarrow parked in front of a log home during a cleanup',
+  objectPosition: 'center 38%',
+};
+
+const LUMBER: TownHero = {
+  webp: '/towns/lumber-pile.webp',
+  jpg: '/towns/lumber-pile.jpg',
+  width: 780,
+  height: 1040,
+  alt: 'Cut logs, lumber, and wood rounds piled on a wooded lot before haul-away',
+  objectPosition: 'center 30%',
+};
+
+const UNLOADING_WOOD: TownHero = {
+  webp: '/towns/unloading-wood.webp',
+  jpg: '/towns/unloading-wood.jpg',
+  width: 1000,
+  height: 1333,
+  alt: 'White truck dumping a trailer load of lumber and logs beside a rural road',
+  objectPosition: 'center 42%',
+};
+
+const LOG_HOME_LOADED: TownHero = {
+  webp: '/towns/log-home-loaded.webp',
+  jpg: '/towns/log-home-loaded.jpg',
+  width: 920,
+  height: 1227,
+  alt: 'Trailer loaded with scrap lumber parked in front of a log home',
+  objectPosition: 'center 40%',
+};
+
+const WOODED: TownHero = {
+  webp: '/towns/wooded-lot.webp',
+  jpg: '/towns/wooded-lot.jpg',
+  width: 840,
+  height: 1120,
+  alt: 'Logs and a tarp on a wooded lot before junk removal',
+  objectPosition: 'center 36%',
+};
+
+const OWNER_CUSTOMER: TownHero = {
+  webp: '/towns/owner-and-customer.webp',
+  jpg: '/towns/owner-and-customer.jpg',
+  width: 1100,
+  height: 1467,
+  alt: 'Bare Acre Hauling owner in a green shirt standing with a customer beside a loaded trailer',
+  objectPosition: 'center 42%',
+};
+
+const TRUCK: TownHero = {
+  webp: '/towns/truck-and-trailer.webp',
+  jpg: '/towns/truck-and-trailer.jpg',
+  width: 1100,
+  height: 1467,
+  alt: 'Pickup truck towing a loaded junk removal trailer',
+  objectPosition: 'center 40%',
 };
 
 export const TOWN_GROUPS: { id: TownPage['group']; title: string; note: string }[] = [
@@ -90,7 +145,7 @@ export const TOWN_GROUPS: { id: TownPage['group']; title: string; note: string }
 export const TOWN_PAGES: TownPage[] = [
   {
     slug: 'junk-removal-molalla',
-    photoKey: 'molalla',
+    photoKey: 'owner-and-customer',
     city: 'Molalla',
     placeType: 'City',
     group: 'home',
@@ -103,11 +158,11 @@ export const TOWN_PAGES: TownPage[] = [
       'This is home. Downtown is a few minutes from the shop. OR-213 runs north toward Mulino, and OR-211 heads east and west. We do garage cleanouts, furniture and appliances, yard debris, and cleanups on the acreage outside town.',
     detail:
       'Out by the Molalla River, the pile is often behind a shop or along a fence line. Text a photo and we\'ll send a price.',
-    hero: CREW,
+    hero: OWNER_CUSTOMER,
   },
   {
     slug: 'junk-removal-mulino',
-    photoKey: 'mulino',
+    photoKey: 'yard-debris',
     city: 'Mulino',
     placeType: 'Place',
     group: 'home',
@@ -120,11 +175,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Mulino is the next stop north of Molalla on OR-213, a short drive before the highway keeps going toward Oregon City. Houses sit on bigger lots, with small acreage mixed in.',
     detail:
       'Garage cleanouts, brush, and junk from a shop or outbuilding are the usual jobs. Text a photo and we\'ll send a price.',
-    hero: BEFORE,
+    hero: YARD,
   },
   {
     slug: 'junk-removal-beavercreek',
-    photoKey: 'beavercreek',
+    photoKey: 'log-home-loaded',
     city: 'Beavercreek',
     placeType: 'Place',
     group: 'home',
@@ -137,11 +192,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Beavercreek is northeast of Molalla, along Beavercreek Road between Oregon City and the road out to Estacada. The places are spread out.',
     detail:
       'We haul yard debris, shop and barn cleanups, and household junk off acreage. From Molalla we head north on OR-213, then east. Text a photo of the pile.',
-    hero: AFTER,
+    hero: LOG_HOME_LOADED,
   },
   {
     slug: 'junk-removal-canby',
-    photoKey: 'canby',
+    photoKey: 'owner-unloading',
     city: 'Canby',
     placeType: 'City',
     group: 'north',
@@ -154,11 +209,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Canby is just north of us, on the 99E side of Clackamas County, between Molalla and Oregon City. Neighborhoods and acreage both.',
     detail:
       'We come up for garages that turned into storage, a washer or fridge, furniture after a move, brush, and estate or move-out cleanouts. Text a photo of the pile.',
-    hero: CREW,
+    hero: OWNER_UNLOADING,
   },
   {
     slug: 'junk-removal-oregon-city',
-    photoKey: 'oregon-city',
+    photoKey: 'lumber-pile',
     city: 'Oregon City',
     placeType: 'City',
     group: 'north',
@@ -171,11 +226,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Oregon City is north of Molalla on OR-213, where the Willamette runs and the neighborhoods climb the hill above the river. Older streets near downtown, and houses farther out.',
     detail:
       'Appliances, furniture, a packed garage, a full estate cleanout, plus yard debris and remodel leftovers on the hill lots. Text a photo and we\'ll get you a price.',
-    hero: BEFORE,
+    hero: LUMBER,
   },
   {
     slug: 'junk-removal-gladstone',
-    photoKey: 'gladstone',
+    photoKey: 'unloading-wood',
     city: 'Gladstone',
     placeType: 'City',
     group: 'north',
@@ -188,11 +243,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Gladstone sits between Oregon City and Milwaukie, where the Clackamas River meets the Willamette. From Molalla it is OR-213 to Oregon City, then a few more minutes.',
     detail:
       'Most jobs are a garage, a basement, appliances, furniture, or a small move-out. Text a photo and we\'ll price it.',
-    hero: AFTER,
+    hero: UNLOADING_WOOD,
   },
   {
     slug: 'junk-removal-milwaukie',
-    photoKey: 'milwaukie',
+    photoKey: 'log-home-trailer',
     city: 'Milwaukie',
     placeType: 'City',
     group: 'north',
@@ -205,11 +260,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Milwaukie is up 99E, with downtown by the Willamette and neighborhoods toward OR-224. From Molalla we come up OR-213, through Oregon City, and on past Gladstone.',
     detail:
       'We haul furniture, appliances, packed garages, and move-outs. Text a photo and we\'ll send a price.',
-    hero: CREW,
+    hero: LOG_HOME_TRAILER,
   },
   {
     slug: 'junk-removal-silverton',
-    photoKey: 'silverton',
+    photoKey: 'wooded-lot',
     city: 'Silverton',
     placeType: 'City',
     group: 'south',
@@ -222,11 +277,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Silverton is south of Molalla on OR-213, about twenty minutes from the shop. Older downtown, and houses out toward the Oregon Garden side of town.',
     detail:
       'Garage cleanouts, furniture, appliances, yard debris, and estate cleanouts. From Mt. Angel over to Silverton is an easy loop for us. Text a photo and we\'ll price the job.',
-    hero: BEFORE,
+    hero: WOODED,
   },
   {
     slug: 'junk-removal-mt-angel',
-    photoKey: 'mt-angel',
+    photoKey: 'truck-and-trailer',
     city: 'Mt. Angel',
     placeType: 'City',
     group: 'south',
@@ -239,11 +294,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Mt. Angel is west of Silverton on OR-214, between Silverton and Woodburn. The abbey sits on the hill above a small downtown. From Molalla we take OR-213 south and cut over.',
     detail:
       'House cleanouts, garages, furniture, and yard debris. Text a photo and we\'ll send a price.',
-    hero: AFTER,
+    hero: TRUCK,
   },
   {
     slug: 'junk-removal-woodburn',
-    photoKey: 'woodburn',
+    photoKey: 'owner-and-customer',
     city: 'Woodburn',
     placeType: 'City',
     group: 'south',
@@ -256,11 +311,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Woodburn is west of Molalla, where OR-211 meets I-5. About twenty minutes from the shop. Downtown, 99E, and the neighborhoods around the outlet shops.',
     detail:
       'House garages, rental move-outs, furniture and appliances by the driveway, and estate cleanouts when an older house turns over. Text a photo so we can see the pile.',
-    hero: CREW,
+    hero: OWNER_CUSTOMER,
   },
   {
     slug: 'junk-removal-hubbard',
-    photoKey: 'hubbard',
+    photoKey: 'yard-debris',
     city: 'Hubbard',
     placeType: 'City',
     group: 'south',
@@ -273,11 +328,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Hubbard is a small town on 99E, south of Aurora and north of Woodburn. From Molalla we take OR-211 west, then a short hop up the highway.',
     detail:
       'Garage cleanouts, appliances, and yard debris, in town and on the acreage at the edge. Text a photo and we\'ll send a price.',
-    hero: BEFORE,
+    hero: YARD,
   },
   {
     slug: 'junk-removal-aurora',
-    photoKey: 'aurora',
+    photoKey: 'log-home-loaded',
     city: 'Aurora',
     placeType: 'City',
     group: 'south',
@@ -290,11 +345,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Aurora sits on 99E, north of Hubbard and south of Canby. The old downtown has colony-era houses and antique shops along the highway, with homes on the streets behind them. From Molalla we come across to 99E.',
     detail:
       'Furniture and estate cleanouts in the older houses. Garage loads and yard debris on the newer streets. Text a photo and we\'ll price it.',
-    hero: AFTER,
+    hero: LOG_HOME_LOADED,
   },
   {
     slug: 'junk-removal-salem',
-    photoKey: 'salem',
+    photoKey: 'owner-unloading',
     city: 'Salem',
     placeType: 'City',
     group: 'south',
@@ -307,11 +362,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Salem is the state capital, southwest of Molalla in Marion County. Downtown streets, then neighborhoods spread out from there.',
     detail:
       'One apartment of furniture or a whole house. We come down for furniture, appliances, garages, yard debris, and estate cleanouts. Text a photo and the cross street and we\'ll send a price.',
-    hero: AFTER,
+    hero: OWNER_UNLOADING,
   },
   {
     slug: 'junk-removal-keizer',
-    photoKey: 'keizer',
+    photoKey: 'lumber-pile',
     city: 'Keizer',
     placeType: 'City',
     group: 'south',
@@ -324,11 +379,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Keizer is just north of Salem, on the Marion County side of the Willamette and west of Molalla. Mostly houses.',
     detail:
       'Garages used as storage, couches and mattresses, old appliances, yard debris, and estate or move-out cleanouts. Text a photo and we\'ll price the load.',
-    hero: CREW,
+    hero: LUMBER,
   },
   {
     slug: 'junk-removal-estacada',
-    photoKey: 'estacada',
+    photoKey: 'unloading-wood',
     city: 'Estacada',
     placeType: 'City',
     group: 'east',
@@ -341,11 +396,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Estacada is east of Molalla. OR-211 heads toward the Clackamas River, and OR-224 brings you into town. About half an hour from the shop. Downtown is small, with acreage and houses set back off the road on the way in.',
     detail:
       'Garage cleanouts, yard debris, and junk from shops and outbuildings. Estate cleanouts too, when a house in town is being cleared. Text a photo and we\'ll set the price.',
-    hero: BEFORE,
+    hero: UNLOADING_WOOD,
   },
   {
     slug: 'junk-removal-sandy',
-    photoKey: 'sandy',
+    photoKey: 'log-home-trailer',
     city: 'Sandy',
     placeType: 'City',
     group: 'east',
@@ -358,11 +413,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Sandy is where OR-211 from Molalla meets US-26, at the start of the Mount Hood highway. We cover downtown and the streets off the highway.',
     detail:
       'Furniture, appliances, garage cleanouts, and yard debris. Places between Estacada and Sandy along 211 are the same kind of work: brush, an outbuilding, household junk. Text a photo and we\'ll send a price.',
-    hero: AFTER,
+    hero: LOG_HOME_TRAILER,
   },
   {
     slug: 'junk-removal-wilsonville',
-    photoKey: 'wilsonville',
+    photoKey: 'wooded-lot',
     city: 'Wilsonville',
     placeType: 'City',
     group: 'metro',
@@ -375,11 +430,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Wilsonville is north of Canby, where I-5 crosses the Willamette. Villebois is on the west side, older streets are closer to the river, and Wilsonville Road is the commercial strip. From Molalla we come up through Canby, about half an hour.',
     detail:
       'Apartment and house furniture, appliances, garage cleanouts, and move-outs. Text a photo with the nearest cross street and we\'ll send a price.',
-    hero: CREW,
+    hero: WOODED,
   },
   {
     slug: 'junk-removal-west-linn',
-    photoKey: 'west-linn',
+    photoKey: 'owner-and-customer',
     city: 'West Linn',
     placeType: 'City',
     group: 'metro',
@@ -392,11 +447,11 @@ export const TOWN_PAGES: TownPage[] = [
       'West Linn is north of Oregon City along the Willamette. Bolton and the Willamette neighborhood are down by the river, and houses climb toward I-205 and OR-43. From Molalla it is OR-213 through Oregon City, about half an hour.',
     detail:
       'Garage cleanouts, furniture, appliances, and yard debris on the sloped lots. Estate cleanouts in the older parts of town too. Text a photo and we\'ll price it.',
-    hero: BEFORE,
+    hero: OWNER_CUSTOMER,
   },
   {
     slug: 'junk-removal-happy-valley',
-    photoKey: 'happy-valley',
+    photoKey: 'truck-and-trailer',
     city: 'Happy Valley',
     placeType: 'City',
     group: 'metro',
@@ -409,11 +464,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Happy Valley is east of I-205, in the newer subdivisions off Sunnyside Road and 172nd, uphill from Clackamas. From Molalla we drive north, then east of Oregon City.',
     detail:
       'Garage cleanouts, furniture after a move, appliances, and yard debris. Text a photo and we\'ll send a price.',
-    hero: AFTER,
+    hero: TRUCK,
   },
   {
     slug: 'junk-removal-tualatin',
-    photoKey: 'tualatin',
+    photoKey: 'yard-debris',
     city: 'Tualatin',
     placeType: 'City',
     group: 'metro',
@@ -426,11 +481,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Tualatin is northwest of Molalla on the I-5 side, past Wilsonville. Tualatin-Sherwood Road and the downtown blocks by the Tualatin River.',
     detail:
       'Furniture, appliances, garage cleanouts, and move-outs from houses and townhouses. Text a photo and we\'ll send a price.',
-    hero: CREW,
+    hero: YARD,
   },
   {
     slug: 'junk-removal-lake-oswego',
-    photoKey: 'lake-oswego',
+    photoKey: 'owner-unloading',
     city: 'Lake Oswego',
     placeType: 'City',
     group: 'metro',
@@ -443,11 +498,11 @@ export const TOWN_PAGES: TownPage[] = [
       'Lake Oswego is northwest of Molalla. OR-43 runs along the Willamette, downtown sits by the lake, and Mountain Park is up the hill. We come up past West Linn.',
     detail:
       'Furniture, appliances, a garage that filled up, or an estate cleanout. Text a photo and we\'ll price the pile.',
-    hero: BEFORE,
+    hero: OWNER_UNLOADING,
   },
   {
     slug: 'junk-removal-newberg',
-    photoKey: 'newberg',
+    photoKey: 'lumber-pile',
     city: 'Newberg',
     placeType: 'City',
     group: 'metro',
@@ -460,7 +515,7 @@ export const TOWN_PAGES: TownPage[] = [
       'Newberg is west of the Willamette in Yamhill County, on OR-99W. Downtown, and the streets up the hill toward George Fox. From Molalla we head west toward Woodburn and across, or up through Wilsonville.',
     detail:
       'Furniture, appliances, garage cleanouts, yard debris, and estate cleanouts. Text a photo and we\'ll send a price.',
-    hero: AFTER,
+    hero: LUMBER,
   },
 ];
 
