@@ -40,8 +40,8 @@ function citySentence(cities: string[]): string {
 
 const STEPS = [
   {
-    title: 'Text a photo',
-    text: 'Send a picture of what needs to go and where you are.',
+    title: 'Call us',
+    text: 'Tell us what needs to go and where you are. You can text a photo if that is easier.',
   },
   {
     title: 'We confirm the price',
@@ -52,6 +52,18 @@ const STEPS = [
     text: 'The crew takes it away and leaves the space clear.',
   },
 ];
+
+function FirstJobOffer() {
+  return (
+    <div className="rounded-lg bg-white px-4 py-3 text-center text-slate-900 shadow-sm">
+      <p className="text-pretty text-lg font-bold leading-snug">10% off your first job.</p>
+      <p className="mt-1 text-pretty text-sm leading-snug text-slate-700">All first-time customers. No promo code.</p>
+      <p className="mt-2 text-pretty text-sm leading-snug text-slate-700">
+        Veterans, first responders, and police get 10% off.
+      </p>
+    </div>
+  );
+}
 
 function useNoIndex() {
   useEffect(() => {
@@ -112,12 +124,15 @@ export function AdLandingPage() {
             <h1 className="text-3xl sm:text-5xl font-bold leading-tight">
               Junk removal in Clackamas County
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-slate-200 leading-relaxed">
+            <p className="mt-3 text-base text-slate-200 sm:text-lg">
+              Based in Molalla. Clackamas County and the Salem area.
+            </p>
+            <div className="mt-5">
+              <QuoteActions align="center" primary="call" afterPrimary={<FirstJobOffer />} />
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-slate-300 sm:text-base">
               {citySentence(CITIES)}.
             </p>
-            <div className="mt-6">
-              <QuoteActions align="center" />
-            </div>
           </div>
         </section>
 
@@ -136,13 +151,9 @@ export function AdLandingPage() {
               <span className="font-semibold">Licensed, Bonded & Insured</span>
             </li>
           </ul>
-          <div className="max-w-3xl mx-auto mt-6 space-y-2 text-center text-slate-700">
-            <p>First-time customers get 10% off.</p>
-            <p>Veterans, first responders, and police get 10% off.</p>
-            <div className="pt-2">
-              <HoursNote />
-              <p className="mt-2 text-sm text-slate-600">{QUOTE_REQUESTS_ANYTIME}</p>
-            </div>
+          <div className="max-w-3xl mx-auto mt-6 text-center text-slate-700">
+            <HoursNote />
+            <p className="mt-2 text-sm text-slate-600">{QUOTE_REQUESTS_ANYTIME}</p>
           </div>
         </section>
 
@@ -211,9 +222,9 @@ export function AdLandingPage() {
 
         <section className="bg-slate-800 text-white px-4 py-12">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-2">Text a photo for a quote</h2>
+            <h2 className="text-2xl font-bold mb-2">Call for a quote</h2>
             <p className="text-slate-300 mb-6">Questions are fine. We will tell you if we can take the load.</p>
-            <QuoteActions align="center" />
+            <QuoteActions align="center" primary="call" afterPrimary={<FirstJobOffer />} />
           </div>
         </section>
       </main>
