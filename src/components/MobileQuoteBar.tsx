@@ -7,7 +7,8 @@ export function MobileQuoteBar() {
   const { pathname } = useLocation();
   if (pathname.startsWith('/admin')) return null;
 
-  const callFirst = pathname === '/ad-landing';
+  // Netlify serves this route as /ad-landing/ (trailing slash). Treat both as the ads page.
+  const callFirst = pathname.replace(/\/+$/, '') === '/ad-landing';
 
   return (
     <>
