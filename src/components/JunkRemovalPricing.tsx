@@ -4,7 +4,7 @@ import {
   Package, Home, Leaf, Wrench, Archive, Building2, Calculator, DollarSign, MapPin,
 } from 'lucide-react';
 import { QuoteActions } from './QuoteActions';
-import { BALLPARK_NOTE, HEAVY_MATERIAL_NOTE, MINIMUM_PRICE_NOTE } from '../lib/contact';
+import { BALLPARK_NOTE, DISCOUNT_NOTE, HEAVY_MATERIAL_NOTE, MINIMUM_PRICE_NOTE } from '../lib/contact';
 
 type LoadSize = 'small' | 'medium' | 'large' | 'full';
 type DriveZone = 'local' | 'nearby' | 'far' | 'distant';
@@ -310,7 +310,7 @@ export function JunkRemovalPricing() {
       {/* CTA */}
       <div className="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-6 sm:p-8 text-white text-center">
         <div className="inline-flex items-center gap-2 bg-red-600/90 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold mb-4">
-          10% OFF for Veterans, First Responders & Police
+          {DISCOUNT_NOTE}
         </div>
         <h3 className="text-xl sm:text-2xl font-bold mb-4">Ready to Get Started?</h3>
         <QuoteActions tone="on-dark" align="center" />

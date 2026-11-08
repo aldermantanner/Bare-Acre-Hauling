@@ -14,6 +14,9 @@ export const GOOGLE_REVIEW_URL = 'https://g.page/r/CSEQQJyBYM0QEBE/review';
 
 export const MINIMUM_PRICE_NOTE = 'Jobs start at $150. You approve the price before we load.';
 
+export const DISCOUNT_NOTE =
+  '10% off for veterans, first responders, police, and first-time customers.';
+
 export const REPLY_TIME = 'We usually reply within a few hours during business hours.';
 
 export const HEAVY_MATERIAL_NOTE =

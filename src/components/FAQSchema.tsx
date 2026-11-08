@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { HEAVY_MATERIAL_NOTE, PHONE_DISPLAY, REPLY_TIME } from '../lib/contact';
+import { DISCOUNT_NOTE, HEAVY_MATERIAL_NOTE, PHONE_DISPLAY, REPLY_TIME } from '../lib/contact';
 
 export function FAQSchema() {
   useEffect(() => {
@@ -76,7 +76,7 @@ export function FAQSchema() {
           "name": "Are you veteran owned?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Bare Acre Hauling is proudly veteran owned and operated. We offer 10% off for veterans, first responders, and police. Just mention it when you book."
+            "text": `Yes. Bare Acre Hauling is proudly veteran owned and operated. We offer ${DISCOUNT_NOTE} Just mention it when you book.`
           }
         }
       ]

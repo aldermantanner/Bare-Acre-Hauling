@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Calendar, MapPin, Phone, Mail, User, MessageSquare, CheckCircle, Camera, Info, X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { DISCOUNT_NOTE } from '../lib/contact';
 import { Link } from 'react-router-dom';
 
 type JunkServiceLevel = 'full_service' | 'cleanout_special';
@@ -233,7 +234,7 @@ export function BookingForm() {
           <span className="text-2xl">🇺🇸</span>
           <span className="font-bold text-lg">Special Discount Available</span>
         </div>
-        <p className="text-sm">Veterans, First Responders & Police receive 10% OFF - Mention when booking</p>
+        <p className="text-sm">{DISCOUNT_NOTE} Mention when booking</p>
       </div>
       <form onSubmit={handleSubmit} autoComplete="off" className="space-y-6">
 

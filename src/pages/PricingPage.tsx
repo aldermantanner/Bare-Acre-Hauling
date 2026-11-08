@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { JunkRemovalPricing } from '../components/JunkRemovalPricing';
 import { SEOHead } from '../components/SEOHead';
-import { MINIMUM_PRICE_NOTE } from '../lib/contact';
+import { DISCOUNT_NOTE, MINIMUM_PRICE_NOTE } from '../lib/contact';
 
 export function PricingPage() {
   return (
@@ -32,7 +32,7 @@ export function PricingPage() {
                   {MINIMUM_PRICE_NOTE}
                 </p>
                 <div className="bg-red-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2 font-semibold text-sm shadow-lg">
-                  <span>10% OFF for Veterans, First Responders & Police</span>
+                  <span>{DISCOUNT_NOTE}</span>
                 </div>
               </div>
             </div>

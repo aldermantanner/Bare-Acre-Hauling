@@ -6,7 +6,7 @@ import { Logo } from '../components/Logo';
 import { QuoteActions } from '../components/QuoteActions';
 import { HoursNote } from '../components/HoursNote';
 import { LocalBusinessSchema } from '../components/LocalBusinessSchema';
-import { PHONE_DISPLAY, PHONE_TEL_HREF, QUOTE_REQUESTS_ANYTIME } from '../lib/contact';
+import { DISCOUNT_NOTE, PHONE_DISPLAY, PHONE_TEL_HREF, QUOTE_REQUESTS_ANYTIME } from '../lib/contact';
 
 const HAUL_ITEMS = [
   'Furniture',
@@ -53,14 +53,10 @@ const STEPS = [
   },
 ];
 
-function FirstJobOffer() {
+function DiscountOffer() {
   return (
     <div className="rounded-lg bg-white px-4 py-3 text-center text-slate-900 shadow-sm">
-      <p className="text-pretty text-lg font-bold leading-snug">10% off your first job.</p>
-      <p className="mt-1 text-pretty text-sm leading-snug text-slate-700">All first-time customers. No promo code.</p>
-      <p className="mt-2 text-pretty text-sm leading-snug text-slate-700">
-        Veterans, first responders, and police get 10% off.
-      </p>
+      <p className="text-pretty text-lg font-bold leading-snug">{DISCOUNT_NOTE}</p>
     </div>
   );
 }
@@ -128,7 +124,7 @@ export function AdLandingPage() {
               Based in Molalla. Clackamas County and the Salem area.
             </p>
             <div className="mt-5">
-              <QuoteActions align="center" primary="call" afterPrimary={<FirstJobOffer />} />
+              <QuoteActions align="center" primary="call" afterPrimary={<DiscountOffer />} />
             </div>
             <p className="mt-6 text-sm leading-relaxed text-slate-300 sm:text-base">
               {citySentence(CITIES)}.
@@ -224,7 +220,7 @@ export function AdLandingPage() {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl font-bold mb-2">Call for a quote</h2>
             <p className="text-slate-300 mb-6">Questions are fine. We will tell you if we can take the load.</p>
-            <QuoteActions align="center" primary="call" afterPrimary={<FirstJobOffer />} />
+            <QuoteActions align="center" primary="call" afterPrimary={<DiscountOffer />} />
           </div>
         </section>
       </main>
