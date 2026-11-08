@@ -4,7 +4,7 @@ import {
   Package, Home, Leaf, Wrench, Archive, Building2, Calculator, DollarSign, MapPin,
 } from 'lucide-react';
 import { QuoteActions } from './QuoteActions';
-import { BALLPARK_NOTE, HEAVY_MATERIAL_NOTE, MINIMUM_PRICE_NOTE } from '../lib/contact';
+import { BALLPARK_NOTE, DISCOUNT_NOTE, HEAVY_MATERIAL_NOTE, MINIMUM_PRICE_NOTE } from '../lib/contact';
 
 type LoadSize = 'small' | 'medium' | 'large' | 'full';
 type DriveZone = 'local' | 'nearby' | 'far' | 'distant';
@@ -105,8 +105,14 @@ export function JunkRemovalPricing() {
         <div className="bg-gradient-to-r from-slate-800 to-slate-700 px-5 sm:px-8 py-5 flex items-center gap-3">
           <Calculator className="h-7 w-7 text-green-400 flex-shrink-0" />
           <div>
-            <h3 className="text-xl font-bold text-white">Cost Estimator</h3>
-            <p className="text-sm text-gray-300">Adjust the options to see your estimated price</p>
+            <h3 className="text-xl font-bold text-white">
+              {materialType === 'heavy' ? 'Custom quote' : 'Cost Estimator'}
+            </h3>
+            <p className="text-sm text-gray-300">
+              {materialType === 'heavy'
+                ? 'Heavy materials need a custom quote. Text a photo or call.'
+                : 'Adjust the options to see your estimated price'}
+            </p>
           </div>
         </div>
 
@@ -185,36 +191,29 @@ export function JunkRemovalPricing() {
                 <div className="text-xs text-gray-500">Dirt, concrete, brick, asphalt, roofing, and other dense materials</div>
               </button>
             </div>
-            {materialType === 'heavy' && (
-              <p className="mt-2 text-xs text-orange-800">{HEAVY_MATERIAL_NOTE}</p>
-            )}
           </div>
 
-          {/* Cost Breakdown */}
-          <div className="bg-gradient-to-br from-slate-50 to-gray-100 rounded-xl p-5 sm:p-6 border border-gray-200">
-            <h4 className="font-bold text-slate-800 mb-4 text-sm sm:text-base flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-green-600" />
-              Cost Breakdown
-            </h4>
-            <div className="space-y-2.5 text-sm sm:text-base">
-              <div className="flex items-center justify-between py-1">
-                <span className="text-gray-600 flex items-center gap-2"><MapPin className="h-4 w-4 text-blue-500" />Drive ({zone.miles} mi round-trip · fuel + driver)</span>
-                <span className="font-semibold text-slate-700">{fmt(driveCost)}</span>
-              </div>
-              <div className="flex items-center justify-between py-1">
-                <span className="text-gray-600 flex items-center gap-2"><Users className="h-4 w-4 text-green-500" />{`Labor (${workers} workers × ${load.laborHours} ${load.laborHours === 1 ? 'hr' : 'hrs'})`}</span>
-                <span className="font-semibold text-slate-700">{fmt(serviceCost)}</span>
-              </div>
-              <div className="flex items-center justify-between py-1">
-                <span className="text-gray-600 flex items-center gap-2"><Trash2 className="h-4 w-4 text-orange-500" />Dump fees ({materialType === 'heavy' ? 'heavy material' : 'standard material'})</span>
-                <span className="font-semibold text-slate-700">{fmt(dumpFee)}</span>
-              </div>
-              <div className="border-t border-gray-300 pt-3 mt-3" />
+          {materialType === 'heavy' ? (
+            <div className="bg-orange-50 rounded-xl p-5 sm:p-6 border border-orange-200">
+              <h4 className="font-bold text-slate-800 mb-2 text-base sm:text-lg">Custom quote</h4>
+              <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
+                Heavy materials are not priced in this calculator.
+              </p>
+              <p className="mt-2 text-sm sm:text-base font-semibold text-slate-800 leading-relaxed">
+                {HEAVY_MATERIAL_NOTE}
+              </p>
+            </div>
+          ) : (
+            <div className="bg-gradient-to-br from-slate-50 to-gray-100 rounded-xl p-5 sm:p-6 border border-gray-200">
+              <h4 className="font-bold text-slate-800 mb-4 text-sm sm:text-base flex items-center gap-2">
+                <DollarSign className="h-5 w-5 text-green-600" />
+                Your estimate
+              </h4>
               <div className="flex items-center justify-between py-1">
                 <span className="font-bold text-slate-800">Ballpark total</span>
                 <span className="text-2xl sm:text-3xl font-bold text-green-800">{fmt(total)}</span>
               </div>
-              <p className="text-sm font-semibold text-slate-800">{BALLPARK_NOTE}</p>
+              <p className="text-sm font-semibold text-slate-800 mt-3">{BALLPARK_NOTE}</p>
               {hitMinimum && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-3">
                   <p className="text-xs sm:text-sm text-amber-800">
@@ -223,15 +222,17 @@ export function JunkRemovalPricing() {
                 </div>
               )}
             </div>
-          </div>
+          )}
 
           {/* Disclaimer + CTA */}
           <div className="space-y-3">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-xs sm:text-sm text-blue-900">
-                {HEAVY_MATERIAL_NOTE}
-              </p>
-            </div>
+            {materialType === 'standard' && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="text-xs sm:text-sm text-blue-900">
+                  {HEAVY_MATERIAL_NOTE}
+                </p>
+              </div>
+            )}
             <QuoteActions tone="on-light" />
           </div>
         </div>
@@ -282,7 +283,7 @@ export function JunkRemovalPricing() {
           <h3 className="text-lg font-bold text-slate-800 mb-3">Materials Requiring a Custom Quote</h3>
           <p className="text-xs sm:text-sm text-gray-700 mb-3">{HEAVY_MATERIAL_NOTE}</p>
           <ul className="space-y-2">
-            {['Concrete, dirt, brick, asphalt', 'Roofing material (shingles)', 'Hazardous or restricted waste'].map((item, i) => (
+            {['Concrete, dirt, brick, asphalt', 'Roofing material (shingles)'].map((item, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
                 <span className="text-amber-600 font-bold">•</span>
                 <span>{item}</span>
@@ -309,7 +310,7 @@ export function JunkRemovalPricing() {
       {/* CTA */}
       <div className="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-6 sm:p-8 text-white text-center">
         <div className="inline-flex items-center gap-2 bg-red-600/90 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold mb-4">
-          10% OFF for Veterans, First Responders & Police
+          {DISCOUNT_NOTE}
         </div>
         <h3 className="text-xl sm:text-2xl font-bold mb-4">Ready to Get Started?</h3>
         <QuoteActions tone="on-dark" align="center" />

@@ -8,7 +8,7 @@ import { ReviewSchema } from '../components/ReviewSchema';
 import { BreadcrumbSchema } from '../components/BreadcrumbSchema';
 import { Photo } from '../components/Photo';
 import { QuoteActions } from '../components/QuoteActions';
-import { GOOGLE_REVIEW_URL, MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
+import { DISCOUNT_NOTE, GOOGLE_REVIEW_URL, MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
 import { TOWN_GROUPS, TOWN_PAGES, townPath } from '../data/towns';
 
 const services = [
@@ -115,7 +115,7 @@ export function HomePage() {
             </p>
             <p className="mb-2 text-sm font-semibold text-white sm:mb-4 sm:text-base">{MINIMUM_PRICE_NOTE}</p>
             <p className="mb-3 rounded-lg bg-yellow-400 px-3 py-2 text-sm font-bold leading-snug text-slate-900 sm:mb-6">
-              10% off for veterans, first responders, police, and first-time customers.
+              {DISCOUNT_NOTE}
             </p>
             <QuoteActions tone="on-dark" />
             <div className="mt-6 flex flex-wrap items-center gap-3">

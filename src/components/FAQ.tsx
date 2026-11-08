@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, MessageSquare, Phone } from 'lucide-react';
-import { HEAVY_MATERIAL_NOTE, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF, REPLY_TIME } from '../lib/contact';
+import { DISCOUNT_NOTE, HEAVY_MATERIAL_NOTE, PHONE_DISPLAY, PHONE_SMS_HREF, PHONE_TEL_HREF, REPLY_TIME } from '../lib/contact';
 
 interface FAQItem {
   question: string;
@@ -54,7 +54,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'Are you veteran owned?',
-    answer: 'Yes. Bare Acre Hauling is proudly veteran owned and operated. We offer 10% off for veterans, first responders, and police. Just mention it when you book.'
+    answer: `Yes. Bare Acre Hauling is proudly veteran owned and operated. We offer ${DISCOUNT_NOTE} Just mention it when you book.`
   }
 ];
 

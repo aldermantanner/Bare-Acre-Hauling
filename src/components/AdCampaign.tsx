@@ -1,7 +1,7 @@
 import { Truck, Star, Shield, Clock, Trash2 } from 'lucide-react';
 import { QuoteActions } from './QuoteActions';
 import { HoursNote } from './HoursNote';
-import { MINIMUM_PRICE_NOTE, QUOTE_REQUESTS_ANYTIME } from '../lib/contact';
+import { DISCOUNT_NOTE, MINIMUM_PRICE_NOTE, QUOTE_REQUESTS_ANYTIME } from '../lib/contact';
 
 export function AdCampaign() {
   return (
@@ -23,7 +23,7 @@ export function AdCampaign() {
             <QuoteActions tone="on-light" align="center" />
           </div>
           <p className="text-gray-600 text-lg">
-            First-time customers get 10% off.
+            {DISCOUNT_NOTE}
           </p>
         </div>
 
@@ -112,7 +112,7 @@ export function AdCampaign() {
         <div className="mt-16 text-center">
           <h2 className="text-4xl font-extrabold text-slate-900 mb-6">Ready to Get Started?</h2>
           <p className="text-2xl text-gray-700 mb-8">
-            First-time customers get 10% off.
+            {DISCOUNT_NOTE}
           </p>
           <div className="flex justify-center">
             <QuoteActions tone="on-light" align="center" />

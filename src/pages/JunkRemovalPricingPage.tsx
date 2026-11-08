@@ -2,6 +2,7 @@ import { JunkRemovalPricing } from '../components/JunkRemovalPricing';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Phone } from 'lucide-react';
 import { SEOHead } from '../components/SEOHead';
+import { DISCOUNT_NOTE } from '../lib/contact';
 
 export function JunkRemovalPricingPage() {
   return (
@@ -33,7 +34,7 @@ export function JunkRemovalPricingPage() {
                 </p>
                 <div className="bg-red-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2 font-semibold text-sm shadow-lg">
                   <span>🇺🇸</span>
-                  <span>10% OFF for Veterans, First Responders & Police</span>
+                  <span>{DISCOUNT_NOTE}</span>
                 </div>
               </div>
               <a
