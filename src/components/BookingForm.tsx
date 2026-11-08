@@ -330,7 +330,7 @@ export function BookingForm() {
             placeholder="e.g., Furniture, appliances, household junk, yard waste"
           />
           <p className="text-xs text-gray-500 mt-1">
-            Note: Concrete, dirt, roofing, and hazardous materials require a custom quote
+            Note: Concrete, dirt, and roofing need a custom quote. We do not take hazardous waste.
           </p>
         </div>
 
