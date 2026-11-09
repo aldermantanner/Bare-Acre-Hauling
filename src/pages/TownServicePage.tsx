@@ -119,6 +119,19 @@ export function TownServicePage({ town }: { town: TownPage }) {
 
         <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
           <p className="text-lg leading-relaxed text-slate-700">{town.detail}</p>
+          {town.slug === 'junk-removal-molalla' && (
+            <figure className="mt-8">
+              <img
+                src="/images/bare-acre-local-junk-hauling.jpg"
+                alt="Tanner Alderman and a customer standing beside a loaded Bare Acre Hauling trailer, with banners reading Local Junk Hauling and Call 503-874-3705 for Molalla, Clackamas and Marion County"
+                width={1080}
+                height={1350}
+                className="mx-auto w-full max-w-md rounded-xl"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          )}
           <div className="mt-8 flex items-center gap-4 rounded-xl bg-slate-50 p-4">
             <Photo
               webp="/owner-tanner.webp"
