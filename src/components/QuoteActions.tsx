@@ -8,8 +8,15 @@ type QuoteActionsProps = {
   className?: string;
   /** Which action gets the large button. The rest of the site stays text-first. */
   primary?: 'text' | 'call';
-  /** Rendered directly under the primary button. */
+  /** Rendered directly under the primary button, or under both when equalActions is set. */
   afterPrimary?: ReactNode;
+  /**
+   * Text and call at the same size and weight. Ignores `primary`.
+   * Used by the ads landing page so neither action looks optional.
+   */
+  equalActions?: boolean;
+  /** The Jobber request link. Turn off when the pair is repeated down a page. */
+  showRequestForm?: boolean;
 };
 
 export function QuoteActions({
@@ -18,6 +25,8 @@ export function QuoteActions({
   className = '',
   primary = 'text',
   afterPrimary,
+  equalActions = false,
+  showRequestForm = true,
 }: QuoteActionsProps) {
   const secondary =
     tone === 'on-dark'
@@ -36,20 +45,67 @@ export function QuoteActions({
     'inline-flex min-h-16 items-center justify-center gap-3 rounded-lg bg-green-800 px-6 py-5 text-xl font-bold text-white shadow-lg transition-colors hover:bg-green-900';
   const secondaryClass = `inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-base font-semibold shadow transition-colors ${secondary}`;
   const demotedClass = `inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-base font-semibold transition-colors ${demoted}`;
+  const equalTextClass =
+    'inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-green-800 px-2 py-3 text-center text-sm font-bold leading-tight text-white shadow-md transition-colors hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 sm:px-3 sm:text-base';
+  const equalCallClass =
+    tone === 'on-dark'
+      ? 'inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-white px-2 py-3 text-center text-sm font-bold leading-tight text-slate-900 shadow-md transition-colors hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-3 sm:text-base'
+      : 'inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-slate-800 px-2 py-3 text-center text-sm font-bold leading-tight text-white shadow-md transition-colors hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800 sm:px-3 sm:text-base';
 
-  const textAction = (className: string) => (
-    <a href={PHONE_SMS_HREF} className={className}>
+  const textAction = (actionClassName: string, label: ReactNode = 'Text a photo for a quote') => (
+    <a href={PHONE_SMS_HREF} className={actionClassName}>
       <MessageSquare className="h-5 w-5 shrink-0" aria-hidden="true" />
-      Text a photo for a quote
+      {label}
     </a>
   );
 
-  const callAction = (className: string, iconClass: string) => (
-    <a href={PHONE_TEL_HREF} className={className}>
+  const callAction = (
+    actionClassName: string,
+    iconClass: string,
+    label: ReactNode = <>Call {PHONE_DISPLAY}</>,
+  ) => (
+    <a href={PHONE_TEL_HREF} className={actionClassName}>
       <Phone className={iconClass} aria-hidden="true" />
-      Call {PHONE_DISPLAY}
+      {label}
     </a>
   );
+
+  const requestForm = showRequestForm ? (
+    <a
+      href={JOBBER_REQUEST_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex min-h-11 items-center justify-center text-center text-sm font-medium underline underline-offset-2 ${tertiary}`}
+    >
+      Or send a request form
+    </a>
+  ) : null;
+
+  if (equalActions) {
+    const textLabel = (
+      <span className="text-center leading-tight">
+        Text a photo
+        <span className="mt-0.5 block text-xs font-semibold sm:text-sm">for a quote</span>
+      </span>
+    );
+    const callLabel = (
+      <span className="text-center leading-tight">
+        Call
+        <span className="mt-0.5 block text-xs font-semibold sm:text-sm">{PHONE_DISPLAY}</span>
+      </span>
+    );
+
+    return (
+      <div className={`flex w-full max-w-xl flex-col gap-3 ${alignment} ${className}`}>
+        <div className="grid grid-cols-2 gap-3">
+          {textAction(equalTextClass, textLabel)}
+          {callAction(equalCallClass, 'h-5 w-5 shrink-0', callLabel)}
+        </div>
+        {afterPrimary}
+        {requestForm}
+      </div>
+    );
+  }
 
   return (
     <div className={`flex w-full max-w-md flex-col gap-3 ${alignment} ${className}`}>
@@ -66,14 +122,7 @@ export function QuoteActions({
           {callAction(secondaryClass, 'h-5 w-5 shrink-0')}
         </>
       )}
-      <a
-        href={JOBBER_REQUEST_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`inline-flex min-h-11 items-center justify-center text-center text-sm font-medium underline underline-offset-2 ${tertiary}`}
-      >
-        Or send a request form
-      </a>
+      {requestForm}
     </div>
   );
 }
