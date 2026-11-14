@@ -43,22 +43,27 @@ export function trackJobberRequestSubmitted(): boolean {
   return sent;
 }
 
-function isTelHref(href: string | null): boolean {
-  if (!href) return false;
-  return href.trim().toLowerCase().startsWith('tel:');
+function hrefScheme(href: string | null): string | null {
+  if (!href) return null;
+  const trimmed = href.trim().toLowerCase();
+  const colon = trimmed.indexOf(':');
+  if (colon <= 0) return null;
+  return trimmed.slice(0, colon);
 }
 
 /**
- * Document click listener. Records a call conversion for tel: links only.
- * Does not call preventDefault, so the phone dialer still opens.
- * sms: links, Book Now, and other anchors are ignored.
+ * Document click listener. Records a conversion when someone taps a tel: or sms: link.
+ * Both use AW-18481474642/9kPMCOn41qgdENLY0-xE. This repo has no separate text-click label.
+ * Does not call preventDefault, so the phone or messages app still opens.
  */
-export function handleTelLinkClick(event: MouseEvent): void {
+export function handleContactLinkClick(event: MouseEvent): void {
   const target = event.target;
   if (!(target instanceof Element)) return;
   const anchor = target.closest('a');
-  if (!anchor || !isTelHref(anchor.getAttribute('href'))) return;
-  // Beacon survives the browser handing the click off to the phone dialer.
-  // Do not preventDefault: delaying tel: until a callback drops the user gesture and can block the call.
+  if (!anchor) return;
+  const scheme = hrefScheme(anchor.getAttribute('href'));
+  if (scheme !== 'tel' && scheme !== 'sms') return;
+  // Beacon survives the browser handing the click off to the phone or messages app.
+  // Do not preventDefault: delaying tel: or sms: until a callback drops the user gesture.
   trackConversion(CALL_CLICK_SEND_TO, 'beacon');
 }

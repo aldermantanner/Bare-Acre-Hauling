@@ -25,23 +25,26 @@ export function MobileQuoteBar() {
         aria-label="Call or text Bare Acre Hauling"
       >
         {callFirst ? (
-          <div className="flex items-stretch gap-2 p-2">
-            <a
-              href={PHONE_TEL_HREF}
-              className="inline-flex min-h-14 flex-[1.7] items-center justify-center gap-2 rounded-lg bg-green-800 px-3 py-2 text-base font-bold leading-tight text-white"
-            >
-              <Phone className="h-5 w-5 shrink-0" aria-hidden="true" />
-              <span className="text-center">
-                Call
-                <span className="block text-sm font-semibold">{PHONE_DISPLAY}</span>
-              </span>
-            </a>
+          <div className="grid grid-cols-2 gap-2 p-2">
             <a
               href={PHONE_SMS_HREF}
-              className="inline-flex min-h-14 flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-2 py-2 text-sm font-semibold text-slate-700"
+              className="inline-flex min-h-[4.25rem] flex-col items-center justify-center gap-0.5 rounded-lg bg-green-800 px-2 py-2 text-center text-sm font-bold leading-tight text-white"
             >
-              <MessageSquare className="h-4 w-4 shrink-0" aria-hidden="true" />
-              Text
+              <span className="inline-flex items-center gap-1.5">
+                <MessageSquare className="h-5 w-5 shrink-0" aria-hidden="true" />
+                Text a photo
+              </span>
+              <span className="text-xs font-semibold">for a quote</span>
+            </a>
+            <a
+              href={PHONE_TEL_HREF}
+              className="inline-flex min-h-[4.25rem] flex-col items-center justify-center gap-0.5 rounded-lg bg-slate-800 px-2 py-2 text-center text-sm font-bold leading-tight text-white"
+            >
+              <span className="inline-flex items-center gap-1.5">
+                <Phone className="h-5 w-5 shrink-0" aria-hidden="true" />
+                Call
+              </span>
+              <span className="text-xs font-semibold">{PHONE_DISPLAY}</span>
             </a>
           </div>
         ) : (
