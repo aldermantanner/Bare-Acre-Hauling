@@ -13,8 +13,10 @@
   }
 
   body {
+    /* `hidden` forces overflow-y to auto and, on iOS Safari, lets scrolling
+       sections paint over position:fixed. `clip` still stops sideways scroll. */
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: clip;
   }
 
   * {

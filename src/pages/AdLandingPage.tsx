@@ -164,7 +164,7 @@ export function AdLandingPage() {
         canonical="https://bareacrehauling.com/ad-landing"
       />
 
-      <header className="sticky top-0 z-40 border-b border-slate-700 bg-slate-900 text-white">
+      <header className="sticky top-0 z-40 border-b border-slate-700 bg-slate-900 pt-[env(safe-area-inset-top)] text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2">
           <div className="flex min-w-0 items-center gap-2">
             <Logo className="h-8 w-8 flex-shrink-0 object-contain" alt="" />

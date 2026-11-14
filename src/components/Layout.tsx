@@ -16,7 +16,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <LocalBusinessSchema />
-      <header className="bg-slate-800 shadow-lg sticky top-0 z-50">
+      <header className="sticky top-0 z-50 bg-slate-800 pt-[env(safe-area-inset-top)] shadow-lg">
         <nav className="max-w-7xl mx-auto px-6 lg:px-12 py-5">
           <div className="flex items-center justify-between gap-12">
             <div className="flex items-center gap-12">
