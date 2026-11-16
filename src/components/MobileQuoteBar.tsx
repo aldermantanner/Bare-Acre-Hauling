@@ -44,8 +44,9 @@ export function MobileQuoteBar() {
   useAboveMobileChrome(navRef, !hidden);
   if (hidden) return null;
 
-  // Netlify serves this route as /ad-landing/ (trailing slash). Treat both as the ads page.
-  const callFirst = pathname.replace(/\/+$/, '') === '/ad-landing';
+  // Netlify serves these routes with a trailing slash. Treat both forms as the ads pages.
+  const path = pathname.replace(/\/+$/, '') || '/';
+  const callFirst = path === '/ad-landing' || path === '/yard-debris';
 
   const bar = (
       <nav
