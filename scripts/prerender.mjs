@@ -22,6 +22,7 @@ const routes = [
   '/privacypolicy',
   '/termsandconditions',
   '/ad-landing',
+  '/yard-debris',
 ];
 
 function chromePath() {

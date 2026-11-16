@@ -28,6 +28,7 @@ const CustomerPortalPage = lazy(() => import('./pages/CustomerPortalPage').then(
 const PaymentSuccessPage = lazy(() => import('./pages/PaymentSuccessPage').then(m => ({ default: m.PaymentSuccessPage })));
 const AdCampaignPage = lazy(() => import('./pages/AdCampaignPage').then(m => ({ default: m.AdCampaignPage })));
 const AdLandingPage = lazy(() => import('./pages/AdLandingPage').then(m => ({ default: m.AdLandingPage })));
+const YardDebrisPage = lazy(() => import('./pages/YardDebrisPage').then(m => ({ default: m.YardDebrisPage })));
 const PricingPage = lazy(() => import('./pages/PricingPage').then(m => ({ default: m.PricingPage })));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
 const TermsAndConditionsPage = lazy(() => import('./pages/TermsAndConditionsPage').then(m => ({ default: m.TermsAndConditionsPage })));
@@ -73,6 +74,7 @@ function App() {
             <Routes>
               <Route path="/ad" element={<AdCampaignPage />} />
               <Route path="/ad-landing" element={<AdLandingPage />} />
+              <Route path="/yard-debris" element={<YardDebrisPage />} />
               <Route path="/success" element={<PaymentSuccessPage />} />
               <Route path="/" element={<Layout><HomePage /></Layout>} />
               <Route path="/booking" element={<Layout><BookingPage /></Layout>} />
