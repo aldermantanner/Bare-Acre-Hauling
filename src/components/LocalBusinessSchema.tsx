@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { TOWN_PAGES } from '../data/towns';
 
-export function LocalBusinessSchema() {
+export function LocalBusinessSchema({ closes = '20:00' }: { closes?: string }) {
   useEffect(() => {
     const schema = {
       "@context": "https://schema.org",
@@ -32,7 +32,7 @@ export function LocalBusinessSchema() {
           "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
         ],
         "opens": "07:00",
-        "closes": "20:00"
+        "closes": closes
       },
       "sameAs": [
         "https://www.facebook.com/bareacrehauling"
@@ -119,7 +119,7 @@ export function LocalBusinessSchema() {
     return () => {
       document.getElementById(id)?.remove();
     };
-  }, []);
+  }, [closes]);
 
   return null;
 }

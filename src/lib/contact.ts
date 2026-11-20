@@ -25,6 +25,10 @@ export const HEAVY_MATERIAL_NOTE =
 export const BALLPARK_NOTE = 'Ballpark only. Text a photo for a real price.';
 
 export const HOURS_LINE = '7:00 AM to 8:00 PM, every day';
+/** Visible hours on the Google Ads landing pages. Matches the ad schedule. */
+export const AD_HOURS_LINE = '7 AM to 7 PM';
+/** Schema close time for the Google Ads landing pages. 7:00 PM. */
+export const AD_HOURS_CLOSES = '19:00';
 export const AFTER_HOURS_NOTE = 'Urgent after-hours pickup available by phone at a higher rate.';
 export const QUOTE_REQUESTS_ANYTIME = 'You can send a quote request online anytime.';
 
