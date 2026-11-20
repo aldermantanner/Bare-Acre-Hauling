@@ -3,10 +3,13 @@ import { MessageSquare, Phone } from 'lucide-react';
 import { Logo } from './Logo';
 import { QuoteActions } from './QuoteActions';
 import { LocalBusinessSchema } from './LocalBusinessSchema';
+import { TESTIMONIALS } from '../data/testimonials';
 import {
+  AD_HOURS_CLOSES,
+  AD_HOURS_LINE,
   DISCOUNT_NOTE,
   GOOGLE_REVIEW_URL,
-  HOURS_LINE,
+  JOBBER_REQUEST_URL,
   PHONE_DISPLAY,
   PHONE_SMS_HREF,
   PHONE_TEL_HREF,
@@ -69,17 +72,116 @@ export function GoogleReviewsLink({ tone }: { tone: 'on-dark' | 'on-light' }) {
   );
 }
 
+function RequestFormLink({ tone }: { tone: 'on-dark' | 'on-light' }) {
+  const tertiary =
+    tone === 'on-dark' ? 'text-slate-200 hover:text-white' : 'text-slate-600 hover:text-slate-900';
+  return (
+    <a
+      href={JOBBER_REQUEST_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex min-h-11 items-center justify-center text-center text-sm font-medium underline underline-offset-2 ${tertiary}`}
+    >
+      Or send a request form
+    </a>
+  );
+}
+
+/** One large Call / Text control. Call and Text stay separate tel: and sms: links. */
+export function HeroCallText() {
+  return (
+    <div className="mx-auto w-full max-w-xl">
+      <div
+        className="flex w-full items-stretch overflow-hidden rounded-2xl bg-green-600 text-white shadow-xl ring-2 ring-amber-300"
+        role="group"
+        aria-label="Call or text Bare Acre Hauling"
+      >
+        <a
+          href={PHONE_TEL_HREF}
+          className="inline-flex min-h-[5.25rem] flex-1 flex-col items-center justify-center gap-0.5 px-3 py-3 hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          <span className="inline-flex items-center gap-2 text-xl font-extrabold leading-none sm:text-2xl">
+            <Phone className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" aria-hidden="true" />
+            Call
+          </span>
+          <span className="text-xs font-bold sm:text-sm">{PHONE_DISPLAY}</span>
+        </a>
+        <span className="flex items-center text-3xl font-bold text-white/80" aria-hidden="true">
+          /
+        </span>
+        <a
+          href={PHONE_SMS_HREF}
+          className="inline-flex min-h-[5.25rem] flex-1 flex-col items-center justify-center gap-0.5 px-3 py-3 hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          <span className="inline-flex items-center gap-2 text-xl font-extrabold leading-none sm:text-2xl">
+            <MessageSquare className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" aria-hidden="true" />
+            Text
+          </span>
+          <span className="text-xs font-bold sm:text-sm">a photo</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export function CustomerReviews({ heading, children }: { heading: string; children?: ReactNode }) {
+  return (
+    <section className="px-4 py-8" aria-labelledby="review-heading">
+      <div className="mx-auto max-w-3xl">
+        <h2 id="review-heading" className="text-center text-2xl font-bold text-slate-900">
+          {heading}
+        </h2>
+        {TESTIMONIALS.length > 0 ? (
+          <ul className="mt-4 grid gap-4">
+            {TESTIMONIALS.map((review) => (
+              <li key={review.id}>
+                <figure className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+                  <blockquote className="text-lg leading-relaxed text-slate-800">
+                    “{review.review_text}”
+                  </blockquote>
+                  <figcaption className="mt-3 text-sm font-semibold text-slate-600">
+                    {review.customer_name}
+                    {review.service_label ? ` · ${review.service_label}` : ''}
+                  </figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className="mt-3 text-center">
+          <GoogleReviewsLink tone="on-light" />
+        </div>
+        {children ? <div className="mt-4">{children}</div> : null}
+      </div>
+    </section>
+  );
+}
+
 export function AdLandingActions({
   tone,
   showDiscount = false,
   showReviews = false,
   showRequestForm = false,
+  hero = false,
 }: {
   tone: 'on-dark' | 'on-light';
   showDiscount?: boolean;
   showReviews?: boolean;
   showRequestForm?: boolean;
+  /** Hero uses one large Call / Text control. Other spots keep the paired buttons. */
+  hero?: boolean;
 }) {
+  if (hero) {
+    return (
+      <div className="flex w-full flex-col items-center gap-3">
+        <HeroCallText />
+        {showDiscount ? <DiscountLine tone={tone} /> : null}
+        {showReviews ? <GoogleReviewsLink tone={tone} /> : null}
+        {showRequestForm ? <RequestFormLink tone={tone} /> : null}
+      </div>
+    );
+  }
+
   let afterPrimary: ReactNode;
   if (showDiscount || showReviews) {
     afterPrimary = (
@@ -140,7 +242,7 @@ function AdLandingFooter() {
           {PHONE_DISPLAY}
         </a>
       </p>
-      <p className="mt-2">Hours: {HOURS_LINE}</p>
+      <p className="mt-2">Hours: {AD_HOURS_LINE}</p>
       <p className="mt-4">
         <a href="/privacypolicy" className="underline underline-offset-2 hover:text-white">
           Privacy Policy
@@ -159,7 +261,7 @@ export function AdLandingShell({ seo, children }: { seo: ReactNode; children: Re
 
   return (
     <div className="min-h-screen bg-stone-50 text-slate-800">
-      <LocalBusinessSchema />
+      <LocalBusinessSchema closes={AD_HOURS_CLOSES} />
       {seo}
       <AdLandingHeader />
       <main>{children}</main>

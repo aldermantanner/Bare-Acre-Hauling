@@ -1,9 +1,8 @@
 import { BadgeCheck, Clock, MapPin, Shield } from 'lucide-react';
 import { SEOHead } from '../components/SEOHead';
-import { TESTIMONIALS } from '../data/testimonials';
-import { AdLandingActions, AdLandingShell, GoogleReviewsLink } from '../components/AdLandingChrome';
+import { AdLandingActions, AdLandingShell, CustomerReviews } from '../components/AdLandingChrome';
 import { Photo } from '../components/Photo';
-import { AFTER_HOURS_NOTE, HOURS_LINE, PHONE_DISPLAY } from '../lib/contact';
+import { AD_HOURS_LINE, AFTER_HOURS_NOTE, PHONE_DISPLAY } from '../lib/contact';
 
 const HAUL_ITEMS = [
   'Furniture',
@@ -30,9 +29,9 @@ const CITIES = [
 
 const TRUST = [
   { icon: Shield, label: 'Veteran-owned' },
-  { icon: BadgeCheck, label: 'Licensed, bonded & insured' },
+  { icon: BadgeCheck, label: 'You approve the price' },
   { icon: MapPin, label: 'Local Molalla' },
-  { icon: Clock, label: HOURS_LINE },
+  { icon: Clock, label: AD_HOURS_LINE },
 ];
 
 const STEPS = [
@@ -51,8 +50,6 @@ const STEPS = [
 ];
 
 export function AdLandingPage() {
-  const review = TESTIMONIALS[0];
-
   return (
     <AdLandingShell
       seo={
@@ -85,18 +82,18 @@ export function AdLandingPage() {
               <p className="text-sm font-semibold uppercase tracking-wide text-green-300">
                 Veteran-owned · Molalla, OR
               </p>
-              <h1 className="mt-2 text-3xl font-bold leading-tight sm:text-5xl">
-                Junk removal in Clackamas County.
+              <h1 className="mt-2 text-3xl font-bold leading-tight sm:text-4xl">
+                You approve the price before we start.
               </h1>
-              <p className="mt-2 text-2xl font-extrabold tracking-tight text-amber-300 sm:text-3xl">
-                Starting at $150.
-              </p>
-              <p className="mt-3 text-base leading-relaxed text-slate-200 sm:text-lg">
-                Veteran-owned and based in Molalla. Text a photo for a quote, or call {PHONE_DISPLAY}. You approve the price before we load.
+              <p className="mt-2 text-lg font-semibold leading-snug text-slate-100 sm:text-xl">
+                Junk removal in Clackamas County.
               </p>
               <div className="mt-4">
-                <AdLandingActions tone="on-dark" showDiscount showReviews showRequestForm />
+                <AdLandingActions tone="on-dark" hero showDiscount showReviews showRequestForm />
               </div>
+              <p className="mt-3 text-center text-sm text-slate-300">
+                Veteran-owned and based in Molalla. Jobs start at $150.
+              </p>
             </div>
           </div>
         </section>
@@ -115,30 +112,9 @@ export function AdLandingPage() {
           <p className="mx-auto mt-3 max-w-6xl text-center text-sm text-slate-600">{AFTER_HOURS_NOTE}</p>
         </section>
 
-        {review && (
-          <section className="px-4 py-8" aria-labelledby="review-heading">
-            <div className="mx-auto max-w-3xl">
-              <h2 id="review-heading" className="text-center text-2xl font-bold text-slate-900">
-                From a customer in Molalla
-              </h2>
-              <figure className="mt-4 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
-                <blockquote className="text-lg leading-relaxed text-slate-800">
-                  “{review.review_text}”
-                </blockquote>
-                <figcaption className="mt-3 text-sm font-semibold text-slate-600">
-                  {review.customer_name}
-                  {review.service_label ? ` · ${review.service_label}` : ''}
-                </figcaption>
-              </figure>
-              <div className="mt-3 text-center">
-                <GoogleReviewsLink tone="on-light" />
-              </div>
-              <div className="mt-4">
-                <AdLandingActions tone="on-light" />
-              </div>
-            </div>
-          </section>
-        )}
+        <CustomerReviews heading="From a customer in Molalla">
+          <AdLandingActions tone="on-light" />
+        </CustomerReviews>
 
         <section className="bg-white px-4 py-8" aria-labelledby="results-heading">
           <div className="mx-auto max-w-5xl">
@@ -200,7 +176,7 @@ export function AdLandingPage() {
                 You deal with Tanner directly.
               </h2>
               <p className="mt-3 text-base leading-relaxed text-slate-200">
-                Tanner Alderman owns and runs Bare Acre Hauling, a veteran-owned business based in Molalla. He served in the U.S. military from 2015 to 2021. He and his crew are licensed, bonded, and insured, and you deal directly with him.
+                Tanner Alderman owns and runs Bare Acre Hauling, a veteran-owned business based in Molalla. He served in the U.S. military from 2015 to 2021. You deal directly with him.
               </p>
               <div className="mt-5">
                 <AdLandingActions tone="on-dark" showDiscount />
@@ -255,8 +231,8 @@ export function AdLandingPage() {
         <section className="bg-slate-900 px-4 py-10 text-white">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-2xl font-bold sm:text-3xl">Text a photo or call.</h2>
-            <p className="mt-2 text-slate-300">
-              Starting at $150. You approve the price before we load.
+            <p className="mt-2 text-sm text-slate-300">
+              Jobs start at $150. You approve the price before we load.
             </p>
             <div className="mt-5">
               <AdLandingActions tone="on-dark" showDiscount showReviews showRequestForm />
