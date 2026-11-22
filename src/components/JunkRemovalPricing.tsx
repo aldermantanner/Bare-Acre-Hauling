@@ -13,12 +13,10 @@ import {
   X,
 } from 'lucide-react';
 import { QuoteActions } from './QuoteActions';
-import { TOWN_PAGES } from '../data/towns';
 import {
   BALLPARK_NOTE,
   DISCOUNT_NOTE,
   HEAVY_MATERIAL_NOTE,
-  MINIMUM_PRICE_NOTE,
   PHONE_DISPLAY,
   PHONE_SMS_HREF,
   PHONE_TEL_HREF,
@@ -113,25 +111,56 @@ const TV_ELECTRONICS_FEE: number | null = null;
 const STAIRS_OR_LONG_CARRY_FEE: number | null = null;
 const ADD_ON_UNPRICED_NOTE = 'may add cost, confirmed on your quote.';
 
-type LoadId = 'quarter' | 'half' | 'threeQuarter' | 'full' | 'two';
+type LoadId = 'one' | 'few' | 'quarter' | 'half' | 'threeQuarter' | 'full' | 'two';
 
 type LoadSize = {
   id: LoadId;
   label: string;
-  /** 1 is one full trailer. 2 is a second full load and a second dump trip. */
+  /**
+   * 1 is one full trailer. 2 is a second full load and a second dump trip.
+   * 0 means this choice is priced by `pounds`, not by a share of the trailer.
+   */
   trailerFraction: number;
   /**
    * On-site hours for the two-person crew. Drive time is priced separately.
-   * A full 14.5-yard trailer is 4.5 hours. Each quarter-trailer step is
-   * about an hour after a little extra time on the smallest load.
-   * Two trailers is two full loads: 9 hours.
+   * One item is 15 minutes. Two or three items are 30 minutes.
+   * A full 14.5-yard trailer is 4.5 hours. Two trailers is two full loads: 9 hours.
    */
   laborHours: number;
   dumpTrips: number;
+  /**
+   * Fixed weight for a single item or a few items.
+   * 200 lb is one couch, mattress, or household appliance, under Metro's
+   * 240 lb minimum, so the dump fee is the $51 minimum.
+   * 450 lb is two or three of those pieces and is billed by the ton plus
+   * the $30 transaction fee.
+   */
+  pounds?: number;
+  /** Shown in place of the cubic-yard line. */
+  detail?: string;
   hint?: string;
 };
 
 const LOAD_SIZES: LoadSize[] = [
+  {
+    id: 'one',
+    label: '1 item',
+    trailerFraction: 0,
+    pounds: 200,
+    laborHours: 0.25,
+    dumpTrips: 1,
+    detail: 'A couch, mattress, or appliance',
+    hint: 'Starts at $150',
+  },
+  {
+    id: 'few',
+    label: '2–3 items',
+    trailerFraction: 0,
+    pounds: 450,
+    laborHours: 0.5,
+    dumpTrips: 1,
+    detail: 'A few pieces, not a trailer load',
+  },
   { id: 'quarter', label: '1/4 trailer', trailerFraction: 0.25, laborHours: 1.5, dumpTrips: 1 },
   { id: 'half', label: '1/2 trailer', trailerFraction: 0.5, laborHours: 2.5, dumpTrips: 1 },
   { id: 'threeQuarter', label: '3/4 trailer', trailerFraction: 0.75, laborHours: 3.5, dumpTrips: 1 },
@@ -163,6 +192,7 @@ type DriveLeg = { miles: number; minutes: number };
  * Routes are the public OSRM demo, driving profile:
  * https://router.project-osrm.org/route/v1/driving/
  * Miles are rounded to 0.1. Minutes are rounded to the nearest minute.
+ * Extra Clackamas and Marion towns were routed the same way on November 22, 2026.
  * Portland is not a town we price.
  */
 const TOWN_TRIPS: Record<string, { oneTrailer: DriveLeg; twoTrailers: DriveLeg }> = {
@@ -188,12 +218,86 @@ const TOWN_TRIPS: Record<string, { oneTrailer: DriveLeg; twoTrailers: DriveLeg }
   Tualatin: { oneTrailer: { miles: 56, minutes: 86 }, twoTrailers: { miles: 79.8, minutes: 124 } },
   'Lake Oswego': { oneTrailer: { miles: 48.5, minutes: 88 }, twoTrailers: { miles: 63, minutes: 123 } },
   Newberg: { oneTrailer: { miles: 70.3, minutes: 109 }, twoTrailers: { miles: 118.3, minutes: 188 } },
+  Barlow: { oneTrailer: { miles: 44.1, minutes: 72 }, twoTrailers: { miles: 68.1, minutes: 115 } },
+  Boring: { oneTrailer: { miles: 61.2, minutes: 103 }, twoTrailers: { miles: 89.2, minutes: 154 } },
+  Damascus: { oneTrailer: { miles: 55.3, minutes: 94 }, twoTrailers: { miles: 77.3, minutes: 136 } },
+  Clackamas: { oneTrailer: { miles: 45, minutes: 72 }, twoTrailers: { miles: 56.8, minutes: 93 } },
+  'Johnson City': { oneTrailer: { miles: 41.8, minutes: 69 }, twoTrailers: { miles: 50.3, minutes: 87 } },
+  Colton: { oneTrailer: { miles: 47.5, minutes: 76 }, twoTrailers: { miles: 91, minutes: 144 } },
+  Redland: { oneTrailer: { miles: 41.1, minutes: 67 }, twoTrailers: { miles: 53.2, minutes: 88 } },
+  Welches: { oneTrailer: { miles: 102.4, minutes: 160 }, twoTrailers: { miles: 176.3, minutes: 280 } },
+  Gervais: { oneTrailer: { miles: 65.4, minutes: 95 }, twoTrailers: { miles: 126.4, minutes: 177 } },
+  Stayton: { oneTrailer: { miles: 92.8, minutes: 147 }, twoTrailers: { miles: 183.7, minutes: 290 } },
+  Sublimity: { oneTrailer: { miles: 88.9, minutes: 140 }, twoTrailers: { miles: 175.9, minutes: 275 } },
+  Turner: { oneTrailer: { miles: 102.8, minutes: 144 }, twoTrailers: { miles: 204.7, minutes: 273 } },
+  Aumsville: { oneTrailer: { miles: 101.3, minutes: 143 }, twoTrailers: { miles: 207.8, minutes: 277 } },
+  Jefferson: { oneTrailer: { miles: 121.1, minutes: 168 }, twoTrailers: { miles: 239.8, minutes: 317 } },
+  'Scotts Mills': { oneTrailer: { miles: 54.5, minutes: 87 }, twoTrailers: { miles: 107, minutes: 170 } },
+  Monitor: { oneTrailer: { miles: 52.9, minutes: 85 }, twoTrailers: { miles: 99.4, minutes: 159 } },
+  'St. Paul': { oneTrailer: { miles: 70.9, minutes: 104 }, twoTrailers: { miles: 130.6, minutes: 181 } },
+  Donald: { oneTrailer: { miles: 58.7, minutes: 87 }, twoTrailers: { miles: 103, minutes: 146 } },
 };
 
-const TOWNS = TOWN_PAGES
-  .map((town) => town.city)
-  .filter((city) => city.toLowerCase() !== 'portland' && TOWN_TRIPS[city])
-  .sort((a, b) => a.localeCompare(b));
+/** Counties are where the community sits. Wilsonville and Lake Oswego are listed with Clackamas. */
+const TOWN_GROUPS: { county: string; towns: string[] }[] = [
+  {
+    county: 'Clackamas County',
+    towns: [
+      'Barlow',
+      'Beavercreek',
+      'Boring',
+      'Canby',
+      'Clackamas',
+      'Colton',
+      'Damascus',
+      'Estacada',
+      'Gladstone',
+      'Happy Valley',
+      'Johnson City',
+      'Lake Oswego',
+      'Milwaukie',
+      'Molalla',
+      'Mulino',
+      'Oregon City',
+      'Redland',
+      'Sandy',
+      'Welches',
+      'West Linn',
+      'Wilsonville',
+    ],
+  },
+  {
+    county: 'Marion County',
+    towns: [
+      'Aumsville',
+      'Aurora',
+      'Donald',
+      'Gervais',
+      'Hubbard',
+      'Jefferson',
+      'Keizer',
+      'Monitor',
+      'Mt. Angel',
+      'Salem',
+      'Scotts Mills',
+      'Silverton',
+      'St. Paul',
+      'Stayton',
+      'Sublimity',
+      'Turner',
+      'Woodburn',
+    ],
+  },
+  {
+    county: 'Yamhill and Washington',
+    towns: ['Newberg', 'Tualatin'],
+  },
+].map((group) => ({
+  county: group.county,
+  towns: group.towns
+    .filter((city) => city.toLowerCase() !== 'portland' && TOWN_TRIPS[city])
+    .sort((a, b) => a.localeCompare(b)),
+}));
 
 const FULL_TRAILER_CUBIC_FEET = TRAILER_LENGTH_FT * TRAILER_WIDTH_FT * TRAILER_SIDE_HEIGHT_FT;
 
@@ -247,6 +351,8 @@ type PricedQuote = {
   dump: number;
   dumpIsMinimum: boolean;
   addOns: number;
+  pounds: number;
+  sizedByPiece: boolean;
   subtotal: number;
   margin: number;
   withMargin: number;
@@ -282,8 +388,9 @@ function routeSentence(town: string, twoLoads: boolean): string {
 function priceQuote(town: string, load: LoadSize, addOnCost: number): PricedQuote {
   const trip = TOWN_TRIPS[town];
   const leg = load.dumpTrips > 1 ? trip.twoTrailers : trip.oneTrailer;
-  const yards = cubicYards(load.trailerFraction);
-  const tons = (yards * HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD) / 2000;
+  const sizedByPiece = load.pounds != null;
+  const pounds = load.pounds ?? cubicYards(load.trailerFraction) * HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD;
+  const tons = pounds / 2000;
   const fuel = cents((leg.miles / TRUCK_MPG) * OREGON_DIESEL_PRICE_PER_GALLON);
   const wear = cents(leg.miles * VEHICLE_WEAR_PER_MILE);
   const driveTime = cents(leg.minutes * DRIVE_TIME_COST_PER_MINUTE);
@@ -303,8 +410,10 @@ function priceQuote(town: string, load: LoadSize, addOnCost: number): PricedQuot
     miles: leg.miles,
     minutes: leg.minutes,
     route: routeSentence(town, load.dumpTrips > 1),
-    cubicYardsLabel: aboutCubicYards(load.trailerFraction),
+    cubicYardsLabel: load.detail ?? aboutCubicYards(load.trailerFraction),
     tons,
+    pounds,
+    sizedByPiece,
     fuel,
     wear,
     driveTime,
@@ -323,6 +432,11 @@ function priceQuote(town: string, load: LoadSize, addOnCost: number): PricedQuot
     low,
     high,
   };
+}
+
+function formatCrewTime(hours: number): string {
+  if (hours < 1) return `${Math.round(hours * 60)} min`;
+  return `${hours} hr`;
 }
 
 function rangeLabel(quote: PricedQuote): string {
@@ -352,8 +466,10 @@ function Line({ label, value, strong = false }: { label: string; value: string; 
 
 export function JunkRemovalPricing() {
   const townFieldId = useId();
+  const townSearchId = useId();
   const [town, setTown] = useState('Molalla');
-  const [loadId, setLoadId] = useState<LoadId>('quarter');
+  const [townQuery, setTownQuery] = useState('');
+  const [loadId, setLoadId] = useState<LoadId>('one');
   const [material, setMaterial] = useState<MaterialType>('standard');
   const [electronics, setElectronics] = useState(false);
   const [stairs, setStairs] = useState(false);
@@ -365,6 +481,14 @@ export function JunkRemovalPricing() {
     (stairs && STAIRS_OR_LONG_CARRY_FEE != null ? STAIRS_OR_LONG_CARRY_FEE : 0);
   const quote = priceQuote(town, load, addOnCost);
   const range = rangeLabel(quote);
+  const townSearch = townQuery.trim().toLowerCase();
+  const matchesTown = (city: string) => !townSearch || city.toLowerCase().includes(townSearch);
+  const visibleTownGroups = TOWN_GROUPS.map((group) => ({
+    county: group.county,
+    towns: group.towns.filter(matchesTown),
+  })).filter((group) => group.towns.length > 0);
+  const searchHasMatch = visibleTownGroups.length > 0;
+  const selectedStillListed = visibleTownGroups.some((group) => group.towns.includes(town));
 
   const renderResult = () => (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
@@ -403,6 +527,11 @@ export function JunkRemovalPricing() {
                 This lands on the {moneyWhole(MINIMUM_PRICE)} minimum.
               </p>
             )}
+            {!quote.hitMinimum && quote.low === MINIMUM_PRICE && (
+              <p className="rounded-xl bg-green-50 px-4 py-3 text-sm font-medium text-green-950">
+                The low end of this range is the {moneyWhole(MINIMUM_PRICE)} minimum.
+              </p>
+            )}
             {electronics && (
               <p className="text-sm leading-relaxed text-slate-700">
                 TVs or electronics: {ADD_ON_UNPRICED_NOTE} Metro South recycles them at no charge, up to 7 items a day.
@@ -432,14 +561,16 @@ export function JunkRemovalPricing() {
                 <div>
                   <p className="font-bold text-slate-900">Labor · {money(quote.labor)}</p>
                   <Line
-                    label={`${WORKERS} people × ${quote.laborHours} hr × ${money(LABOR_RATE_PER_HOUR)}`}
+                    label={`${WORKERS} people × ${formatCrewTime(quote.laborHours)} at ${money(LABOR_RATE_PER_HOUR)}/hr`}
                     value={money(quote.labor)}
                   />
                 </div>
                 <div>
                   <p className="font-bold text-slate-900">Dump fee · {money(quote.dump)}</p>
                   <p className="mt-1 text-slate-600">
-                    {quote.cubicYardsLabel} of household junk, about {quote.tons.toFixed(2)} tons at {HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD} lb per cubic yard.
+                    {quote.sizedByPiece
+                      ? `${quote.cubicYardsLabel}. About ${Math.round(quote.pounds)} lb.`
+                      : `${quote.cubicYardsLabel} of household junk, about ${quote.tons.toFixed(2)} tons at ${HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD} lb per cubic yard.`}
                     {quote.dumpTrips > 1 ? ' Two trips to Metro South.' : ' One trip to Metro South.'}
                   </p>
                   {quote.dumpIsMinimum ? (
@@ -510,9 +641,10 @@ export function JunkRemovalPricing() {
       <div className="mb-8 max-w-2xl">
         <h2 className="text-2xl font-bold text-slate-800 sm:text-3xl">Estimate a load</h2>
         <p className="mt-3 text-base leading-relaxed text-slate-600 sm:text-lg">
-          Pick your town and how full the trailer is. The range comes from the drive, two people loading, and the Metro South dump fee.
+          Pick your town and the size of the load. The range comes from the drive, two people loading, and the Metro South dump fee.
         </p>
-        <p className="mt-3 text-sm font-semibold text-slate-700">{MINIMUM_PRICE_NOTE}</p>
+        <p className="mt-4 text-lg font-bold text-slate-800">Single items start at $150.</p>
+        <p className="mt-1 text-sm font-semibold text-slate-700">{RESULT_FINE_PRINT}</p>
       </div>
 
       <div
@@ -531,27 +663,52 @@ export function JunkRemovalPricing() {
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start lg:gap-8">
         <div className="space-y-8">
           <div>
-            <label htmlFor={townFieldId} className="block text-base font-bold text-slate-800">
+            <label htmlFor={townSearchId} className="block text-base font-bold text-slate-800">
               Where is the junk?
+            </label>
+            <input
+              id={townSearchId}
+              type="search"
+              value={townQuery}
+              onChange={(event) => setTownQuery(event.target.value)}
+              placeholder="Search towns"
+              autoComplete="off"
+              className="mt-3 min-h-14 w-full rounded-2xl border-2 border-slate-200 bg-white px-4 font-semibold text-slate-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
+            />
+            <label htmlFor={townFieldId} className="sr-only">
+              Town
             </label>
             <select
               id={townFieldId}
               value={town}
-              onChange={(event) => setTown(event.target.value)}
+              onChange={(event) => {
+                setTown(event.target.value);
+                setTownQuery('');
+              }}
               className="mt-3 min-h-14 w-full rounded-2xl border-2 border-slate-200 bg-white px-4 font-semibold text-slate-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
             >
-              {TOWNS.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
+              {!selectedStillListed && <option value={town}>{town}</option>}
+              {visibleTownGroups.map((group) => (
+                <optgroup key={group.county} label={group.county}>
+                  {group.towns.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
+            {townSearch && !searchHasMatch && (
+              <p className="mt-2 text-sm text-slate-600">
+                No town matches. Text a photo and we&apos;ll tell you if we can haul there.
+              </p>
+            )}
           </div>
 
           <fieldset>
-            <legend className="text-base font-bold text-slate-800">How full is the trailer?</legend>
+            <legend className="text-base font-bold text-slate-800">How much are we hauling?</legend>
             <p className="mt-1 text-sm text-slate-600">
-              7×14 dump trailer, 4 ft sides. A full load is {aboutCubicYards(1)}.
+              Single items start at $150. A full load is the 7×14 trailer with 4 ft sides, {aboutCubicYards(1)}.
             </p>
             <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {LOAD_SIZES.map((item) => {
@@ -574,19 +731,21 @@ export function JunkRemovalPricing() {
                       {active && <Check className="mt-1 h-5 w-5 shrink-0 text-green-700" aria-hidden="true" />}
                     </span>
                     <span className="mt-0.5 block text-sm font-medium text-slate-600">
-                      {aboutCubicYards(item.trailerFraction)}
+                      {item.detail ?? aboutCubicYards(item.trailerFraction)}
                     </span>
-                    {item.hint && <span className="mt-0.5 block text-sm text-slate-500">{item.hint}</span>}
-                    <span className="mt-3 flex gap-1" aria-hidden="true">
-                      <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
-                        <span className="block h-full rounded-full bg-green-700" style={{ width: `${fill}%` }} />
-                      </span>
-                      {item.trailerFraction > 1 && (
+                    {item.hint && <span className="mt-0.5 block text-sm font-semibold text-green-800">{item.hint}</span>}
+                    {item.trailerFraction > 0 && (
+                      <span className="mt-3 flex gap-1" aria-hidden="true">
                         <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
-                          <span className="block h-full w-full rounded-full bg-green-700" />
+                          <span className="block h-full rounded-full bg-green-700" style={{ width: `${fill}%` }} />
                         </span>
-                      )}
-                    </span>
+                        {item.trailerFraction > 1 && (
+                          <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
+                            <span className="block h-full w-full rounded-full bg-green-700" />
+                          </span>
+                        )}
+                      </span>
+                    )}
                   </button>
                 );
               })}
