@@ -1,8 +1,8 @@
 import { BadgeCheck, Clock, MapPin, Shield } from 'lucide-react';
 import { SEOHead } from '../components/SEOHead';
-import { AdLandingActions, AdLandingShell } from '../components/AdLandingChrome';
+import { AdLandingActions, AdLandingShell, CustomerReviews } from '../components/AdLandingChrome';
 import { Photo } from '../components/Photo';
-import { AFTER_HOURS_NOTE, HOURS_LINE, PHONE_DISPLAY } from '../lib/contact';
+import { AD_HOURS_LINE, AFTER_HOURS_NOTE, PHONE_DISPLAY } from '../lib/contact';
 
 const HAUL_ITEMS = [
   { title: 'Brush', text: 'Shrubs, hedge trimmings, and brush piles from the yard.' },
@@ -26,13 +26,19 @@ const CITIES = [
   'West Linn',
   'Happy Valley',
   'Lake Oswego',
+  'Salem',
+  'Woodburn',
+  'Silverton',
+  'Mt. Angel',
+  'Aurora',
+  'Hubbard',
 ];
 
 const TRUST = [
   { icon: Shield, label: 'Veteran-owned' },
   { icon: BadgeCheck, label: 'You approve the price' },
   { icon: MapPin, label: 'Clackamas County' },
-  { icon: Clock, label: HOURS_LINE },
+  { icon: Clock, label: AD_HOURS_LINE },
 ];
 
 const STEPS = [
@@ -83,20 +89,20 @@ export function YardDebrisPage() {
             <p className="text-sm font-semibold uppercase tracking-wide text-green-300">
               Veteran-owned · Molalla, OR
             </p>
-            <h1 className="mt-2 text-3xl font-bold leading-tight sm:text-5xl">
-              Yard debris removal in Clackamas County.
+            <h1 className="mt-2 text-3xl font-bold leading-tight sm:text-4xl">
+              You approve the price before we start.
             </h1>
-            <p className="mt-2 text-2xl font-extrabold tracking-tight text-amber-300 sm:text-3xl">
-              Starting at $150.
+            <p className="mt-2 text-lg font-semibold leading-snug text-slate-100 sm:text-xl">
+              Yard debris removal in Clackamas County.
             </p>
-            <p className="mt-2 text-base font-semibold leading-snug text-slate-100 sm:text-lg">
+            <p className="mt-1 text-base leading-snug text-slate-100">
               Brush, branches, leaves, green waste, and yard cleanouts.
             </p>
             <div className="mt-4">
-              <AdLandingActions tone="on-dark" showDiscount showReviews showRequestForm />
+              <AdLandingActions tone="on-dark" hero showDiscount showReviews showRequestForm />
             </div>
-            <p className="mt-3 text-center text-sm leading-relaxed text-slate-300 sm:text-base">
-              Veteran-owned and based in Molalla. You approve the price before anything is loaded. Text a photo of the pile, or call {PHONE_DISPLAY}.
+            <p className="mt-3 text-center text-sm leading-relaxed text-slate-300">
+              Veteran-owned and based in Molalla. Jobs start at $150.
             </p>
           </div>
         </div>
@@ -116,14 +122,17 @@ export function YardDebrisPage() {
         <p className="mx-auto mt-3 max-w-6xl text-center text-sm text-slate-600">{AFTER_HOURS_NOTE}</p>
       </section>
 
+      <CustomerReviews heading="From a customer in Molalla" />
+
       <section className="bg-white px-4 py-8" aria-labelledby="haul-heading">
         <div className="mx-auto max-w-3xl">
           <h2 id="haul-heading" className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
             Yard debris we haul
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-center text-slate-600">
-            Brush, branches, leaf cleanup, green waste, and yard cleanouts in Clackamas County. Starting at $150.
+            Brush, branches, leaf cleanup, green waste, and yard cleanouts in Clackamas County.
           </p>
+          <p className="mt-1 text-center text-sm text-slate-500">Jobs start at $150.</p>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2">
             {HAUL_ITEMS.map((item) => (
               <li key={item.title} className="rounded-xl border border-stone-200 bg-stone-50 px-4 py-4">
@@ -174,10 +183,10 @@ export function YardDebrisPage() {
           </ol>
 
           <h2 id="area-heading" className="mt-8 text-center text-2xl font-bold text-slate-900">
-            Yard debris removal across Clackamas County
+            Service area
           </h2>
           <p className="mt-2 text-center text-slate-600">
-            Based in Molalla, serving Clackamas County and nearby towns.
+            Based in Molalla, serving Clackamas County and these Marion County towns.
           </p>
           <ul className="mt-4 flex flex-wrap justify-center gap-2">
             {CITIES.map((city) => (
@@ -220,8 +229,8 @@ export function YardDebrisPage() {
       <section className="bg-slate-900 px-4 py-10 text-white">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-bold sm:text-3xl">Text a photo of the yard debris, or call.</h2>
-          <p className="mt-2 text-slate-300">
-            Starting at $150. Brush, branches, leaves, green waste, and yard cleanouts. You approve the price before anything is loaded.
+          <p className="mt-2 text-sm text-slate-300">
+            Jobs start at $150. Brush, branches, leaves, green waste, and yard cleanouts. You approve the price before anything is loaded.
           </p>
           <div className="mt-5">
             <AdLandingActions tone="on-dark" showDiscount showReviews showRequestForm />
