@@ -1,325 +1,748 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import {
-  Users, Trash2, Check, X,
-  Package, Home, Leaf, Wrench, Archive, Building2, Calculator, DollarSign, MapPin,
+  Archive,
+  Building2,
+  Check,
+  ChevronDown,
+  Home,
+  Leaf,
+  MessageSquare,
+  Package,
+  Phone,
+  Wrench,
+  X,
 } from 'lucide-react';
 import { QuoteActions } from './QuoteActions';
-import { BALLPARK_NOTE, DISCOUNT_NOTE, HEAVY_MATERIAL_NOTE, MINIMUM_PRICE_NOTE } from '../lib/contact';
+import { TOWN_PAGES } from '../data/towns';
+import {
+  BALLPARK_NOTE,
+  DISCOUNT_NOTE,
+  HEAVY_MATERIAL_NOTE,
+  MINIMUM_PRICE_NOTE,
+  PHONE_DISPLAY,
+  PHONE_SMS_HREF,
+  PHONE_TEL_HREF,
+} from '../lib/contact';
 
-type LoadSize = 'small' | 'medium' | 'large' | 'full';
-type DriveZone = 'local' | 'nearby' | 'far' | 'distant';
+/**
+ * PRICING CONFIG
+ * Tanner: change prices here. The calculator reads this block and the
+ * town drive table under it. Nothing in this file calls a routing or
+ * price API when a customer uses the page.
+ */
+
+/**
+ * OREGON DIESEL PRICE — dollars per gallon. Update this when you want
+ * the calculator to follow the pump price.
+ * AAA Oregon statewide average: $6.3907.
+ * Price as of November 21, 2026. Recorded November 22, 2026.
+ * Source: AAA Fuel Prices, State Gas Price Averages
+ * https://gasprices.aaa.com/state-gas-price-averages/
+ */
+const OREGON_DIESEL_PRICE_PER_GALLON = 6.3907;
+
+const TRUCK_MPG = 16;
+const VEHICLE_WEAR_PER_MILE = 0.15;
+/** Kept from the previous calculator. */
+const DRIVE_TIME_COST_PER_MINUTE = 0.45;
+const LABOR_RATE_PER_HOUR = 55;
+const WORKERS = 2;
+const PROFIT_MARGIN = 0.3;
+const MINIMUM_PRICE = 150;
+/** Shown range is this far under and over the working total, then rounded. */
+const RANGE_SPREAD = 0.1;
+const ROUND_TO_DOLLARS = 5;
+
+/**
+ * 7 ft wide × 14 ft long × 4 ft sides.
+ * 7 × 14 × 4 = 392 cubic feet. 392 / 27 = 14.5185... cubic yards,
+ * shown on the buttons as about 14.5 cubic yards for a full load.
+ * Fractions use this same box. "More than 1 trailer" is two full loads.
+ */
+const TRAILER_LENGTH_FT = 14;
+const TRAILER_WIDTH_FT = 7;
+const TRAILER_SIDE_HEIGHT_FT = 4;
+const CUBIC_FEET_PER_YARD = 27;
+
+/**
+ * Loose mixed household junk, not packed down and not dirt or concrete.
+ * 250 lb per cubic yard is the planning weight. A full trailer is
+ * 392 / 27 × 250 = about 3,630 lb (about 1.81 tons). Metro weighs the
+ * real load. Change this number to move every dump fee together.
+ */
+const HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD = 250;
+
+/**
+ * Metro South Transfer Station, 2001 Washington St, Oregon City.
+ * Public rates read November 22, 2026 from
+ * https://www.oregonmetro.gov/waste-disposal-and-prevention/need-get-rid-something/metro-south-transfer-station
+ * The same garbage, wood, and yard rates are in Metro's FY 2026-27 flyer,
+ * effective July 1, 2026 through June 30, 2027:
+ * https://www.oregonmetro.gov/sites/default/files/2026-06/metro-transfer-stations-what-to-know-2026.pdf
+ * https://www.oregonmetro.gov/what-metro-does/garbage-and-recycling-system/wpes-budget-and-solid-waste-fee-setting
+ *
+ * Household junk uses the garbage rate. The minimum covers a load up to
+ * 240 lb and does not add the transaction fee. Heavier loads pay the
+ * per-ton rate plus the staffed-scale transaction fee ($30). The $8.34
+ * automated-scale fee is for commercial accounts, so it is not used here.
+ * An uncovered load is an extra $25/ton ($3 on a minimum load). This
+ * estimate assumes the trailer is covered.
+ */
+const METRO_GARBAGE_PER_TON = 176.7;
+const METRO_GARBAGE_MINIMUM_FEE = 51;
+const METRO_MINIMUM_LOAD_POUNDS = 240;
+const METRO_PUBLIC_TRANSACTION_FEE = 30;
+const METRO_CLEAN_YARD_DEBRIS_PER_TON = 56;
+const METRO_CLEAN_YARD_DEBRIS_MINIMUM_FEE = 37;
+const METRO_CLEAN_WOOD_PER_TON = 97.13;
+const METRO_CLEAN_WOOD_MINIMUM_FEE = 42;
+
+/**
+ * Add-on fees are dollars of cost, added before the margin.
+ * null means there is no published fee, so the box does not change the
+ * range. The button then says the cost is confirmed on the quote.
+ *
+ * TVs and electronics: Metro South takes them free as an Oregon E-Cycles
+ * site, up to 7 items a day (computers, monitors, TVs, and related items).
+ * https://www.oregonmetro.gov/waste-disposal-and-prevention/need-get-rid-something/metro-south-transfer-station
+ * There is no published fee for carrying them, so this stays null.
+ *
+ * Stairs or a long carry: no published rate. Stays null.
+ */
+const TV_ELECTRONICS_FEE: number | null = null;
+const STAIRS_OR_LONG_CARRY_FEE: number | null = null;
+const ADD_ON_UNPRICED_NOTE = 'may add cost, confirmed on your quote.';
+
+type LoadId = 'quarter' | 'half' | 'threeQuarter' | 'full' | 'two';
+
+type LoadSize = {
+  id: LoadId;
+  label: string;
+  /** 1 is one full trailer. 2 is a second full load and a second dump trip. */
+  trailerFraction: number;
+  /**
+   * On-site hours for the two-person crew. Drive time is priced separately.
+   * A full 14.5-yard trailer is 4.5 hours. Each quarter-trailer step is
+   * about an hour after a little extra time on the smallest load.
+   * Two trailers is two full loads: 9 hours.
+   */
+  laborHours: number;
+  dumpTrips: number;
+  hint?: string;
+};
+
+const LOAD_SIZES: LoadSize[] = [
+  { id: 'quarter', label: '1/4 trailer', trailerFraction: 0.25, laborHours: 1.5, dumpTrips: 1 },
+  { id: 'half', label: '1/2 trailer', trailerFraction: 0.5, laborHours: 2.5, dumpTrips: 1 },
+  { id: 'threeQuarter', label: '3/4 trailer', trailerFraction: 0.75, laborHours: 3.5, dumpTrips: 1 },
+  { id: 'full', label: 'Full trailer', trailerFraction: 1, laborHours: 4.5, dumpTrips: 1 },
+  {
+    id: 'two',
+    label: 'More than 1 trailer',
+    trailerFraction: 2,
+    laborHours: 9,
+    dumpTrips: 2,
+    hint: 'Second dump trip',
+  },
+];
+
 type MaterialType = 'standard' | 'heavy';
 
-const LOAD_SIZES: Record<LoadSize, { label: string; yards: string; laborHours: number; standardDumpFee: number; heavyDumpFee: number; desc: string }> = {
-  small:  { label: 'Small',       yards: '1–3 yards',   laborHours: 1, standardDumpFee: 45,  heavyDumpFee: 90,  desc: 'A few appliances, small pile of junk' },
-  medium: { label: 'Medium',      yards: '4–6 yards',   laborHours: 2, standardDumpFee: 85,  heavyDumpFee: 180, desc: 'Room cleanout, garage items, furniture' },
-  large:  { label: 'Large',       yards: '7–10 yards',  laborHours: 3, standardDumpFee: 213, heavyDumpFee: 450, desc: 'Garage cleanout, remodel debris' },
-  full:   { label: 'Full Load',   yards: '11–15 yards', laborHours: 4, standardDumpFee: 284, heavyDumpFee: 750, desc: 'Estate cleanout, full house, hoarder home' },
+type DriveLeg = { miles: number; minutes: number };
+
+/**
+ * Driving miles and minutes for Molalla → town → Metro South → Molalla.
+ * twoTrailers adds Metro South → town → Metro South before the drive home
+ * (a second loaded trip).
+ *
+ * Precomputed November 22, 2026. No runtime request.
+ * Town points and the yard are OpenStreetMap Nominatim centers.
+ * The yard is Molalla (45.14734, -122.57703). Metro South is the
+ * Nominatim point for 2001 Washington Street, Oregon City
+ * (45.36955, -122.59074).
+ * Routes are the public OSRM demo, driving profile:
+ * https://router.project-osrm.org/route/v1/driving/
+ * Miles are rounded to 0.1. Minutes are rounded to the nearest minute.
+ * Portland is not a town we price.
+ */
+const TOWN_TRIPS: Record<string, { oneTrailer: DriveLeg; twoTrailers: DriveLeg }> = {
+  Molalla: { oneTrailer: { miles: 34.5, minutes: 56 }, twoTrailers: { miles: 69.2, minutes: 112 } },
+  Mulino: { oneTrailer: { miles: 34.6, minutes: 56 }, twoTrailers: { miles: 57.9, minutes: 92 } },
+  Beavercreek: { oneTrailer: { miles: 36.6, minutes: 60 }, twoTrailers: { miles: 51.7, minutes: 85 } },
+  Canby: { oneTrailer: { miles: 41.1, minutes: 68 }, twoTrailers: { miles: 61.3, minutes: 104 } },
+  'Oregon City': { oneTrailer: { miles: 35.3, minutes: 61 }, twoTrailers: { miles: 37.9, minutes: 69 } },
+  Gladstone: { oneTrailer: { miles: 38.1, minutes: 63 }, twoTrailers: { miles: 42.8, minutes: 76 } },
+  Milwaukie: { oneTrailer: { miles: 49.9, minutes: 82 }, twoTrailers: { miles: 64.7, minutes: 112 } },
+  Silverton: { oneTrailer: { miles: 63, minutes: 100 }, twoTrailers: { miles: 124, minutes: 195 } },
+  'Mt. Angel': { oneTrailer: { miles: 59, minutes: 97 }, twoTrailers: { miles: 116.1, minutes: 189 } },
+  Woodburn: { oneTrailer: { miles: 59.4, minutes: 87 }, twoTrailers: { miles: 115.8, minutes: 163 } },
+  Hubbard: { oneTrailer: { miles: 54.2, minutes: 82 }, twoTrailers: { miles: 90.8, minutes: 145 } },
+  Aurora: { oneTrailer: { miles: 46.1, minutes: 76 }, twoTrailers: { miles: 73.8, minutes: 124 } },
+  Salem: { oneTrailer: { miles: 91.7, minutes: 136 }, twoTrailers: { miles: 179.3, minutes: 254 } },
+  Keizer: { oneTrailer: { miles: 86.2, minutes: 122 }, twoTrailers: { miles: 166.5, minutes: 224 } },
+  Estacada: { oneTrailer: { miles: 55.3, minutes: 86 }, twoTrailers: { miles: 90, minutes: 139 } },
+  Sandy: { oneTrailer: { miles: 69.9, minutes: 113 }, twoTrailers: { miles: 110, minutes: 185 } },
+  Wilsonville: { oneTrailer: { miles: 53.1, minutes: 80 }, twoTrailers: { miles: 83.6, minutes: 124 } },
+  'West Linn': { oneTrailer: { miles: 38.2, minutes: 62 }, twoTrailers: { miles: 42.4, minutes: 72 } },
+  'Happy Valley': { oneTrailer: { miles: 51, minutes: 85 }, twoTrailers: { miles: 68.8, minutes: 118 } },
+  Tualatin: { oneTrailer: { miles: 56, minutes: 86 }, twoTrailers: { miles: 79.8, minutes: 124 } },
+  'Lake Oswego': { oneTrailer: { miles: 48.5, minutes: 88 }, twoTrailers: { miles: 63, minutes: 123 } },
+  Newberg: { oneTrailer: { miles: 70.3, minutes: 109 }, twoTrailers: { miles: 118.3, minutes: 188 } },
 };
 
-const DRIVE_ZONES: Record<DriveZone, { label: string; minutes: number; miles: number; desc: string }> = {
-  local:   { label: 'Local — Molalla area',        minutes: 30,  miles: 20,  desc: '0–15 min one way' },
-  nearby:  { label: 'Nearby — Clackamas County',   minutes: 60,  miles: 40,  desc: '15–30 min one way' },
-  far:     { label: 'Far — Portland metro',        minutes: 90,  miles: 60,  desc: '30–45 min one way' },
-  distant: { label: 'Distant — outlying areas',    minutes: 120, miles: 80,  desc: '45+ min one way' },
+const TOWNS = TOWN_PAGES
+  .map((town) => town.city)
+  .filter((city) => city.toLowerCase() !== 'portland' && TOWN_TRIPS[city])
+  .sort((a, b) => a.localeCompare(b));
+
+const FULL_TRAILER_CUBIC_FEET = TRAILER_LENGTH_FT * TRAILER_WIDTH_FT * TRAILER_SIDE_HEIGHT_FT;
+
+function cubicYards(trailerFraction: number): number {
+  return (FULL_TRAILER_CUBIC_FEET * trailerFraction) / CUBIC_FEET_PER_YARD;
+}
+
+function aboutCubicYards(trailerFraction: number): string {
+  const rounded = Math.round(cubicYards(trailerFraction) * 10) / 10;
+  const shown = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+  return `about ${shown} cubic yards`;
+}
+
+function cents(amount: number): number {
+  return Math.round(amount * 100) / 100;
+}
+
+function roundToStep(amount: number, step: number): number {
+  return Math.round(amount / step) * step;
+}
+
+function money(amount: number): string {
+  return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+}
+
+function moneyWhole(amount: number): string {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  });
+}
+
+function formatMiles(miles: number): string {
+  return Number.isInteger(miles) ? String(miles) : miles.toFixed(1);
+}
+
+type PricedQuote = {
+  miles: number;
+  minutes: number;
+  route: string;
+  cubicYardsLabel: string;
+  tons: number;
+  fuel: number;
+  wear: number;
+  driveTime: number;
+  drive: number;
+  laborHours: number;
+  labor: number;
+  dumpTrips: number;
+  dump: number;
+  dumpIsMinimum: boolean;
+  addOns: number;
+  subtotal: number;
+  margin: number;
+  withMargin: number;
+  total: number;
+  hitMinimum: boolean;
+  low: number;
+  high: number;
 };
 
-const LABOR_RATE_PER_HOUR = 55;
-const DIESEL_PRICE = 5.50;
-const TRUCK_MPG = 16;
-const FUEL_COST_PER_MILE = DIESEL_PRICE / TRUCK_MPG;
-const VEHICLE_WEAR_PER_MILE = 0.15;
-const DRIVER_RATE_PER_MIN = 0.45;
-const PROFIT_MARGIN = 0.30;
-const MINIMUM = 150;
+function dumpFee(tons: number, trips: number): { fee: number; minimum: boolean } {
+  const tonsPerTrip = tons / trips;
+  const poundsPerTrip = tonsPerTrip * 2000;
+  if (poundsPerTrip <= METRO_MINIMUM_LOAD_POUNDS) {
+    return { fee: cents(trips * METRO_GARBAGE_MINIMUM_FEE), minimum: true };
+  }
+  return {
+    fee: cents(trips * (tonsPerTrip * METRO_GARBAGE_PER_TON + METRO_PUBLIC_TRANSACTION_FEE)),
+    minimum: false,
+  };
+}
+
+function routeSentence(town: string, twoLoads: boolean): string {
+  if (twoLoads) {
+    return town === 'Molalla'
+      ? 'Molalla to Metro South, back for the second load, to Metro South again, then home.'
+      : `Molalla to ${town}, to Metro South, back to ${town} for the second load, to Metro South again, then home.`;
+  }
+  return town === 'Molalla'
+    ? 'Molalla to Metro South and back.'
+    : `Molalla to ${town}, to Metro South, and back to Molalla.`;
+}
+
+function priceQuote(town: string, load: LoadSize, addOnCost: number): PricedQuote {
+  const trip = TOWN_TRIPS[town];
+  const leg = load.dumpTrips > 1 ? trip.twoTrailers : trip.oneTrailer;
+  const yards = cubicYards(load.trailerFraction);
+  const tons = (yards * HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD) / 2000;
+  const fuel = cents((leg.miles / TRUCK_MPG) * OREGON_DIESEL_PRICE_PER_GALLON);
+  const wear = cents(leg.miles * VEHICLE_WEAR_PER_MILE);
+  const driveTime = cents(leg.minutes * DRIVE_TIME_COST_PER_MINUTE);
+  const drive = cents(fuel + wear + driveTime);
+  const labor = cents(WORKERS * load.laborHours * LABOR_RATE_PER_HOUR);
+  const dump = dumpFee(tons, load.dumpTrips);
+  const addOns = cents(addOnCost);
+  const subtotal = cents(drive + labor + dump.fee + addOns);
+  const margin = cents(subtotal * PROFIT_MARGIN);
+  const withMargin = cents(subtotal + margin);
+  const total = Math.max(withMargin, MINIMUM_PRICE);
+  const low = Math.max(MINIMUM_PRICE, roundToStep(total * (1 - RANGE_SPREAD), ROUND_TO_DOLLARS));
+  let high = roundToStep(total * (1 + RANGE_SPREAD), ROUND_TO_DOLLARS);
+  if (high < low) high = low;
+
+  return {
+    miles: leg.miles,
+    minutes: leg.minutes,
+    route: routeSentence(town, load.dumpTrips > 1),
+    cubicYardsLabel: aboutCubicYards(load.trailerFraction),
+    tons,
+    fuel,
+    wear,
+    driveTime,
+    drive,
+    laborHours: load.laborHours,
+    labor,
+    dumpTrips: load.dumpTrips,
+    dump: dump.fee,
+    dumpIsMinimum: dump.minimum,
+    addOns,
+    subtotal,
+    margin,
+    withMargin,
+    total,
+    hitMinimum: withMargin < MINIMUM_PRICE,
+    low,
+    high,
+  };
+}
+
+function rangeLabel(quote: PricedQuote): string {
+  if (quote.low === quote.high) return `About ${moneyWhole(quote.low)}`;
+  return `About ${moneyWhole(quote.low)}–${moneyWhole(quote.high)}`;
+}
 
 const serviceTypes = [
-  { icon: Package,    name: 'Appliance Removal',         desc: 'Fridges, washers, dryers, stoves, dishwashers', color: 'bg-blue-50 border-blue-200',     iconBg: 'bg-blue-100',     iconColor: 'text-blue-600' },
-  { icon: Home,       name: 'Garage Cleanouts',          desc: 'Full garage clear-outs including shelves, boxes, tools, and junk', color: 'bg-yellow-50 border-yellow-200', iconBg: 'bg-yellow-100', iconColor: 'text-yellow-600' },
-  { icon: Leaf,       name: 'Yard Cleanup',              desc: 'Brush, branches, yard waste, and green debris removal', color: 'bg-emerald-50 border-emerald-200', iconBg: 'bg-emerald-100', iconColor: 'text-emerald-600' },
-  { icon: Wrench,     name: 'Debris Removal',            desc: 'Construction waste, drywall, lumber, and remodel debris', color: 'bg-orange-50 border-orange-200', iconBg: 'bg-orange-100', iconColor: 'text-orange-600' },
-  { icon: Archive,    name: 'Complete House Cleanout',   desc: 'Full-property cleanouts for estates, foreclosures, and move-outs', color: 'bg-slate-50 border-slate-200', iconBg: 'bg-slate-100', iconColor: 'text-slate-600' },
-  { icon: Building2,  name: 'Hoarder House Cleanouts',   desc: 'Discreet, compassionate cleanouts for severely cluttered properties', color: 'bg-red-50 border-red-200', iconBg: 'bg-red-100', iconColor: 'text-red-600' },
+  { icon: Package, name: 'Appliance Removal', desc: 'Fridges, washers, dryers, stoves, dishwashers' },
+  { icon: Home, name: 'Garage Cleanouts', desc: 'Shelves, boxes, tools, and a garage full of junk' },
+  { icon: Leaf, name: 'Yard Cleanup', desc: 'Brush, branches, and green debris' },
+  { icon: Wrench, name: 'Debris Removal', desc: 'Drywall, lumber, and remodel debris' },
+  { icon: Archive, name: 'House Cleanouts', desc: 'Estates, move-outs, and full-property loads' },
+  { icon: Building2, name: 'Hoarder House Cleanouts', desc: 'Careful cleanouts for severely cluttered homes' },
 ];
 
-const factorDetails = [
-  { icon: MapPin,      title: 'Drive Time',      desc: 'Round-trip travel to your location. Closer jobs cost less — that savings passes to you.',     color: 'text-blue-600',   bg: 'bg-blue-100' },
-  { icon: Users,       title: 'Labor',           desc: 'Crew size and time on-site. Bigger loads take more hands and more hours.',                    color: 'text-green-600',  bg: 'bg-green-100' },
-  { icon: Trash2,      title: 'Dump Fees',       desc: 'Disposal costs at the transfer station, based on weight and material type.',                  color: 'text-orange-600', bg: 'bg-orange-100' },
-];
+const RESULT_FINE_PRINT = 'Ballpark only. You approve the price before we load.';
+
+function Line({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
+  return (
+    <div className={`flex items-start justify-between gap-4 py-1 ${strong ? 'font-bold text-slate-900' : 'text-slate-700'}`}>
+      <span>{label}</span>
+      <span className="shrink-0 tabular-nums">{value}</span>
+    </div>
+  );
+}
 
 export function JunkRemovalPricing() {
-  const [loadSize, setLoadSize] = useState<LoadSize>('small');
-  const [driveZone, setDriveZone] = useState<DriveZone>('local');
-  const [materialType, setMaterialType] = useState<MaterialType>('standard');
+  const townFieldId = useId();
+  const [town, setTown] = useState('Molalla');
+  const [loadId, setLoadId] = useState<LoadId>('quarter');
+  const [material, setMaterial] = useState<MaterialType>('standard');
+  const [electronics, setElectronics] = useState(false);
+  const [stairs, setStairs] = useState(false);
 
-  const workers = 2;
-  const load = LOAD_SIZES[loadSize];
-  const zone = DRIVE_ZONES[driveZone];
+  const load = LOAD_SIZES.find((item) => item.id === loadId) ?? LOAD_SIZES[0];
+  const heavy = material === 'heavy';
+  const addOnCost =
+    (electronics && TV_ELECTRONICS_FEE != null ? TV_ELECTRONICS_FEE : 0) +
+    (stairs && STAIRS_OR_LONG_CARRY_FEE != null ? STAIRS_OR_LONG_CARRY_FEE : 0);
+  const quote = priceQuote(town, load, addOnCost);
+  const range = rangeLabel(quote);
 
-  const fuelCost = zone.miles * FUEL_COST_PER_MILE;
-  const wearCost = zone.miles * VEHICLE_WEAR_PER_MILE;
-  const driverTimeCost = zone.minutes * DRIVER_RATE_PER_MIN;
-  const driveCost = fuelCost + wearCost + driverTimeCost;
-  const serviceCost = workers * load.laborHours * LABOR_RATE_PER_HOUR;
-  const dumpFee = materialType === 'heavy' ? load.heavyDumpFee : load.standardDumpFee;
-  const subtotal = driveCost + serviceCost + dumpFee;
-  const profit = subtotal * PROFIT_MARGIN;
-  const rawTotal = subtotal + profit;
-  const total = Math.max(rawTotal, MINIMUM);
-  const hitMinimum = rawTotal < MINIMUM;
+  const renderResult = () => (
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
+      <div className="bg-slate-800 px-5 py-6 text-white sm:px-6">
+        <p className="text-sm font-semibold uppercase tracking-wide text-green-300">
+          {heavy ? 'Custom quote' : 'Ballpark range'}
+        </p>
+        <p className="mt-2 text-5xl font-bold leading-none tracking-tight lg:text-4xl">
+          {heavy ? (
+            'Text a photo'
+          ) : (
+            <>
+              <span className="mb-2 block text-lg font-semibold text-slate-200">About</span>
+              <span className="whitespace-nowrap">
+                {quote.low === quote.high ? moneyWhole(quote.low) : `${moneyWhole(quote.low)}–${moneyWhole(quote.high)}`}
+              </span>
+            </>
+          )}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-slate-200">
+          {heavy
+            ? 'Heavy materials are priced from a photo.'
+            : `${town} · ${load.label} · ${quote.cubicYardsLabel}`}
+        </p>
+      </div>
 
-  const fmt = (n: number) => `$${Math.round(n).toLocaleString()}`;
+      <div className="space-y-4 px-5 py-5 sm:px-6">
+        <p className="text-base font-semibold text-slate-800">{RESULT_FINE_PRINT}</p>
+
+        {heavy ? (
+          <p className="text-sm leading-relaxed text-slate-700">{HEAVY_MATERIAL_NOTE}</p>
+        ) : (
+          <>
+            {quote.hitMinimum && (
+              <p className="rounded-xl bg-amber-50 px-4 py-3 text-sm font-medium text-amber-950">
+                This lands on the {moneyWhole(MINIMUM_PRICE)} minimum.
+              </p>
+            )}
+            {electronics && (
+              <p className="text-sm leading-relaxed text-slate-700">
+                TVs or electronics: {ADD_ON_UNPRICED_NOTE} Metro South recycles them at no charge, up to 7 items a day.
+              </p>
+            )}
+            {stairs && (
+              <p className="text-sm leading-relaxed text-slate-700">
+                Stairs or a long carry: {ADD_ON_UNPRICED_NOTE}
+              </p>
+            )}
+
+            <details className="group rounded-2xl border border-slate-200 bg-slate-50">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-4 font-bold text-slate-800 [&::-webkit-details-marker]:hidden">
+                How we got this
+                <ChevronDown className="h-5 w-5 shrink-0 text-slate-500 transition-transform group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <div className="space-y-4 border-t border-slate-200 px-4 py-4 text-sm">
+                <div>
+                  <p className="font-bold text-slate-900">Drive · {money(quote.drive)}</p>
+                  <p className="mt-1 text-slate-600">
+                    {formatMiles(quote.miles)} miles, {quote.minutes} minutes. {quote.route}
+                  </p>
+                  <Line label={`Fuel, ${formatMiles(quote.miles)} mi at ${TRUCK_MPG} mpg`} value={money(quote.fuel)} />
+                  <Line label={`Wear, ${formatMiles(quote.miles)} mi × ${money(VEHICLE_WEAR_PER_MILE)}`} value={money(quote.wear)} />
+                  <Line label={`Drive time, ${quote.minutes} min × ${money(DRIVE_TIME_COST_PER_MINUTE)}`} value={money(quote.driveTime)} />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900">Labor · {money(quote.labor)}</p>
+                  <Line
+                    label={`${WORKERS} people × ${quote.laborHours} hr × ${money(LABOR_RATE_PER_HOUR)}`}
+                    value={money(quote.labor)}
+                  />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900">Dump fee · {money(quote.dump)}</p>
+                  <p className="mt-1 text-slate-600">
+                    {quote.cubicYardsLabel} of household junk, about {quote.tons.toFixed(2)} tons at {HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD} lb per cubic yard.
+                    {quote.dumpTrips > 1 ? ' Two trips to Metro South.' : ' One trip to Metro South.'}
+                  </p>
+                  {quote.dumpIsMinimum ? (
+                    <Line
+                      label={`${moneyWhole(METRO_GARBAGE_MINIMUM_FEE)} minimum × ${quote.dumpTrips}`}
+                      value={money(quote.dump)}
+                    />
+                  ) : (
+                    <>
+                      <Line
+                        label={`${quote.tons.toFixed(2)} tons × ${money(METRO_GARBAGE_PER_TON)}`}
+                        value={money(cents(quote.tons * METRO_GARBAGE_PER_TON))}
+                      />
+                      <Line
+                        label={`Transaction fee × ${quote.dumpTrips}`}
+                        value={money(cents(METRO_PUBLIC_TRANSACTION_FEE * quote.dumpTrips))}
+                      />
+                    </>
+                  )}
+                </div>
+                {quote.addOns > 0 && <Line label="Add-ons" value={money(quote.addOns)} strong />}
+                <div className="border-t border-slate-200 pt-3">
+                  <Line label="Costs" value={money(quote.subtotal)} />
+                  <Line label={`Margin (${Math.round(PROFIT_MARGIN * 100)}%)`} value={money(quote.margin)} />
+                  <Line label="Working total" value={money(quote.total)} strong />
+                  <p className="pt-2 text-slate-600">
+                    The range is 10% under to 10% over that total, rounded to the nearest $5.
+                    {quote.hitMinimum ? ` The ${moneyWhole(MINIMUM_PRICE)} minimum is the floor.` : ''}
+                  </p>
+                </div>
+                <p className="text-xs leading-relaxed text-slate-500">
+                  Diesel is the AAA Oregon average of ${OREGON_DIESEL_PRICE_PER_GALLON.toFixed(4)} a gallon as of November 21, 2026.
+                  Mixed household junk uses Metro South&apos;s garbage rate. Sorted clean yard debris is {money(METRO_CLEAN_YARD_DEBRIS_PER_TON)} a ton
+                  (minimum {moneyWhole(METRO_CLEAN_YARD_DEBRIS_MINIMUM_FEE)}) and clean wood is {money(METRO_CLEAN_WOOD_PER_TON)} a ton
+                  (minimum {moneyWhole(METRO_CLEAN_WOOD_MINIMUM_FEE)}) when it is kept separate. A mixed load is priced as garbage.
+                </p>
+              </div>
+            </details>
+          </>
+        )}
+
+        <div className="grid grid-cols-1 gap-3">
+          <a
+            href={PHONE_SMS_HREF}
+            className="inline-flex min-h-16 items-center justify-center gap-2 rounded-2xl bg-green-800 px-4 py-4 text-center text-lg font-bold text-white shadow-md transition-colors hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
+          >
+            <MessageSquare className="h-6 w-6 shrink-0" aria-hidden="true" />
+            Text a photo
+          </a>
+          <a
+            href={PHONE_TEL_HREF}
+            className="inline-flex min-h-16 items-center justify-center gap-2 rounded-2xl bg-slate-800 px-4 py-4 text-center text-lg font-bold text-white shadow-md transition-colors hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
+          >
+            <Phone className="h-6 w-6 shrink-0" aria-hidden="true" />
+            Call {PHONE_DISPLAY}
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10 sm:py-12">
-      {/* Hero */}
-      <div className="text-center mb-10">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mb-3">
-          Fair Pricing. Built From Real Costs.
-        </h2>
-        <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-          Every estimate is built from drive time, labor, and dump fees. You approve the price before we load.
+    <div className="mx-auto max-w-5xl px-4 py-10 sm:py-12">
+      <p className="sr-only" aria-live="polite" data-testid="ballpark-range">
+        {heavy ? `Custom quote. ${HEAVY_MATERIAL_NOTE}` : `${range}. ${RESULT_FINE_PRINT}`}
+      </p>
+
+      <div className="mb-8 max-w-2xl">
+        <h2 className="text-2xl font-bold text-slate-800 sm:text-3xl">Estimate a load</h2>
+        <p className="mt-3 text-base leading-relaxed text-slate-600 sm:text-lg">
+          Pick your town and how full the trailer is. The range comes from the drive, two people loading, and the Metro South dump fee.
         </p>
-        <div className="mt-4 inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-full text-sm sm:text-base font-semibold shadow-lg max-w-xl">
-          <DollarSign className="h-5 w-5 shrink-0" />
-          <span>{MINIMUM_PRICE_NOTE}</span>
+        <p className="mt-3 text-sm font-semibold text-slate-700">{MINIMUM_PRICE_NOTE}</p>
+      </div>
+
+      <div
+        className="sticky z-30 mb-6 lg:hidden"
+        style={{ top: 'calc(5.25rem + env(safe-area-inset-top))' }}
+        aria-hidden="true"
+      >
+        <div className="flex items-center justify-between gap-3 rounded-2xl bg-slate-800 px-4 py-3 text-white shadow-md">
+          <p className="text-xs font-semibold uppercase tracking-wide text-green-300">
+            {heavy ? 'Custom quote' : 'Ballpark'}
+          </p>
+          <p className="text-lg font-bold tracking-tight">{heavy ? 'Text a photo' : range}</p>
         </div>
       </div>
 
-      {/* Four Factors */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-10">
-        {factorDetails.map((f, i) => (
-          <div key={i} className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-gray-100 text-center">
-            <div className={`inline-flex items-center justify-center w-12 h-12 ${f.bg} rounded-full mb-3`}>
-              <f.icon className={`h-6 w-6 ${f.color}`} />
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start lg:gap-8">
+        <div className="space-y-8">
+          <div>
+            <label htmlFor={townFieldId} className="block text-base font-bold text-slate-800">
+              Where is the junk?
+            </label>
+            <select
+              id={townFieldId}
+              value={town}
+              onChange={(event) => setTown(event.target.value)}
+              className="mt-3 min-h-14 w-full rounded-2xl border-2 border-slate-200 bg-white px-4 font-semibold text-slate-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
+            >
+              {TOWNS.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <fieldset>
+            <legend className="text-base font-bold text-slate-800">How full is the trailer?</legend>
+            <p className="mt-1 text-sm text-slate-600">
+              7×14 dump trailer, 4 ft sides. A full load is {aboutCubicYards(1)}.
+            </p>
+            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {LOAD_SIZES.map((item) => {
+                const active = loadId === item.id;
+                const fill = Math.min(item.trailerFraction, 1) * 100;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => setLoadId(item.id)}
+                    className={`min-h-[5.25rem] rounded-2xl border-2 px-4 py-3 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 ${
+                      active ? 'border-green-700 bg-green-50 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'
+                    }`}
+                  >
+                    <span className="flex items-start justify-between gap-3">
+                      <span className={`block text-lg font-bold ${active ? 'text-green-800' : 'text-slate-800'}`}>
+                        {item.label}
+                      </span>
+                      {active && <Check className="mt-1 h-5 w-5 shrink-0 text-green-700" aria-hidden="true" />}
+                    </span>
+                    <span className="mt-0.5 block text-sm font-medium text-slate-600">
+                      {aboutCubicYards(item.trailerFraction)}
+                    </span>
+                    {item.hint && <span className="mt-0.5 block text-sm text-slate-500">{item.hint}</span>}
+                    <span className="mt-3 flex gap-1" aria-hidden="true">
+                      <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
+                        <span className="block h-full rounded-full bg-green-700" style={{ width: `${fill}%` }} />
+                      </span>
+                      {item.trailerFraction > 1 && (
+                        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
+                          <span className="block h-full w-full rounded-full bg-green-700" />
+                        </span>
+                      )}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-            <h4 className="font-bold text-slate-800 text-sm sm:text-base mb-1">{f.title}</h4>
-            <p className="text-xs sm:text-sm text-gray-500 leading-snug">{f.desc}</p>
+          </fieldset>
+
+          <fieldset>
+            <legend className="text-base font-bold text-slate-800">What are we hauling?</legend>
+            <div className="mt-3 grid grid-cols-1 gap-3">
+              <button
+                type="button"
+                aria-pressed={material === 'standard'}
+                onClick={() => setMaterial('standard')}
+                className={`min-h-16 rounded-2xl border-2 px-4 py-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 ${
+                  material === 'standard' ? 'border-green-700 bg-green-50' : 'border-slate-200 bg-white hover:border-slate-300'
+                }`}
+              >
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-lg font-bold text-slate-800">Household junk</span>
+                  {material === 'standard' && <Check className="h-5 w-5 text-green-700" aria-hidden="true" />}
+                </span>
+                <span className="mt-1 block text-sm text-slate-600">Furniture, appliances, and mixed household junk</span>
+              </button>
+              <button
+                type="button"
+                aria-pressed={material === 'heavy'}
+                onClick={() => setMaterial('heavy')}
+                className={`min-h-16 rounded-2xl border-2 px-4 py-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 ${
+                  material === 'heavy' ? 'border-orange-500 bg-orange-50' : 'border-slate-200 bg-white hover:border-slate-300'
+                }`}
+              >
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-lg font-bold text-slate-800">Heavy materials</span>
+                  {material === 'heavy' && <Check className="h-5 w-5 text-orange-600" aria-hidden="true" />}
+                </span>
+                <span className="mt-1 block text-sm text-slate-600">Dirt, concrete, brick, roofing, and other dense loads. Custom quote, text a photo.</span>
+              </button>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend className="text-base font-bold text-slate-800">Anything else?</legend>
+            <div className="mt-3 grid grid-cols-1 gap-3">
+              <label className={`flex min-h-16 cursor-pointer items-center gap-4 rounded-2xl border-2 px-4 py-3 ${electronics ? 'border-green-700 bg-green-50' : 'border-slate-200 bg-white'}`}>
+                <input
+                  type="checkbox"
+                  checked={electronics}
+                  onChange={(event) => setElectronics(event.target.checked)}
+                  className="h-6 w-6 shrink-0 accent-green-800"
+                />
+                <span>
+                  <span className="block text-base font-bold text-slate-800">TVs or electronics</span>
+                  <span className="mt-0.5 block text-sm text-slate-600">{ADD_ON_UNPRICED_NOTE}</span>
+                </span>
+              </label>
+              <label className={`flex min-h-16 cursor-pointer items-center gap-4 rounded-2xl border-2 px-4 py-3 ${stairs ? 'border-green-700 bg-green-50' : 'border-slate-200 bg-white'}`}>
+                <input
+                  type="checkbox"
+                  checked={stairs}
+                  onChange={(event) => setStairs(event.target.checked)}
+                  className="h-6 w-6 shrink-0 accent-green-800"
+                />
+                <span>
+                  <span className="block text-base font-bold text-slate-800">Stairs or a long carry</span>
+                  <span className="mt-0.5 block text-sm text-slate-600">{ADD_ON_UNPRICED_NOTE}</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div className="lg:hidden">
+            {renderResult()}
+          </div>
+        </div>
+
+        <div className="mt-8 hidden lg:mt-0 lg:block">
+          <div className="lg:sticky lg:top-24">{renderResult()}</div>
+        </div>
+      </div>
+
+      <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {[
+          { title: 'Drive', text: 'Molalla to your town, to Metro South in Oregon City, and back.' },
+          { title: 'Labor', text: 'Two people. A fuller trailer takes longer to load.' },
+          { title: 'Dump fee', text: 'Metro South charges household junk by the ton, plus a transaction fee.' },
+        ].map((item) => (
+          <div key={item.title} className="rounded-2xl border border-slate-200 bg-white p-5">
+            <h3 className="font-bold text-slate-800">{item.title}</h3>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600">{item.text}</p>
           </div>
         ))}
       </div>
 
-      {/* Interactive Estimator */}
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mb-10">
-        <div className="bg-gradient-to-r from-slate-800 to-slate-700 px-5 sm:px-8 py-5 flex items-center gap-3">
-          <Calculator className="h-7 w-7 text-green-400 flex-shrink-0" />
-          <div>
-            <h3 className="text-xl font-bold text-white">
-              {materialType === 'heavy' ? 'Custom quote' : 'Cost Estimator'}
-            </h3>
-            <p className="text-sm text-gray-300">
-              {materialType === 'heavy'
-                ? 'Heavy materials need a custom quote. Text a photo or call.'
-                : 'Adjust the options to see your estimated price'}
-            </p>
-          </div>
-        </div>
-
-        <div className="p-5 sm:p-8 space-y-7">
-          {/* Load Size */}
-          <div>
-            <label className="block text-sm font-bold text-slate-700 mb-3">How much junk?</label>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-              {(Object.keys(LOAD_SIZES) as LoadSize[]).map((key) => {
-                const item = LOAD_SIZES[key];
-                const active = loadSize === key;
-                return (
-                  <button
-                    key={key}
-                    onClick={() => setLoadSize(key)}
-                    className={`rounded-xl p-3 sm:p-4 text-left border-2 transition-all ${active ? 'border-green-500 bg-green-50 shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className={`font-bold text-sm sm:text-base ${active ? 'text-green-700' : 'text-slate-700'}`}>{item.label}</span>
-                      {active && <Check className="h-4 w-4 text-green-600" />}
-                    </div>
-                    <div className="text-xs text-gray-500 mb-1">{item.yards}</div>
-                    <div className="text-xs text-gray-400 leading-snug hidden sm:block">{item.desc}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Drive Zone */}
-          <div>
-            <label className="block text-sm font-bold text-slate-700 mb-3">Where are you located?</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-              {(Object.keys(DRIVE_ZONES) as DriveZone[]).map((key) => {
-                const item = DRIVE_ZONES[key];
-                const active = driveZone === key;
-                return (
-                  <button
-                    key={key}
-                    onClick={() => setDriveZone(key)}
-                    className={`rounded-xl p-3 sm:p-4 text-left border-2 transition-all flex items-center justify-between ${active ? 'border-green-500 bg-green-50 shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-                  >
-                    <div>
-                      <div className={`font-bold text-sm sm:text-base ${active ? 'text-green-700' : 'text-slate-700'}`}>{item.label}</div>
-                      <div className="text-xs text-gray-500">{item.desc}</div>
-                    </div>
-                    {active && <Check className="h-5 w-5 text-green-600 flex-shrink-0" />}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Material Type */}
-          <div>
-            <label className="block text-sm font-bold text-slate-700 mb-3">What are we hauling?</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-              <button
-                onClick={() => setMaterialType('standard')}
-                className={`rounded-xl p-4 text-left border-2 transition-all ${materialType === 'standard' ? 'border-green-500 bg-green-50 shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className={`font-bold text-sm sm:text-base ${materialType === 'standard' ? 'text-green-700' : 'text-slate-700'}`}>Standard Materials</span>
-                  {materialType === 'standard' && <Check className="h-5 w-5 text-green-600" />}
-                </div>
-                <div className="text-xs text-gray-500">Household junk, furniture, appliances, yard waste, and mixed debris</div>
-              </button>
-              <button
-                onClick={() => setMaterialType('heavy')}
-                className={`rounded-xl p-4 text-left border-2 transition-all ${materialType === 'heavy' ? 'border-orange-500 bg-orange-50 shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className={`font-bold text-sm sm:text-base ${materialType === 'heavy' ? 'text-orange-700' : 'text-slate-700'}`}>Heavy Materials</span>
-                  {materialType === 'heavy' && <Check className="h-5 w-5 text-orange-600" />}
-                </div>
-                <div className="text-xs text-gray-500">Dirt, concrete, brick, asphalt, roofing, and other dense materials</div>
-              </button>
-            </div>
-          </div>
-
-          {materialType === 'heavy' ? (
-            <div className="bg-orange-50 rounded-xl p-5 sm:p-6 border border-orange-200">
-              <h4 className="font-bold text-slate-800 mb-2 text-base sm:text-lg">Custom quote</h4>
-              <p className="text-sm sm:text-base text-slate-800 leading-relaxed">
-                Heavy materials are not priced in this calculator.
-              </p>
-              <p className="mt-2 text-sm sm:text-base font-semibold text-slate-800 leading-relaxed">
-                {HEAVY_MATERIAL_NOTE}
-              </p>
-            </div>
-          ) : (
-            <div className="bg-gradient-to-br from-slate-50 to-gray-100 rounded-xl p-5 sm:p-6 border border-gray-200">
-              <h4 className="font-bold text-slate-800 mb-4 text-sm sm:text-base flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-green-600" />
-                Your estimate
-              </h4>
-              <div className="flex items-center justify-between py-1">
-                <span className="font-bold text-slate-800">Ballpark total</span>
-                <span className="text-2xl sm:text-3xl font-bold text-green-800">{fmt(total)}</span>
-              </div>
-              <p className="text-sm font-semibold text-slate-800 mt-3">{BALLPARK_NOTE}</p>
-              {hitMinimum && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-3">
-                  <p className="text-xs sm:text-sm text-amber-800">
-                    This estimate falls below our $150 minimum — that's what you'd pay.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Disclaimer + CTA */}
-          <div className="space-y-3">
-            {materialType === 'standard' && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-xs sm:text-sm text-blue-900">
-                  {HEAVY_MATERIAL_NOTE}
-                </p>
-              </div>
-            )}
-            <QuoteActions tone="on-light" />
-          </div>
-        </div>
-      </div>
-
-      {/* Services We Handle */}
-      <div className="mb-10">
-        <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3 text-center">Services We Offer</h3>
-        <p className="text-center text-gray-600 mb-6 max-w-2xl mx-auto text-sm sm:text-base">
-          One company, every type of cleanout. Same cost-factor pricing applies to all jobs.
-        </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          {serviceTypes.map((s, i) => (
-            <div key={i} className={`rounded-xl p-4 sm:p-5 border-2 ${s.color} flex items-start gap-3`}>
-              <div className={`${s.iconBg} rounded-xl p-2.5 flex-shrink-0`}>
-                <s.icon className={`h-5 w-5 ${s.iconColor}`} />
+      <div className="mt-12">
+        <h3 className="text-center text-xl font-bold text-slate-800 sm:text-2xl">What we haul</h3>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {serviceTypes.map((service) => (
+            <div key={service.name} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
+              <div className="rounded-xl bg-green-50 p-2.5">
+                <service.icon className="h-5 w-5 text-green-800" aria-hidden="true" />
               </div>
               <div>
-                <h4 className="font-bold text-slate-800 mb-0.5 text-sm sm:text-base">{s.name}</h4>
-                <p className="text-xs sm:text-sm text-gray-600">{s.desc}</p>
+                <h4 className="font-bold text-slate-800">{service.name}</h4>
+                <p className="mt-0.5 text-sm text-slate-600">{service.desc}</p>
               </div>
             </div>
           ))}
         </div>
-        <p className="mt-4 text-center text-gray-500 text-xs sm:text-sm">Also: general trash removal, furniture removal, commercial cleanouts, and more. Call if you're not sure.</p>
       </div>
 
-      {/* What's Included / Custom Quote */}
-      <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-10">
-        <div className="bg-green-50 rounded-xl p-5 sm:p-6 border border-green-200">
-          <h3 className="text-lg font-bold text-slate-800 mb-3">What's Included</h3>
-          <ul className="space-y-2">
-            {[
-              'Labor & loading',
-              'Hauling & disposal of standard household junk',
-              'Furniture, appliances, general trash, mixed items',
-              'Yard waste and green debris',
-              'Construction and remodel debris',
-            ].map((item, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-sm text-gray-700">
-                <Check className="h-5 w-5 text-green-600 flex-shrink-0" />
+      <div className="mt-8 grid gap-4 md:grid-cols-2">
+        <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
+          <h3 className="text-lg font-bold text-slate-800">In a household load</h3>
+          <ul className="mt-3 space-y-2">
+            {['Loading and hauling', 'Furniture, appliances, and mixed household junk', 'Yard waste mixed into the load', 'Remodel debris that is not a heavy material'].map((item) => (
+              <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
+                <Check className="mt-0.5 h-5 w-5 shrink-0 text-green-700" aria-hidden="true" />
                 <span>{item}</span>
               </li>
             ))}
           </ul>
         </div>
-        <div className="bg-amber-50 rounded-xl p-5 sm:p-6 border border-amber-200">
-          <h3 className="text-lg font-bold text-slate-800 mb-3">Materials Requiring a Custom Quote</h3>
-          <p className="text-xs sm:text-sm text-gray-700 mb-3">{HEAVY_MATERIAL_NOTE}</p>
-          <ul className="space-y-2">
-            {['Concrete, dirt, brick, asphalt', 'Roofing material (shingles)'].map((item, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                <span className="text-amber-600 font-bold">•</span>
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+          <h3 className="text-lg font-bold text-slate-800">Custom quote</h3>
+          <p className="mt-2 text-sm text-slate-700">{HEAVY_MATERIAL_NOTE}</p>
+          <ul className="mt-3 space-y-2">
+            {['Concrete, dirt, brick, asphalt', 'Roofing and shingles'].map((item) => (
+              <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
+                <span className="font-bold text-amber-700" aria-hidden="true">•</span>
                 <span>{item}</span>
               </li>
             ))}
           </ul>
-          <p className="text-xs text-gray-700 mt-3">Text a photo. You approve the price before we load.</p>
         </div>
       </div>
 
-      {/* What We Don't Take */}
-      <div className="bg-red-50 rounded-xl p-5 sm:p-8 mb-10 border border-red-200">
-        <h3 className="text-xl font-bold text-slate-800 mb-4 sm:mb-6 text-center">What We Don't Take</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
-          {['Hazardous waste', 'Chemicals & liquids', 'Paint', 'Asbestos'].map((item) => (
-            <div key={item} className="flex items-center gap-2 text-sm text-gray-700">
-              <X className="h-5 w-5 text-red-600 flex-shrink-0" />
+      <div className="mt-8 rounded-2xl border border-red-200 bg-red-50 p-5">
+        <h3 className="text-center text-lg font-bold text-slate-800">What we don&apos;t take</h3>
+        <div className="mx-auto mt-4 grid max-w-3xl grid-cols-2 gap-3">
+          {['Hazardous waste', 'Chemicals and liquids', 'Paint', 'Asbestos'].map((item) => (
+            <div key={item} className="flex items-center gap-2 text-sm text-slate-700">
+              <X className="h-5 w-5 shrink-0 text-red-600" aria-hidden="true" />
               <span>{item}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* CTA */}
-      <div className="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-6 sm:p-8 text-white text-center">
-        <div className="inline-flex items-center gap-2 bg-red-600/90 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold mb-4">
-          {DISCOUNT_NOTE}
+      <div className="mt-8 rounded-3xl bg-slate-800 px-5 py-8 text-white sm:px-8">
+        <p className="inline-flex rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold">{DISCOUNT_NOTE}</p>
+        <h3 className="mt-4 text-2xl font-bold">Send a photo of the pile</h3>
+        <p className="mt-2 max-w-xl text-slate-200">{BALLPARK_NOTE} {HEAVY_MATERIAL_NOTE}</p>
+        <div className="mt-5">
+          <QuoteActions tone="on-dark" />
         </div>
-        <h3 className="text-xl sm:text-2xl font-bold mb-4">Ready to Get Started?</h3>
-        <QuoteActions tone="on-dark" align="center" />
-        <p className="text-slate-300 mt-4 text-xs sm:text-sm">Serving Molalla & surrounding areas in Clackamas County</p>
       </div>
-
-      <p className="text-center text-xs text-gray-500 mt-6">
-        {BALLPARK_NOTE} {HEAVY_MATERIAL_NOTE}
-      </p>
     </div>
   );
 }

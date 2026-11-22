@@ -23,7 +23,9 @@ export function Logo({
         className={className}
         loading={loading}
         decoding="async"
-        fetchPriority={fetchPriority}
+        {...(fetchPriority !== 'auto'
+          ? ({ fetchpriority: fetchPriority } as { fetchpriority: 'high' | 'low' })
+          : {})}
       />
     </picture>
   );
