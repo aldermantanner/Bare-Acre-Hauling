@@ -375,14 +375,9 @@ function dumpFee(tons: number, trips: number): { fee: number; minimum: boolean }
 }
 
 function routeSentence(town: string, twoLoads: boolean): string {
-  if (twoLoads) {
-    return town === 'Molalla'
-      ? 'Molalla to Metro South, back for the second load, to Metro South again, then home.'
-      : `Molalla to ${town}, to Metro South, back to ${town} for the second load, to Metro South again, then home.`;
-  }
-  return town === 'Molalla'
-    ? 'Molalla to Metro South and back.'
-    : `Molalla to ${town}, to Metro South, and back to Molalla.`;
+  const run = twoLoads ? 'including two dump runs' : 'including the dump run';
+  if (town === 'Molalla') return `Round trip from Molalla, ${run}.`;
+  return `Round trip from Molalla to ${town}, ${run}.`;
 }
 
 function priceQuote(town: string, load: LoadSize, addOnCost: number): PricedQuote {
@@ -534,7 +529,7 @@ export function JunkRemovalPricing() {
             )}
             {electronics && (
               <p className="text-sm leading-relaxed text-slate-700">
-                TVs or electronics: {ADD_ON_UNPRICED_NOTE} Metro South recycles them at no charge, up to 7 items a day.
+                TVs or electronics: {ADD_ON_UNPRICED_NOTE} They can often be recycled at no charge.
               </p>
             )}
             {stairs && (
@@ -566,12 +561,12 @@ export function JunkRemovalPricing() {
                   />
                 </div>
                 <div>
-                  <p className="font-bold text-slate-900">Dump fee · {money(quote.dump)}</p>
+                  <p className="font-bold text-slate-900">Dump and disposal · {money(quote.dump)}</p>
                   <p className="mt-1 text-slate-600">
                     {quote.sizedByPiece
                       ? `${quote.cubicYardsLabel}. About ${Math.round(quote.pounds)} lb.`
                       : `${quote.cubicYardsLabel} of household junk, about ${quote.tons.toFixed(2)} tons at ${HOUSEHOLD_JUNK_POUNDS_PER_CUBIC_YARD} lb per cubic yard.`}
-                    {quote.dumpTrips > 1 ? ' Two trips to Metro South.' : ' One trip to Metro South.'}
+                    {quote.dumpTrips > 1 ? ' Two dump runs.' : ' One dump run.'}
                   </p>
                   {quote.dumpIsMinimum ? (
                     <Line
@@ -603,7 +598,7 @@ export function JunkRemovalPricing() {
                 </div>
                 <p className="text-xs leading-relaxed text-slate-500">
                   Diesel is the AAA Oregon average of ${OREGON_DIESEL_PRICE_PER_GALLON.toFixed(4)} a gallon as of November 21, 2026.
-                  Mixed household junk uses Metro South&apos;s garbage rate. Sorted clean yard debris is {money(METRO_CLEAN_YARD_DEBRIS_PER_TON)} a ton
+                  Mixed household junk uses the garbage disposal rate. Sorted clean yard debris is {money(METRO_CLEAN_YARD_DEBRIS_PER_TON)} a ton
                   (minimum {moneyWhole(METRO_CLEAN_YARD_DEBRIS_MINIMUM_FEE)}) and clean wood is {money(METRO_CLEAN_WOOD_PER_TON)} a ton
                   (minimum {moneyWhole(METRO_CLEAN_WOOD_MINIMUM_FEE)}) when it is kept separate. A mixed load is priced as garbage.
                 </p>
@@ -641,7 +636,7 @@ export function JunkRemovalPricing() {
       <div className="mb-8 max-w-2xl">
         <h2 className="text-2xl font-bold text-slate-800 sm:text-3xl">Estimate a load</h2>
         <p className="mt-3 text-base leading-relaxed text-slate-600 sm:text-lg">
-          Pick your town and the size of the load. The range comes from the drive, two people loading, and the Metro South dump fee.
+          Pick your town and the size of the load. The range comes from the drive, two people loading, and dump and disposal fees.
         </p>
         <p className="mt-4 text-lg font-bold text-slate-800">Single items start at $150.</p>
         <p className="mt-1 text-sm font-semibold text-slate-700">{RESULT_FINE_PRINT}</p>
@@ -828,9 +823,9 @@ export function JunkRemovalPricing() {
 
       <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
-          { title: 'Drive', text: 'Molalla to your town, to Metro South in Oregon City, and back.' },
+          { title: 'Drive', text: 'Round trip from Molalla, including the dump run.' },
           { title: 'Labor', text: 'Two people. A fuller trailer takes longer to load.' },
-          { title: 'Dump fee', text: 'Metro South charges household junk by the ton, plus a transaction fee.' },
+          { title: 'Dump and disposal', text: 'Dump and disposal fees for the load, based on weight.' },
         ].map((item) => (
           <div key={item.title} className="rounded-2xl border border-slate-200 bg-white p-5">
             <h3 className="font-bold text-slate-800">{item.title}</h3>
