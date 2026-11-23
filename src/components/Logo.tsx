@@ -5,7 +5,11 @@ type LogoProps = {
   fetchPriority?: 'high' | 'low' | 'auto';
 };
 
-/** Header/footer mark. WebP is about 33 KB; PNG is the fallback. */
+/**
+ * Header and footer mark.
+ * logo.webp / logo.png are the circular badge with transparent corners.
+ * logo-original.webp / logo-original.png keep the previous square files.
+ */
 export function Logo({
   className,
   alt = 'Bare Acre Hauling',
