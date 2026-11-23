@@ -44,7 +44,9 @@ export function Photo({
         style={objectPosition ? { objectPosition } : undefined}
         loading={loading}
         decoding={fetchPriority === 'high' ? 'sync' : 'async'}
-        fetchPriority={fetchPriority}
+        {...(fetchPriority !== 'auto'
+          ? ({ fetchpriority: fetchPriority } as { fetchpriority: 'high' | 'low' })
+          : {})}
       />
     </picture>
   );

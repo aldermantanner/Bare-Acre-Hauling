@@ -7,6 +7,7 @@ import { ServiceSchema } from '../components/ServiceSchema';
 import { ReviewSchema } from '../components/ReviewSchema';
 import { BreadcrumbSchema } from '../components/BreadcrumbSchema';
 import { Photo } from '../components/Photo';
+import { YardCleanupPhotos } from '../components/YardCleanupPhotos';
 import { QuoteActions } from '../components/QuoteActions';
 import { DISCOUNT_NOTE, GOOGLE_REVIEW_URL, MINIMUM_PRICE_NOTE, PHONE_DISPLAY } from '../lib/contact';
 import { TOWN_GROUPS, TOWN_PAGES, townPath } from '../data/towns';
@@ -221,50 +222,11 @@ export function HomePage() {
           <div className="mb-8 text-center sm:mb-12">
             <span className="inline-block bg-green-100 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wide">Real Results</span>
             <h2 className="text-4xl font-bold text-slate-800 mb-4">See the Difference We Make</h2>
-            <p className="text-lg text-gray-600 max-w-xl mx-auto">One visit. One crew. A completely cleared space — same day.</p>
+            <p className="text-lg text-gray-600 max-w-xl mx-auto">Yard debris and scrap wood, hauled away.</p>
           </div>
 
-          {/* Photo pair */}
-          <div className="mb-10 grid h-64 grid-cols-2 gap-2 overflow-hidden rounded-2xl shadow-2xl sm:h-80 sm:gap-4 md:h-[420px]">
-            {/* Before */}
-            <div className="relative overflow-hidden">
-              <Photo
-                webp="/before-real.webp"
-                jpg="/before-real.jpg"
-                alt="Driveway covered in junk and debris before removal"
-                width={1200}
-                height={900}
-                pictureClassName="absolute inset-0"
-                className="h-full w-full object-cover object-[center_30%]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute top-5 left-5">
-                <span className="rounded-lg bg-red-600 px-2 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-lg sm:px-4 sm:py-2 sm:text-sm sm:tracking-widest">Before</span>
-              </div>
-              <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-sm font-semibold leading-snug text-white drop-shadow-lg sm:text-base">Driveway packed with scrap, debris, and junk</p>
-              </div>
-            </div>
-
-            {/* After */}
-            <div className="relative overflow-hidden">
-              <Photo
-                webp="/after.webp"
-                jpg="/after.jpg"
-                alt="Clean cleared driveway after junk removal"
-                width={1050}
-                height={1400}
-                pictureClassName="absolute inset-0"
-                className="h-full w-full object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
-              <div className="absolute top-5 right-5">
-                <span className="rounded-lg bg-green-600 px-2 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-lg sm:px-4 sm:py-2 sm:text-sm sm:tracking-widest">After</span>
-              </div>
-              <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-sm font-semibold leading-snug text-white drop-shadow-lg sm:text-base">Completely cleared — same day</p>
-              </div>
-            </div>
+          <div className="mb-10">
+            <YardCleanupPhotos showCombo />
           </div>
 
           {/* One real customer note, plus a way to leave a Google review. No extra ratings. */}

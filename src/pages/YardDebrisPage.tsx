@@ -2,6 +2,7 @@ import { BadgeCheck, Clock, MapPin, Shield } from 'lucide-react';
 import { SEOHead } from '../components/SEOHead';
 import { AdLandingActions, AdLandingShell } from '../components/AdLandingChrome';
 import { Photo } from '../components/Photo';
+import { YardCleanupPhotos } from '../components/YardCleanupPhotos';
 import { AFTER_HOURS_NOTE, HOURS_LINE, PHONE_DISPLAY } from '../lib/contact';
 
 const HAUL_ITEMS = [
@@ -155,6 +156,20 @@ export function YardDebrisPage() {
             pictureClassName="mx-auto mt-5 block w-full max-w-md overflow-hidden rounded-2xl shadow-lg"
             className="aspect-[3/4] w-full object-cover object-center"
           />
+        </div>
+      </section>
+
+      <section className="bg-stone-50 px-4 py-8" aria-labelledby="cleared-heading">
+        <div className="mx-auto max-w-5xl">
+          <h2 id="cleared-heading" className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
+            A yard we cleared
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-center text-slate-600">
+            Yard debris and scrap wood cleanup. You approve the price before anything is loaded.
+          </p>
+          <div className="mt-5">
+            <YardCleanupPhotos showCombo />
+          </div>
         </div>
       </section>
 
